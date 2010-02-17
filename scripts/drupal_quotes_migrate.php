@@ -1,9 +1,7 @@
 <?php
-/* connect to the database */
-define('DB_HOST', 'localhost');
-define('DB_USER', 'mozilla');
-define('DB_PASS', 'mozilla');
-define('DB_NAME', 'kohana');
+chdir(dirname(__FILE__));
+
+require_once('config.php');
 
 try {
 $db_link = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
