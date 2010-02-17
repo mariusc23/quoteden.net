@@ -4,20 +4,20 @@ chdir(dirname(__FILE__));
 require_once('config.php');
 
 try {
-$db_link = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
-
+$db_1_link = new PDO("mysql:host=" . DB_DRUPAL_HOST . ";dbname=" . DB_DRUPAL_NAME, DB_DRUPAL_USER, DB_DRUPAL_PASS);
+$db_2_link = new PDO("mysql:host=" . DB_KOHANA_HOST . ";dbname=" . DB_KOHANA_NAME, DB_KOHANA_USER, DB_KOHANA_PASS);
 
 /* get authors */
 $query = '
     SELECT aid AS id, name, bio
     FROM quotes_authors
 ';
-$statement = $db_link->prepare($query);
+$statement = $db_1_link->prepare($query);
 $statement->execute($args);
 $rows = $statement->fetchAll();
 
 /* migrate authors */
-$statement = $db_link->prepare("INSERT IGNORE INTO k_authors(id, name, bio)
+$statement = $db_2_link->prepare("INSERT IGNORE INTO k_authors(id, name, bio)
     VALUES (?, ?, ?);");
 $count = 0;
 foreach ($rows as $row) {
@@ -36,12 +36,12 @@ $query = '
         AND node.nid = quotes.nid
         AND node.vid = quotes.vid
 ';
-$statement = $db_link->prepare($query);
+$statement = $db_1_link->prepare($query);
 $statement->execute($args);
 $rows = $statement->fetchAll();
 
 /* migrate quotes */
-$statement = $db_link->prepare("INSERT IGNORE INTO k_quotes(id, text, author_id, changed, created)
+$statement = $db_2_link->prepare("INSERT IGNORE INTO k_quotes(id, text, author_id, changed, created)
     VALUES (?, ?, ?, ?, ?);");
 
 $count = 0;
@@ -56,12 +56,12 @@ $query = '
     SELECT term_data.tid AS id, term_data.name AS name
     FROM term_data
 ';
-$statement = $db_link->prepare($query);
+$statement = $db_1_link->prepare($query);
 $statement->execute($args);
 $rows = $statement->fetchAll();
 
 /* migrate quotes */
-$statement = $db_link->prepare("INSERT IGNORE INTO k_categories(id, name)
+$statement = $db_2_link->prepare("INSERT IGNORE INTO k_categories(id, name)
     VALUES (?, ?);");
 
 $count = 0;
@@ -78,12 +78,12 @@ $query = '
         node.nid = term_node.nid
         AND node.vid = term_node.vid
 ';
-$statement = $db_link->prepare($query);
+$statement = $db_1_link->prepare($query);
 $statement->execute($args);
 $rows = $statement->fetchAll();
 
 /* migrate quotes */
-$statement = $db_link->prepare("INSERT IGNORE INTO k_quote_category(id, category_id, quote_id)
+$statement = $db_2_link->prepare("INSERT IGNORE INTO k_quote_category(id, category_id, quote_id)
     VALUES (null, ?, ?);");
 
 $count = 0;
