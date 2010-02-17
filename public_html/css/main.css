@@ -1,0 +1,312 @@
+/**
+ * @author Paul and Marius Craciunoiu
+ * @version 1.1
+ *
+ * Designed for quoteden.net
+ */
+
+/** Prevent overflowing content **/
+#header,
+#content,
+#navbar,
+#footer
+{
+    overflow: visible;
+    word-wrap: break-word;
+}
+
+/*----------------------------------
+    Body
+----------------------------------*/
+body {
+    margin: 14px 0 0 0;
+    background: #ccc;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+a {
+    color: #ff6400;
+    text-decoration: none;
+}
+a:visited {
+    color: #fb8f4a;
+}
+
+/*----------------------------------
+    Header
+----------------------------------*/
+#header {
+    margin: 0 auto;
+    width: 740px;
+    height: 120px;
+    background: url(../img/header.png) no-repeat top left;
+    position: relative;
+}
+/* Alternatively, the skip-to-nav link can be completely hidden until a user tabs
+    to the link. Un-comment the following CSS to use this technique. */
+/*
+#skip-to-nav a, #skip-to-nav a:hover, #skip-to-nav a:visited
+{
+    position: absolute;
+    left: 0;
+    top: -500px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+#skip-to-nav a:active, #skip-to-nav a:focus
+{
+    position: static;
+    width: auto;
+    height: auto;
+}
+*/
+
+#logo {
+    margin: 0 10px 0 0;
+    padding: 0;
+    font-size: 2em;
+    line-height: 1.3em;
+    position: absolute;
+    top: 28px;
+    left: 28px;
+}
+#logo a {
+    text-indent: -9999px;
+    display: block;
+    width: 220px;
+    height: 60px;
+}
+
+#header .add-quotes {
+    position: absolute;
+    text-indent: -9999px;
+    top: 32px;
+    left: 244px;
+}
+#header .add-quotes {
+    background: url(../img/add.png) no-repeat top left;
+    display: block;
+    height: 16px;
+    width: 16px;
+}
+
+#header .top-rated {
+    position: absolute;
+    right: 250px;
+    top: 90px;
+}
+
+#header .quote {
+    position: absolute;
+    text-align: right;
+    color: #fff;
+    right: 0;
+    top: 0;
+    padding: 15px 20px 0 0;
+    width: 450px;
+    height: 100px;
+    font-size: 75%;
+}
+#header .quote .text {
+    line-height: 1.5em;
+}
+#header .quote .author {
+    margin-top: 12px;
+}
+
+/** navbar **/
+#navbar {
+}
+#navbar ul {
+}
+#navbar li {
+}
+
+#search {
+    position: absolute;
+    top: 90px;
+    right: 0;
+}
+#search input[type="text"] {
+    border: 0;
+    background: #ed9861;
+    width: 150px;
+}
+
+#search input[type="submit"] {
+    background: url(../img/search.png) no-repeat top left;
+    width: 18px;
+    height: 24px;
+    cursor: pointer;
+    border: 0;
+    text-indent: -9999px;
+    font-size: 0;
+    float: right;
+    right: 15px;
+    top: 1px;
+    position: relative;
+}
+
+
+#login {
+    position: absolute;
+    font-size: 80%;
+    display: none;
+    top: 48px;
+    left: 245px;
+    z-index: 50;
+}
+#login * {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+#login input[type="submit"] {
+    position: absolute;
+    top: -16px; left: 20px;
+    background: url(../img/enter.png) no-repeat top left;
+    width: 36px; height: 16px;
+    font-size: 0px;
+    text-indent: -9999px;
+    cursor: pointer;
+}
+
+#login input[type="text"]
+, #login input[type="password"]
+{
+    display: block;
+    margin: 5px 0;
+    background: #eee;
+    font-size: 95%;
+    background: #ed9861;
+}
+
+/*----------------------------------
+    Content
+----------------------------------*/
+#content {
+    /* If a div.clear-block doesn't have any content after it, Firefox and Safari
+     * will mistakenly place several pixels worth of space between the bottom of
+     * the div and the bottom of the viewport. This fixes it.
+     */
+    overflow-y: hidden; /* CSS3 property */
+    position: relative;
+    margin: 0 auto;
+    width: 740px;
+    padding: 0 0 20px 0;
+    background: #fff;
+}
+
+#content-inner {
+    margin: 0;
+    padding: 0;
+}
+
+.pager {
+    clear: both;
+    margin: 1em 0;
+    text-align: center;
+}
+
+.pager a
+, .pager span
+{
+    padding: 0.4em;
+}
+
+.feed-icons {
+    text-align: center;
+}
+
+
+/*----------------------------------
+    Quote list
+----------------------------------*/
+#content .quote {
+    clear: both;
+    background: url(../img/qmark1.png) no-repeat top left;
+    margin: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+}
+#content .quote-inner {
+    padding: 20px;
+    width: 500px;
+    background: url(../img/qmark2.png) no-repeat bottom right;
+    min-height: 100px;
+    height: auto !important;
+    height: 100px;
+}
+#content .quote .id {
+    float: right;
+    font-size: 95px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 190px;
+    text-align: center;
+}
+#content .quote .id a {
+    color: #ccc;
+}
+#content .quote .text {
+    line-height: 1.8em;
+}
+#content .quote .categories {
+    float: left;
+    line-height: 1.8em;
+    width: 250px;
+}
+#content .quote .categories a {
+    display: inline-block;
+    padding: 0 0.5em 0 0;
+}
+#content .quote .author {
+    float: right;
+    line-height: 1.8em;
+    margin-right: 2em;
+}
+#content .quote .after-author {
+    clear: left;
+    margin-bottom: 1em;
+}
+
+/*----------------------------------
+    Author list
+----------------------------------*/
+.author-header {
+    padding: 0.5em 0;
+    font-size: 2em;
+    text-align: center;
+}
+
+/*----------------------------------
+    Footer
+----------------------------------*/
+#footer {
+    margin: 0 auto;
+    width: 740px;
+    height: 36px;
+    text-align: center;
+    color: #fff;
+    background: url(../img/footer.png) repeat-x;
+}
+#footer-inner {
+    line-height: 36px;
+}
+
+#footer a {
+    color: #cdc;
+}
+ 
+  .node-type-quotes .fivestar-widget {
+    position: absolute;
+    top: 20px;
+    right: 74px;
+  }
+  .fivestar-widget .fivestar-widget {
+    position: static !important;
+  }
+  
+  .fivestar-widget .description {
+    display: none;
+  }
