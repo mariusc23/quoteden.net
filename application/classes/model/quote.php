@@ -5,23 +5,9 @@ class Model_Quote extends ORM {
 
     public function __construct($id = NULL) {
         parent::__construct($id);
-        $categories = $this->categories->find_all();
-        $this->_object['categories_list'] = array();
-        foreach ($categories as $category) {
-            $this->_object['categories_list'][$category->id] = $category;
-        }
-        usort($this->_object['categories_list'], array('Model_Quote', '_sort_categories'));
+        $this->_object['categories_list'] = $this->categories
+            ->order_by('name', 'asc')
+            ->find_all();
     }
-
-    /**
-     * Comparison function for sorting categories alphabetically.
-     * @param array $a, $b objects for category (needs 'name' property)
-     * @return strcmp result for ($a, $b)
-     * @see strcmp (php)
-     */
-    public static function _sort_categories($a, $b) {
-        return strcmp($a->name, $b->name);
-    }
-
 }
 

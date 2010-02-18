@@ -1,0 +1,17 @@
+<?php
+define('IN_PRODUCTION', TRUE);
+define('QUOTES_ITEMS_PER_PAGE', 10);
+define('QUOTES_AUTHORS_PER_PAGE', 20);
+define('SITE_SEPARATOR', ' - ');
+
+define('SEARCH_RESULTSPERPAGE', 10);
+define('SEARCH_MAXRESULTS', 1000);
+define('SEARCH_DEFAULTLANGUAGE', 'en');
+define('SEARCH_RANKER', SPH_RANK_PROXIMITY_BM25);
+
+define('INDEX_QUOTES', 'quotes');
+define('SEARCH_SUMMARY_LENGTH', 200);
+
+// set host, port to access sphinxd
+$host = 'localhost';
+$port = 3312;

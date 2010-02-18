@@ -39,9 +39,9 @@ if ($title) {
 
 <a href="/top" title="Top Rated Quotes" class="top-rated"><img src="<?php echo Url::site('img/top.png') ?>" alt="Top Rated"/></a>
 
-<form id="search" method="post" accept-charset="UTF-8" action="/">
-    <input type="text" title="Search this site" value="" size="15" name="q" maxlength="255" />
-    <input type="submit" value="Search" id="edit-submit" name="search" />
+<form id="search" method="get" accept-charset="UTF-8" action="<?php echo Url::site('search') ?>">
+    <input type="text" title="Search this site" value="<?php if (isset($_GET['q'])) echo $_GET['q']; ?>" size="15" name="q" maxlength="255" />
+    <input type="submit" value="Search" id="edit-submit" />
 </form>
 
 </div></div><!-- /#header-inner, /#header -->
