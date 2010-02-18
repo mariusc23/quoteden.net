@@ -271,18 +271,57 @@ a:visited {
 }
 
 /*----------------------------------
-    Author list
+    Author page
 ----------------------------------*/
-.author-header {
+.author-header h1 {
     padding: 0.5em 0;
     font-size: 2em;
     text-align: center;
 }
 
+.author-header h3 {
+    text-align: center;
+}
 .author-bio {
-    padding: 10px 20px;
+    padding: 10px 20px 30px 20px;
     line-height: 1.3em;
     border-bottom: 1px solid #ccc;
+}
+
+.quote-list-author .categories {
+    width: 90% !important;
+}
+
+
+/*----------------------------------
+    Authors list
+----------------------------------*/
+.author-list .author {
+    text-align: center;
+    padding: 10px;
+}
+
+/*----------------------------------
+    Category list
+----------------------------------*/
+.category-header h1 {
+    padding: 0.5em 0;
+    font-size: 2em;
+    text-align: center;
+}
+
+.category-header h3 {
+    text-align: center;
+}
+
+
+/*----------------------------------
+    Quote list
+----------------------------------*/
+.quote-header h1 {
+    padding: 0.5em 0;
+    font-size: 2em;
+    text-align: center;
 }
 
 /*----------------------------------

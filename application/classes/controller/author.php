@@ -70,7 +70,7 @@ class Controller_Author extends Controller_Template {
         $pagination = Pagination::factory(array(
             'current_page'   => array('source' => 'query_string', 'key' => 'p'),
             'total_items'    => $count,
-            'items_per_page' => QUOTES_ITEMS_PER_PAGE,
+            'items_per_page' => QUOTES_AUTHORS_PER_PAGE,
         ));
 
         // get the content
@@ -162,33 +162,6 @@ class Controller_Author extends Controller_Template {
             // Initialize empty values
             $this->template->title   = '';
             $this->template->content = '';
-            $this->template->styles = array();
-            $this->template->scripts = array();
         }
     }
-
-    /**
-     * Add default css and js
-     */
-    public function after() {
-        if ($this->auto_render) {
-            // css
-            $styles = array(
-                'css/reset.css' => 'screen',
-                'css/main.css'  => 'screen',
-                'css/print.css' => 'print',
-            );
-
-            // js
-            $scripts = array(
-                'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
-                'js/main.js',
-            );
-
-            $this->template->styles = array_merge( $this->template->styles, $styles );
-            $this->template->scripts = array_merge( $this->template->scripts, $scripts );
-        }
-        parent::after();
-    }
-
 }

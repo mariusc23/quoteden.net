@@ -110,6 +110,69 @@ class Controller_Quote extends Controller_Template {
         $this->template->content = $view;
     }
 
+
+    /**
+     * Shows the author page, lists some quotes
+     */
+    public function action_id() {
+        $id = $this->request->param('id');
+        $quote = ORM::factory('quote')->where('id', '=', $id)->find();
+
+        $view = View::factory('quotes/quote');
+
+        if (!$quote->loaded()) {
+            $this->template->content = $view;
+            return ;
+        }
+
+        $view->quote = $quote;
+        $view->categories = array();
+        $categories = $quote->categories->find_all();
+        $view->categories[$quote->id] = array();
+        foreach ($categories as $c) {
+            $view->categories[$quote->id][] = array(
+                'id'   => $c->id,
+                'name' => $c->name,
+            );
+        }
+        // sort them alphabetically
+        usort($view->categories[$quote->id], array('Controller_Quote', '_sort_categories'));
+
+
+        $view->quotes = array();
+        $count = 0;
+        foreach($categories as $category) {
+            if ($count > QUOTES_ITEMS_PER_PAGE) break;
+            $quotes = $category->quotes->find_all();
+            foreach ($quotes as $q) {
+                if ($id == $q->id) continue;
+                if ($count > QUOTES_ITEMS_PER_PAGE) break;
+                $cs = $q->categories->find_all();
+                $view->categories[$q->id] = array();
+                foreach ($cs as $c) {
+                    $view->categories[$q->id][] = array(
+                        'id'   => $c->id,
+                        'name' => $c->name,
+                    );
+                }
+                // sort them alphabetically
+                usort($view->categories[$q->id], array('Controller_Quote', '_sort_categories'));
+                $view->quotes[] = $q;
+                $count++;
+            }
+        }
+        $view->count = $count;
+
+        $this->template->title = 'Quote ' . $quote->id;
+        $this->template->content = $view;
+    }
+
+    /**
+     * Comparison function for sorting categories alphabetically.
+     * @param array $a, $b associative array for category (needs 'name' key)
+     * @return strcmp result for ($a, $b)
+     * @see strcmp (php)
+     */
     public static function _sort_categories($a, $b) {
         return strcmp($a['name'], $b['name']);
     }
@@ -123,32 +186,6 @@ class Controller_Quote extends Controller_Template {
             // Initialize empty values
             $this->template->title   = '';
             $this->template->content = '';
-            $this->template->styles = array();
-            $this->template->scripts = array();
         }
-    }
-
-    /**
-     * Add default css and js
-     */
-    public function after() {
-        if ($this->auto_render) {
-            // css
-            $styles = array(
-                'css/reset.css' => 'screen',
-                'css/main.css'  => 'screen',
-                'css/print.css' => 'print',
-            );
-
-            // js
-            $scripts = array(
-                'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
-                'js/main.js',
-            );
-
-            $this->template->styles = array_merge( $this->template->styles, $styles );
-            $this->template->scripts = array_merge( $this->template->scripts, $scripts );
-        }
-        parent::after();
     }
 }

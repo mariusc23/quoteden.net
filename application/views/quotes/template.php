@@ -11,16 +11,9 @@ if ($title) {
 <head>
 <title><?php echo $title; ?></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="<?php echo Url::site('rss.xml') ?>" title="<?php echo SITE_NAME; ?> feed" type="application/rss+xml" rel="alternate">
-<link type="image/x-icon" href="<?php echo Url::site('favicon.ico') ?>" rel="shortcut icon">
-<?php
-//$css = array();
-foreach ($styles as $file => $type) {
-    //$css[] = $file;
-    echo HTML::style($file, array('media' => $type)), "\n";
-}
-//echo Url::site('min/b=js&amp;f=' . implode(',', $css));
-?>
+<link href="<?php echo Url::site('rss.xml') ?>" title="<?php echo SITE_NAME; ?> feed" type="application/rss+xml" rel="alternate" />
+<link type="image/x-icon" href="<?php echo Url::site('img/favicon.ico') ?>" rel="shortcut icon">
+<link type="text/css" rel="stylesheet" href="<?php echo Url::site('min/?g=css'); ?>" rel="stylesheet" media="screen" />
 </head>
 <body>
 <div id="header">
@@ -64,8 +57,7 @@ Copyright &copy; 2009 - <?php echo date('Y'); ?> <a href="/"><?php echo SITE_NAM
 </div><!-- /#footer-inner -->
 </div><!-- /#footer -->
 
-<?php foreach ($scripts as $file) echo HTML::script($file), "\n" ?>
-
+<script type="text/javascript" src="<?php echo Url::site('min/?g=js'); ?>"></script>
 </body>
 </html>
 

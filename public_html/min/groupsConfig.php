@@ -31,4 +31,6 @@ return array(
             'minifier' => array('Minify_Packer', 'minify')
         ))
     ),//*/
+    'js' => array('//js/main.js'),
+    'css' => array('//css/reset.css', '//css/main.css', '//css/print.css'),
 );

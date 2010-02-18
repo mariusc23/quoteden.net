@@ -32,7 +32,7 @@ $min_errorLogger = false;
  * Allow use of the Minify URI Builder app. If you no longer need 
  * this, set to false.
  **/
-$min_enableBuilder = true;
+$min_enableBuilder = false;
 
 
 /**
@@ -40,9 +40,12 @@ $min_enableBuilder = true;
  * will have to load extra code to guess. Some examples below:
  */
 //$min_cachePath = 'c:\\WINDOWS\\Temp';
-$min_cachePath = '/tmp';
+//$min_cachePath = '/tmp';
 //$min_cachePath = preg_replace('/^\\d+;/', '', session_save_path());
-
+require 'lib/Minify/Cache/Memcache.php';
+$memcache = new Memcache;
+$memcache->connect('localhost', 11211);
+$min_cachePath = new Minify_Cache_Memcache($memcache);
 
 /**
  * Leave an empty string to use PHP's $_SERVER['DOCUMENT_ROOT'].
@@ -54,8 +57,8 @@ $min_cachePath = '/tmp';
  * If /min/ is directly inside your document root, just uncomment the 
  * second line. The third line might work on some Apache servers.
  */
-$min_documentRoot = '';
-//$min_documentRoot = substr(__FILE__, 0, strlen(__FILE__) - 15);
+//$min_documentRoot = '';
+$min_documentRoot = substr(__FILE__, 0, strlen(__FILE__) - 15);
 //$min_documentRoot = $_SERVER['SUBDOMAIN_DOCUMENT_ROOT'];
 
 
@@ -86,7 +89,7 @@ $min_serveOptions['bubbleCssImports'] = false;
  * Note: Despite this setting, if you include a number at the end of the
  * querystring, maxAge will be set to one year. E.g. /min/f=hello.css&123456
  */
-$min_serveOptions['maxAge'] = 1800;
+$min_serveOptions['maxAge'] = 2592000; // 30 days
 
 
 /**
