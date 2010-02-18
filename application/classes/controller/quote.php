@@ -92,21 +92,6 @@ class Controller_Quote extends Controller_Template {
         // render the pager
         $view->pager = $pagination->render();
 
-        // get the categories for each quote
-        $view->categories = array();
-        foreach($view->quotes as $quote) {
-            $categories = $quote->categories->find_all();
-            $view->categories[$quote->id] = array();
-            foreach ($categories as $category) {
-                $view->categories[$quote->id][] = array(
-                    'id'   => $category->id,
-                    'name' => $category->name,
-                );
-            }
-            // sort them alphabetically
-            usort($view->categories[$quote->id], array('Controller_Quote', '_sort_categories'));
-        }
-
         $this->template->content = $view;
     }
 
@@ -116,7 +101,7 @@ class Controller_Quote extends Controller_Template {
      */
     public function action_id() {
         $id = $this->request->param('id');
-        $quote = ORM::factory('quote')->where('id', '=', $id)->find();
+        $quote = new Model_Quote($id);
 
         $view = View::factory('quotes/quote');
 
@@ -126,37 +111,15 @@ class Controller_Quote extends Controller_Template {
         }
 
         $view->quote = $quote;
-        $view->categories = array();
-        $categories = $quote->categories->find_all();
-        $view->categories[$quote->id] = array();
-        foreach ($categories as $c) {
-            $view->categories[$quote->id][] = array(
-                'id'   => $c->id,
-                'name' => $c->name,
-            );
-        }
-        // sort them alphabetically
-        usort($view->categories[$quote->id], array('Controller_Quote', '_sort_categories'));
-
 
         $view->quotes = array();
         $count = 0;
-        foreach($categories as $category) {
+        foreach($quote->categories_list as $category) {
             if ($count > QUOTES_ITEMS_PER_PAGE) break;
             $quotes = $category->quotes->find_all();
             foreach ($quotes as $q) {
                 if ($id == $q->id) continue;
                 if ($count > QUOTES_ITEMS_PER_PAGE) break;
-                $cs = $q->categories->find_all();
-                $view->categories[$q->id] = array();
-                foreach ($cs as $c) {
-                    $view->categories[$q->id][] = array(
-                        'id'   => $c->id,
-                        'name' => $c->name,
-                    );
-                }
-                // sort them alphabetically
-                usort($view->categories[$q->id], array('Controller_Quote', '_sort_categories'));
                 $view->quotes[] = $q;
                 $count++;
             }
@@ -165,16 +128,6 @@ class Controller_Quote extends Controller_Template {
 
         $this->template->title = 'Quote ' . $quote->id;
         $this->template->content = $view;
-    }
-
-    /**
-     * Comparison function for sorting categories alphabetically.
-     * @param array $a, $b associative array for category (needs 'name' key)
-     * @return strcmp result for ($a, $b)
-     * @see strcmp (php)
-     */
-    public static function _sort_categories($a, $b) {
-        return strcmp($a['name'], $b['name']);
     }
 
     /**

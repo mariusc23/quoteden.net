@@ -29,8 +29,8 @@ else print ' quote)';
 <?php print $quote->text; ?>
 </div>
 <div class="categories">
-<?php foreach ($categories[$quote->id] as $category) {
-    print '<a href="' . Url::site('category/id/' . $category['id']) . '">' . $category['name'] . '</a> ';
+<?php foreach ($quote->categories_list as $category) {
+    print '<a href="' . Url::site('category/id/' . $category->id) . '">' . $category->name . '</a> ';
 } ?>
 </div>
 <br class="after-author" />

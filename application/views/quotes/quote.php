@@ -14,8 +14,8 @@ endif; ?>
 <?php print $quote->text; ?>
 </div>
 <div class="categories">
-<?php foreach ($categories[$quote->id] as $category) {
-    print '<a href="' . Url::site('category/id/' . $category['id']) . '">' . $category['name'] . '</a> ';
+<?php foreach ($quote->categories_list as $category) {
+    print '<a href="' . Url::site('category/id/' . $category->id) . '">' . $category->name . '</a> ';
 } ?>
 </div>
 <br class="after-author" />
@@ -34,8 +34,8 @@ endif; ?>
 <?php print $q->text; ?>
 </div>
 <div class="categories">
-<?php if ($count > 0) foreach ($categories[$q->id] as $category) {
-    print '<a href="' . Url::site('category/id/' . $category['id']) . '">' . $category['name'] . '</a> ';
+<?php if ($count > 0) foreach ($q->categories_list as $category) {
+    print '<a href="' . Url::site('category/id/' . $category->id) . '">' . $category->name . '</a> ';
 } ?>
 </div>
 <br class="after-author" />

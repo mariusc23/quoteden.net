@@ -35,7 +35,7 @@ class Controller_Category extends Controller_Template {
      */
     public function action_id() {
         $id = $this->request->param('id');
-        $category = ORM::factory('category')->where('id', '=', $id)->find();
+        $category = new Model_Category($id);
 
         $view = View::factory('quotes/category');
 
@@ -56,7 +56,7 @@ class Controller_Category extends Controller_Template {
         ));
 
         // count the number of quotes for each author
-        $quotes = $category->quotes
+        $view->quotes = $category->quotes
             ->order_by('id','desc')
             ->limit($pagination->items_per_page)
             ->offset($pagination->offset)
@@ -65,26 +65,6 @@ class Controller_Category extends Controller_Template {
 
         // render the pager
         $view->pager = $pagination->render();
-
-        $view->quotes = array();
-        $view->categories = array();
-        $quotes = $category->quotes->find_all();
-        foreach($quotes as $quote) {
-            $categories = $quote->categories->find_all();
-            $view->categories[$quote->id] = array();
-            foreach ($categories as $category) {
-                // skip current category
-                if ($category->id == $id) continue;
-                $view->categories[$quote->id][] = array(
-                    'id'   => $category->id,
-                    'name' => $category->name,
-                );
-            }
-            // sort them alphabetically
-            usort($view->categories[$quote->id], array('Controller_Quote', '_sort_categories'));
-            $view->quotes[] = $quote;
-        }
-
 
         $this->template->title = $category->name . ' (category)';
         $this->template->content = $view;

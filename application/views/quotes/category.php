@@ -24,8 +24,8 @@ else print ' quote)';
 <?php print $quote->text; ?>
 </div>
 <div class="categories">
-<?php foreach ($categories[$quote->id] as $category) {
-    print '<a href="' . Url::site('category/id/' . $category['id']) . '">' . $category['name'] . '</a> ';
+<?php foreach ($quote->categories_list as $category) {
+    print '<a href="' . Url::site('category/id/' . $category->id) . '">' . $category->name . '</a> ';
 } ?>
 </div>
 <div class="author"><a href="<?php print Url::site('author/id/' . $quote->author->id); ?>" title="More quotes by this author"><?php
