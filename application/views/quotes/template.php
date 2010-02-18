@@ -13,7 +13,7 @@ if ($title) {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo Url::site('rss.xml') ?>" title="<?php echo SITE_NAME; ?> feed" type="application/rss+xml" rel="alternate" />
 <link type="image/x-icon" href="<?php echo Url::site('img/favicon.ico') ?>" rel="shortcut icon">
-<link type="text/css" rel="stylesheet" href="<?php echo Url::site('min/?g=css'); ?>" rel="stylesheet" media="screen" />
+<link type="text/css" href="<?php echo Url::site('min/?g=css'); ?>" rel="stylesheet" media="screen" />
 </head>
 <body>
 <div id="header">
