@@ -279,6 +279,12 @@ a:visited {
     text-align: center;
 }
 
+.author-bio {
+    padding: 10px 20px;
+    line-height: 1.3em;
+    border-bottom: 1px solid #ccc;
+}
+
 /*----------------------------------
     Footer
 ----------------------------------*/
