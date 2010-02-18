@@ -1,4 +1,4 @@
-
+## Goes in modules/searc/config
 
 ## MySQL Connection Settings
 MYSQL_USER      = ''
