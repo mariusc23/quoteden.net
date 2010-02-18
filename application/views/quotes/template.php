@@ -57,6 +57,7 @@ Copyright &copy; 2009 - <?php echo date('Y'); ?> <a href="/"><?php echo SITE_NAM
 </div><!-- /#footer-inner -->
 </div><!-- /#footer -->
 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo Url::site('min/?g=js'); ?>"></script>
 </body>
 </html>
