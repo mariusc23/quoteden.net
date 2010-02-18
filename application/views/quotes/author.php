@@ -20,22 +20,7 @@ else print ' quote)';
 <?php endif; ?>
 <div class="quote-list quote-list-author">
 <?php foreach ($quotes as $quote): ?>
-<div class="quote">
-<div class="id">
-<a href="<?php print Url::site('quote/id/' . $quote->id); ?>" title="Details about this quote"><?php print $quote->id; ?></a>
-</div>
-<div class="quote-inner">
-<div class="text">
-<?php print $quote->text; ?>
-</div>
-<div class="categories">
-<?php foreach ($quote->categories_list as $category) {
-    print '<a href="' . Url::site('category/id/' . $category->id) . '">' . $category->name . '</a> ';
-} ?>
-</div>
-<br class="after-author" />
-</div><!-- /.quote-inner -->
-</div><!-- /.quote -->
+<?php include('quote_single.php'); ?>
 <?php endforeach; ?>
 <?php print $pager; ?>
 <div class="feed-icons">
