@@ -21,6 +21,7 @@
 body {
     margin: 14px 0 0 0;
     background: #ccc;
+    font-size: 14px;
     font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 }
 a {
@@ -226,8 +227,8 @@ a:visited {
 #content .quote {
     clear: both;
     background: url(../img/qmark1.png) no-repeat top left;
-    margin: 5px;
-    padding-bottom: 5px;
+    margin: 2px;
+    padding-bottom: 2px;
     border-bottom: 1px solid #ccc;
 }
 #content .quote-inner {
@@ -254,12 +255,24 @@ a:visited {
 #content .quote .categories {
     float: left;
     line-height: 1.8em;
-    width: 250px;
+    font-size: 0.9em;
+    width: 300px;
 }
 #content .quote .categories a {
     display: inline-block;
     padding: 0 0.5em 0 0;
 }
+#content .quote .id a {
+    font-weight: 700;
+}
+#content .quote {
+    margin: 2px;
+    padding-bottom: 2px;
+}
+#content .quote .categories, #content .quote .author {
+    padding-top: 4px;
+}
+
 #content .quote .author {
     float: right;
     line-height: 1.8em;
@@ -284,7 +297,7 @@ a:visited {
 }
 .author-bio {
     padding: 10px 20px 30px 20px;
-    line-height: 1.3em;
+    line-height: 1.5em;
     border-bottom: 1px solid #ccc;
 }
 
@@ -318,10 +331,19 @@ a:visited {
 /*----------------------------------
     Quote list
 ----------------------------------*/
-.quote-header h1 {
-    padding: 0.5em 0;
-    font-size: 2em;
+.quote-header {
+    padding: 80px 0;
     text-align: center;
+}
+.quote-header.border {
+    border-bottom: 1px solid #ccc;
+}
+
+/*----------------------------------
+    Search page
+----------------------------------*/
+.sh { /* search highlight */
+    background: #ffe2cf;
 }
 
 /*----------------------------------

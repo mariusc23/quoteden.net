@@ -4,9 +4,14 @@ Unknown author
 </h1>
 <?php return;
 endif; ?>
-<div class="quote-header">
 <?php include('quote_single.php'); ?>
-<h1>Related quotes</h1>
+<div class="quote-header<?php if ($quotes): ?> border<?php endif; ?>">
+Looking for other great quotes?
+<?php if ($quotes): ?>
+Check out the related quotes below or our <a href="<?php print Url::site('top'); ?>">top related quotes</a>.
+<?php else: ?>
+Check out our <a href="<?php print Url::site('top'); ?>">top related quotes</a>.
+<?php endif; // if ($quotes) ?>
 </div>
 <div class="quote-list quote-list-quote">
 <?php foreach ($quotes as $quote): ?>
