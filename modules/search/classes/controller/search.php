@@ -36,12 +36,18 @@ class Controller_Search extends Controller_Template {
         //$this->sphinxclient->ResetFilters();
 
         $results = $this->sphinxclient->Query($search_query, SPHINX_INDEX);
-        $count = $results['total'];
-        $results = $results['matches'];
+        if ($results) {
+            $count = $results['total'];
+            $results = $results['matches'];
 
-        $view->quotes = array();
-        foreach ($results as $sphinx_quote) {
-            $view->quotes[] = new Model_Quote($sphinx_quote['id']);
+            $view->quotes = array();
+
+            foreach ($results as $sphinx_quote) {
+                $view->quotes[] = new Model_Quote($sphinx_quote['id']);
+            }
+        } else {
+            $this->template->content = $view;
+            return ;
         }
         // count items
 
