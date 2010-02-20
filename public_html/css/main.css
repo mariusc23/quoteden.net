@@ -32,6 +32,16 @@ a:visited {
     color: #fb8f4a;
 }
 
+body ul {
+    list-style-type: disc;
+    padding: 5px 30px 15px;
+}
+
+ul li {
+    padding: 5px 0;
+}
+
+
 /*----------------------------------
     Header
 ----------------------------------*/
@@ -79,13 +89,11 @@ a:visited {
     height: 60px;
 }
 
-#header .add-quotes {
+#header .plus {
     position: absolute;
     text-indent: -9999px;
     top: 32px;
     left: 244px;
-}
-#header .add-quotes {
     background: url(../img/add.png) no-repeat top left;
     display: block;
     height: 16px;
@@ -354,6 +362,41 @@ a:visited {
 
 #footer a {
     color: #cdc;
+}
+
+
+/*----------------------------------
+    Login form
+----------------------------------*/
+h1 {
+    font-size: 200%;
+    text-align: center;
+    padding: 0.5em 0 1em;
+}
+.login {
+    text-align: center;
+}
+.login label {
+    display: block;
+    padding: 5px;
+    width: 90%;
+    margin: 0 auto;
+}
+.login label span {
+    display: inline-block;
+    width: 80px;
+}
+.login ul {
+    color: #ff0400;
+}
+
+
+/*----------------------------------
+    Register page
+----------------------------------*/
+.user-register #content-inner {
+    padding: 0 20px;
+    line-height: 1.8em;
 }
  
   .node-type-quotes .fivestar-widget {

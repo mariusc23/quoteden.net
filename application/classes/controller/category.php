@@ -1,6 +1,6 @@
 <?php
 class Controller_Category extends Controller_Template {
-    public $template = 'quotes/template';
+    public $template = 'base/template';
 
     public function action_index() {
         /*/ create pagination object
@@ -67,15 +67,10 @@ class Controller_Category extends Controller_Template {
         $this->template->title = $category->name . ' (category)';
     }
 
-    /**
-     * Initialize template values
-     */
     public function before() {
         parent::before();
-        if ($this->auto_render) {
-            // Initialize empty values
-            $this->template->title   = '';
-            $this->template->content = '';
-        }
-    }
+        $this->template->user = Auth::instance()->get_user();
+        $this->template->model = 'category';
+        $this->template->action = Request::instance()->action;
+   }
 }

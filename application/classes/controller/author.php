@@ -1,6 +1,6 @@
 <?php
 class Controller_Author extends Controller_Template {
-    public $template = 'quotes/template';
+    public $template = 'base/template';
 
     /**
      * Adds an author
@@ -132,15 +132,10 @@ class Controller_Author extends Controller_Template {
         $this->template->title = $author->name;
     }
 
-    /**
-     * Initialize template values
-     */
     public function before() {
         parent::before();
-        if ($this->auto_render) {
-            // Initialize empty values
-            $this->template->title   = '';
-            $this->template->content = '';
-        }
-    }
+        $this->template->user = Auth::instance()->get_user();
+        $this->template->model = 'author';
+        $this->template->action = Request::instance()->action;
+   }
 }

@@ -7,10 +7,10 @@
 
 $(document).ready(function() {
     /* show/hide login form */
-    $('.add-quotes').click(function() {
-        if ($("#login").length > 0) {
+    if ($('.log-in').length > 0) {
+        $('.log-in').click(function() {
             $("#login").slideToggle("fast");
             return false;
-        }
-    });
+        });
+    }
 });
