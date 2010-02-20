@@ -3,6 +3,7 @@ class Controller_User extends Controller_Template {
     public $template = 'base/template';
     public $auth_role     = array('login');
     public $secure_actions     = array();
+    public $referer = '';
 
     function action_register() {
         $view = $this->template->content = View::factory('user/register');
@@ -36,7 +37,7 @@ class Controller_User extends Controller_Template {
                 Auth::instance()->login($post['username'], $post['password']);
  
                 // show their account
-                Request::instance()->redirect($_SERVER['HTTP_REFERER']);
+                Request::instance()->redirect($this->referer);
             } else {
                 // show the registration errors
                 $view->errors = $post->errors('register');
@@ -48,7 +49,7 @@ class Controller_User extends Controller_Template {
         $view = $this->template->content = View::factory('user/login');
         // if user already logged in
         if (Auth::instance()->logged_in() != 0){
-            if ($_POST) Request::instance()->redirect($_SERVER['HTTP_REFERER']);
+            if ($_POST) Request::instance()->redirect($this->referer);
             $view->user = $this->template->user;
         }
 
@@ -59,7 +60,7 @@ class Controller_User extends Controller_Template {
 
             // check auth
             if ($user->login($_POST)) {
-                Request::instance()->redirect($_SERVER['HTTP_REFERER']);
+                Request::instance()->redirect($this->referer);
             } else {
                 $view->errors = $_POST->errors('login');
                 $this->template->title = 'Error logging in';
@@ -74,7 +75,7 @@ class Controller_User extends Controller_Template {
         // log out
         Auth::instance()->logout();
 
-        Request::instance()->redirect($_SERVER['HTTP_REFERER']);
+        Request::instance()->redirect($this->referer);
     }
 
     public function before() {
@@ -82,6 +83,7 @@ class Controller_User extends Controller_Template {
         $this->template->user = Auth::instance()->get_user();
         $this->template->model = 'user';
         $this->template->action = Request::instance()->action;
+        $this->referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
    }
 
 }

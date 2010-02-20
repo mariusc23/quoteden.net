@@ -28,7 +28,9 @@ a {
     color: #ff6400;
     text-decoration: none;
 }
-a:visited {
+a:visited,
+a:hover,
+a:active {
     color: #fb8f4a;
 }
 
@@ -49,7 +51,7 @@ ul li {
     margin: 0 auto;
     width: 740px;
     height: 120px;
-    background: url(../img/header.png) no-repeat top left;
+    background: url(../img/quotessprite.png) no-repeat 0 -72px;
     position: relative;
 }
 /* Alternatively, the skip-to-nav link can be completely hidden until a user tabs
@@ -94,10 +96,15 @@ ul li {
     text-indent: -9999px;
     top: 32px;
     left: 244px;
-    background: url(../img/add.png) no-repeat top left;
+    background: url(../img/quotessprite.png) no-repeat -333px -24px;
     display: block;
     height: 16px;
     width: 16px;
+}
+
+#header a.plus:hover,
+#header a.plus:active {
+    background-position: -333px -48px;
 }
 
 #header .top-rated {
@@ -144,8 +151,8 @@ ul li {
 }
 
 #search input[type="submit"] {
-    background: url(../img/search.png) no-repeat top left;
-    width: 18px;
+    background: url(../img/quotessprite.png) no-repeat -306px -24px;
+    width: 12px;
     height: 24px;
     cursor: pointer;
     border: 0;
@@ -173,12 +180,17 @@ ul li {
 }
 #login input[type="submit"] {
     position: absolute;
+    color: #fff;
     top: -16px; left: 20px;
-    background: url(../img/enter.png) no-repeat top left;
+    background: url(../img/quotessprite.png) no-repeat -349px -24px;
     width: 36px; height: 16px;
     font-size: 0px;
     text-indent: -9999px;
     cursor: pointer;
+}
+
+#login input[type="submit"]:hover {
+    background-position: -349px -48px;
 }
 
 #login input[type="text"]
@@ -229,13 +241,26 @@ ul li {
     text-align: center;
 }
 
+.feed-icons a {
+    font-size: 0px;
+    text-indent: -9999px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../img/quotessprite.png) no-repeat -385px -24px;
+}
+
+.feed-icons a:hover,
+.feed-icons a:active {
+    background-position: -385px -48px;
+}
 
 /*----------------------------------
     Quote list
 ----------------------------------*/
 #content .quote {
     clear: both;
-    background: url(../img/qmark1.png) no-repeat top left;
+    background: url(../img/quotessprite.png) no-repeat -718px -192px;
     margin: 2px;
     padding-bottom: 2px;
     border-bottom: 1px solid #ccc;
@@ -243,7 +268,7 @@ ul li {
 #content .quote-inner {
     padding: 20px;
     width: 500px;
-    background: url(../img/qmark2.png) no-repeat bottom right;
+    background: url(../img/quotessprite.png) no-repeat 520px 125px;
     min-height: 100px;
     height: auto !important;
     height: 100px;

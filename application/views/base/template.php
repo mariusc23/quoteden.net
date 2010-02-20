@@ -15,7 +15,7 @@ if (isset($title)) {
 <link type="text/css" href="<?php print Url::site('min/?g=css'); ?>" rel="stylesheet" media="screen" />
 </head>
 <body class="<?php print $model . '-' . $action ?>">
-<div id="header">
+<div id="header" role="banner">
 <div id="header-inner">
 
 <h1 id="logo"><a rel="home" title="<?php print SITE_NAME; ?> - Home Page" href="/"><?php print SITE_NAME; ?></a></h1>
@@ -48,21 +48,31 @@ if (!$user) {
     </form>
 </div>
 
+<ul id="navigation" role="navigation">
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
+        <form id="search" method="get" accept-charset="UTF-8" action="<?php print Url::site('search') ?>">
+            <input type="text" title="Search this site" value="<?php if (isset($_GET['q'])) print $_GET['q']; ?>" size="15" name="q" maxlength="255" />
+            <input type="submit" value="Search" id="edit-submit" />
+        </form>
+    </li>
+</ul>
 <a href="/top" title="Top Rated Quotes" class="top-rated"><img src="<?php print Url::site('img/top.png') ?>" alt="Top Rated"/></a>
 
-<form id="search" method="get" accept-charset="UTF-8" action="<?php print Url::site('search') ?>">
-    <input type="text" title="Search this site" value="<?php if (isset($_GET['q'])) print $_GET['q']; ?>" size="15" name="q" maxlength="255" />
-    <input type="submit" value="Search" id="edit-submit" />
-</form>
 
 </div></div><!-- /#header-inner, /#header -->
-<div id="content">
+<div id="content" role="main">
 <div id="content-inner">
 <?php print $content ?>
 </div><!-- /#content-inner -->
 </div><!-- /#content -->
 
-<div id="footer">
+<div id="footer" role="contentinfo">
 <div id="footer-inner">
 Copyright &copy; 2009 - <?php print date('Y'); ?> <a href="/"><?php print SITE_NAME; ?></a>
 </div><!-- /#footer-inner -->
