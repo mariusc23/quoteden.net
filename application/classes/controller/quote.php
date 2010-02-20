@@ -16,6 +16,7 @@ class Controller_Quote extends Controller_Template {
             ->rule('quote_author', 'max_length', array(500))
             ->filter(TRUE, 'trim')
         ;
+        $view = $this->template->content = new View('quotes/add');
 
         if ($post->check()) {
             // check author exists
@@ -36,22 +37,15 @@ class Controller_Quote extends Controller_Template {
 
             if ($quote->save()) {
                 // success!
-                $view=new View('quotes/add');
                 $view->created = true;
-
                 $this->template->title = 'Quotes saved';
-                $this->template->content = $view;
             } else {
                 // failure
-                $view=new View('quotes/add');
                 $view->error = isset($_POST['quote_text']) ? true : false;
-
                 $this->template->title = 'Error saving';
-                $this->template->content = $view;
             }
         }
         else {
-            $view=new View('quotes/add');
             // if data has been submitted, it's not valid
             if ($_POST) {
                 $view->data = $_POST;
@@ -59,7 +53,6 @@ class Controller_Quote extends Controller_Template {
             }
 
             $this->template->title = 'Add quotes';
-            $this->template->content = $view;
         }
 
     }
@@ -82,7 +75,7 @@ class Controller_Quote extends Controller_Template {
         ));
 
         // get the content
-        $view = View::factory('quotes/quotes');
+        $view = $this->template->content = View::factory('quotes/quotes');
         $view->quotes = ORM::factory('quote')->order_by('id','desc')
              ->limit($pagination->items_per_page)
              ->offset($pagination->offset)
@@ -91,8 +84,6 @@ class Controller_Quote extends Controller_Template {
 
         // render the pager
         $view->pager = $pagination->render();
-
-        $this->template->content = $view;
     }
 
 
@@ -103,10 +94,9 @@ class Controller_Quote extends Controller_Template {
         $id = $this->request->param('id');
         $quote = new Model_Quote($id);
 
-        $view = View::factory('quotes/quote');
+        $view = $this->template->content = View::factory('quotes/quote');
 
         if (!$quote->loaded()) {
-            $this->template->content = $view;
             return ;
         }
 
@@ -127,7 +117,6 @@ class Controller_Quote extends Controller_Template {
         $view->count = $count;
 
         $this->template->title = 'Quote ' . $quote->id;
-        $this->template->content = $view;
     }
 
     /**

@@ -1,5 +1,4 @@
 <?php
-define('SITE_NAME', 'Quote Den');
 if ($title) {
     $title = $title . SITE_SEPARATOR . SITE_NAME;
 } else {

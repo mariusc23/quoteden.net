@@ -43,7 +43,7 @@ class Controller_Author extends Controller_Template {
      * Adds authors.
      */
     public function action_add() {
-        $view = new View('quotes/add_author');
+        $view = $this->template->content = new View('quotes/add_author');
 
         $result = $this->_add($_POST);
         if ($result) {
@@ -59,7 +59,6 @@ class Controller_Author extends Controller_Template {
             $this->template->title = 'Add author';
         }
 
-        $this->template->content = $view;
     }
 
     public function action_index() {
@@ -74,7 +73,7 @@ class Controller_Author extends Controller_Template {
         ));
 
         // get the content
-        $view = View::factory('quotes/authors');
+        $view = $this->template->content = View::factory('quotes/authors');
         $view->authors = ORM::factory('author')
             ->order_by('id','desc')
             ->limit($pagination->items_per_page)
@@ -93,7 +92,6 @@ class Controller_Author extends Controller_Template {
 
 
         $this->template->title = 'Authors';
-        $this->template->content = $view;
     }
 
     /**
@@ -103,10 +101,9 @@ class Controller_Author extends Controller_Template {
         $id = $this->request->param('id');
         $author = new Model_Author($id);
 
-        $view = View::factory('quotes/author');
+        $view = $this->template->content = View::factory('quotes/author');
 
         if (!$author->loaded()) {
-            $this->template->content = $view;
             return ;
         }
 
@@ -133,7 +130,6 @@ class Controller_Author extends Controller_Template {
         $view->pager = $pagination->render();
 
         $this->template->title = $author->name;
-        $this->template->content = $view;
     }
 
     /**

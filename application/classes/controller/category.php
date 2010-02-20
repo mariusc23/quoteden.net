@@ -11,7 +11,7 @@ class Controller_Category extends Controller_Template {
         ));*/
 
         // get the content
-        $view = View::factory('quotes/categories');
+        $view = $this->template->content = View::factory('quotes/categories');
         $view->categories = ORM::factory('category')
             ->order_by('name', 'asc')
             ->find_all();
@@ -27,7 +27,6 @@ class Controller_Category extends Controller_Template {
         //$view->pager = $pagination->render();
 
         $this->template->title = 'Categories';
-        $this->template->content = $view;
     }
 
     /**
@@ -37,10 +36,9 @@ class Controller_Category extends Controller_Template {
         $id = $this->request->param('id');
         $category = new Model_Category($id);
 
-        $view = View::factory('quotes/category');
+        $view = $this->template->content = View::factory('quotes/category');
 
         if (!$category->loaded()) {
-            $this->template->content = $view;
             return ;
         }
 
@@ -67,7 +65,6 @@ class Controller_Category extends Controller_Template {
         $view->pager = $pagination->render();
 
         $this->template->title = $category->name . ' (category)';
-        $this->template->content = $view;
     }
 
     /**
