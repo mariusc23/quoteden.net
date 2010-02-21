@@ -3,6 +3,15 @@ class Controller_Quote extends Controller_Template {
     public $template = 'base/template';
 
     /**
+     * Top action corresponds to /quote/top
+     * 
+     * Top rated quotes
+     */
+    public function action_top() {
+        // get the content
+        $view = $this->template->content = View::factory('quotes/top');
+    }
+    /**
      * Add action corresponds to /quote/add
      * 
      * Adds quotes and automatically creates authors if they do not exist
