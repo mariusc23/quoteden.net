@@ -84,7 +84,7 @@ $rows = $statement->fetchAll();
 
 /* migrate quotes */
 $statement = $db_2_link->prepare("INSERT IGNORE INTO quote_category(category_id, quote_id)
-    VALUES (null, ?, ?);");
+    VALUES (?, ?);");
 
 $count = 0;
 foreach ($rows as $row) {
