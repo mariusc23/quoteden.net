@@ -6,7 +6,7 @@
 <?php else: ?>
 <h1>Log in</h1>
 <?php
-print Form::open('user/login', array('class'=>'login'));
+print Form::open(Url::site('user/login', 'https'), array('class'=>'login'));
 if (isset($errors)) {
     print '<ul class="error">';
     foreach ($errors as $error) {
