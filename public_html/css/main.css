@@ -55,6 +55,9 @@ h2 {
     padding: 0.5em 0 1em;
 }
 
+.hide {
+    display: none;
+}
 
 /*----------------------------------
     Header
@@ -387,6 +390,56 @@ h2 {
 ----------------------------------*/
 .category-header {
     font-size: 160%;
+}
+
+/*----------------------------------
+    Categories list
+----------------------------------*/
+.category-row {
+    width: 100%;
+    clear: both;
+    position: relative;
+}
+.letter {
+    float: left;
+    width: 185px;
+    height: 470px;
+    overflow: visible;
+}
+
+.letter h2,
+.category-letter h2 {
+    color: #6f6f6f;
+    font-size: 160%;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+    padding: 10px 0 10px 5px;
+    margin: 20px 20px 5px 25px;
+}
+
+.letter ul,
+.category-letter ul  {
+    list-style: none;
+    line-height: 1.4em;
+    padding: 0 20px 10px 25px;
+}
+
+.letter li.last,
+.category-letter li.last {
+    text-align: left;
+    padding: 20px 10px 0 0;
+    font-weight: bold;
+}
+
+.category-letter #content ul {
+    float: left;
+    width: 140px;
+}
+
+.category-letter #content .last {
+    float: right;
+    padding: 16px 50px 0 0;
+    font-weight: bold;
 }
 
 

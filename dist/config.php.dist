@@ -14,3 +14,8 @@ define('SPHINX_INDEX', 'quotes');
 define('SPHINX_HOST', 'localhost');
 define('SPHINX_PORT', 3312);
 
+define('SITE_NAME', 'Quote Den');
+
+setlocale(LC_ALL, 'en_US.utf8');
+
+define('CATEGORIES_LIST_COUNT', 8);
