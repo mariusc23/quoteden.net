@@ -48,7 +48,7 @@ if (!$user) {
 </div>
 
 <ul id="navigation" role="navigation">
-    <li<?php if ($model == 'quote' && ($action == 'index' || $action == 'add')): ?> class="active"<?php endif; ?>>
+    <li<?php if ($model == 'quote' && ($action == 'index' || $action == 'add' || $action == 'id')): ?> class="active"<?php endif; ?>>
         <a href="<?php print Url::site('') ?>" title="home page">Home</a>
     </li>
     <li<?php if ($model == 'quote' && $action == 'top'): ?> class="active"<?php endif; ?>>
