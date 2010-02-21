@@ -79,15 +79,49 @@ Kohana::modules(array(
     'search'     => MODPATH.'search',
  	));
 
+
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-Route::set('default', '(<controller>(/<action>(/<id>)))')
-	->defaults(array(
-		'controller' => 'quote',
-	 	'action'     => 'index',
-	 ));
+Route::set('default', '(quote(/<action>(/<id>)))')
+    ->defaults(array(
+        'controller' => 'quote',
+        'action'     => 'index',
+     ));
+
+Route::set('category', '(category(/<action>(/<id>)))')
+    ->defaults(array(
+        'controller' => 'category',
+        'action'     => 'index',
+     ));
+
+Route::set('author', '(author(/<action>(/<id>)))')
+    ->defaults(array(
+        'controller' => 'author',
+        'action'     => 'index',
+     ));
+
+Route::set('search', '(search(/<action>(/<id>)))')
+    ->defaults(array(
+        'controller' => 'search',
+        'action'     => 'index',
+     ));
+
+Route::set('user', '(user(/<action>(/<id>)))')
+    ->defaults(array(
+        'controller' => 'user',
+        'action'     => 'login',
+     ));
+
+/**
+ * 404 page
+ */
+Route::set('catch-all', '<uri>', array('uri' => '.+'))
+    ->defaults(array(
+        'controller' => 'errors',
+        'action' => '404'
+));
 
 /**
  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].

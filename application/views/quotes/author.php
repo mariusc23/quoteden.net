@@ -1,7 +1,8 @@
 <?php if (!isset($author)): ?>
-<h1 class="author-header">
-Unknown author
-</h1>
+<div class="list-note category-header">
+Sorry, could not find this author.<br/>
+<a href="<?php print Url::site('author'); ?>">See all authors</a>
+</div>
 <?php return;
 endif; ?>
 <div class="quote-list quote-list-author">

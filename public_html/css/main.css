@@ -316,7 +316,7 @@ li.error {
 #content .quote-inner {
     padding: 20px;
     width: 500px;
-    background: url(../img/quotessprite.png) no-repeat 520px 120px;
+    background: url(../img/qmark2.png) no-repeat bottom right;
     min-height: 100px;
     height: auto !important;
     height: 100px;
@@ -372,6 +372,11 @@ li.error {
 }
 .list-note.border {
     border-bottom: 1px solid #ccc;
+}
+.list-note-small {
+    padding: 30px 20px;
+    line-height: 1.5em;
+    text-align: center;
 }
 
 /*----------------------------------
