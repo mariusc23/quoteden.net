@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `users` (
  PRIMARY KEY (`id`),
  UNIQUE KEY `username` (`username`),
  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDb DEFAULT CHARSET=utf8
+) ENGINE=InnoDb DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `roles` (
