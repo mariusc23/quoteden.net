@@ -17,7 +17,7 @@ $statement->execute($args);
 $rows = $statement->fetchAll();
 
 /* migrate authors */
-$statement = $db_2_link->prepare("INSERT IGNORE INTO k_authors(id, name, bio)
+$statement = $db_2_link->prepare("INSERT IGNORE INTO authors(id, name, bio)
     VALUES (?, ?, ?);");
 $count = 0;
 foreach ($rows as $row) {
@@ -41,7 +41,7 @@ $statement->execute($args);
 $rows = $statement->fetchAll();
 
 /* migrate quotes */
-$statement = $db_2_link->prepare("INSERT IGNORE INTO k_quotes(id, text, author_id, changed, created)
+$statement = $db_2_link->prepare("INSERT IGNORE INTO quotes(id, text, author_id, changed, created)
     VALUES (?, ?, ?, ?, ?);");
 
 $count = 0;
@@ -61,7 +61,7 @@ $statement->execute($args);
 $rows = $statement->fetchAll();
 
 /* migrate quotes */
-$statement = $db_2_link->prepare("INSERT IGNORE INTO k_categories(id, name)
+$statement = $db_2_link->prepare("INSERT IGNORE INTO categories(id, name)
     VALUES (?, ?);");
 
 $count = 0;
@@ -83,7 +83,7 @@ $statement->execute($args);
 $rows = $statement->fetchAll();
 
 /* migrate quotes */
-$statement = $db_2_link->prepare("INSERT IGNORE INTO k_quote_category(id, category_id, quote_id)
+$statement = $db_2_link->prepare("INSERT IGNORE INTO quote_category(category_id, quote_id)
     VALUES (null, ?, ?);");
 
 $count = 0;
