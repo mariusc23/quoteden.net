@@ -1,12 +1,8 @@
-<h1>Add Quote</h1>
 <?php
-$submit = 'quote/add';
-$attr = array('class'=>'quote_form');
-$hidden = array();
-
 if (isset($data)) {
-    $text = $data['quote_text'];
-    $author = $data['quote_author'];
+    $text = $data['text'];
+    $author = $data['author'];
+    $categories = $data['categories'];
     if ($error) {
         print 'Error occured.';
         print '<br/>';
@@ -14,25 +10,79 @@ if (isset($data)) {
 } else {
     $text = '';
     $author = '';
+    $categories = '';
 }
-print form::open($submit, $attr, $hidden);
 
-print form::label('quote_text', 'Text:');
-print '<br/>';
-print form::textarea('quote_text', $text);
+?>
+<div id="add-forms">
+<form method="post" accept-charset="UTF-8" action="<?php print Url::site('quote/add') ?>">
+    <div class="text">
+        <label><span>Quote 1:</span>
+            <textarea name="text[]" rows="8" cols="55"></textarea>
+        </label>
+    </div>
 
-print '<br/>';
-print '<br/>';
+    <div class="meta">
+        <label><span>Categories (comma separated):</span>
+            <textarea type="text" value="<?php print $categories ?>" rows="2" cols="34" name="categories[]" ></textarea>
+        </label>
 
-print form::label('quote_author', 'Author:');
-print '<br/>';
-print form::input('quote_author', $author);
+        <label class="author"><span>Author:</span>
+            <input type="text" value="<?php print $categories ?>" size="24" name="author[]" />
+        </label>
+        <div class="submit">
+            <input type="submit" value="Submit" /> or
+            <a href="<?php print Url::site('quote/delete') ?>">delete</a>
+        </div>
+    </div>
+</form>
 
-print '<br/>';
-print '<br/>';
+<form method="post" accept-charset="UTF-8" action="<?php print Url::site('quote/add') ?>">
+    <div class="text">
+        <label><span>Quote 2:</span>
+            <textarea name="text[]" rows="8" cols="55"></textarea>
+        </label>
+    </div>
 
-print form::submit('submit', 'Add quote');
+    <div class="meta">
+        <label><span>Categories (comma separated):</span>
+            <textarea type="text" value="<?php print $categories ?>" rows="2" cols="34" name="categories[]" ></textarea>
+        </label>
 
-print form::close();
+        <label class="author"><span>Author:</span>
+            <input type="text" value="<?php print $categories ?>" size="24" name="author[]" />
+        </label>
+        <div class="submit">
+            <input type="submit" value="Submit" /> or
+            <a href="<?php print Url::site('quote/delete') ?>">delete</a>
+        </div>
+    </div>
+</form>
 
-echo '<a href="' . Url::site('quote/index') . '">Quotes list</a>';
+<form method="post" accept-charset="UTF-8" action="<?php print Url::site('quote/add') ?>">
+    <div class="text">
+        <label><span>Quote 3:</span>
+            <textarea name="text[]" rows="8" cols="55"></textarea>
+        </label>
+    </div>
+
+    <div class="meta">
+        <label><span>Categories (comma separated):</span>
+            <textarea type="text" value="<?php print $categories ?>" rows="2" cols="34" name="categories[]" ></textarea>
+        </label>
+
+        <label class="author"><span>Author:</span>
+            <input type="text" value="<?php print $categories ?>" size="24" name="author[]" />
+        </label>
+        <div class="submit">
+            <input type="submit" value="Submit" /> or
+            <a href="<?php print Url::site('quote/delete') ?>">delete</a>
+        </div>
+    </div>
+</form>
+
+</div>
+
+<a id="quote-add-more" href="#">add</a>
+<br class="clear"/>
+

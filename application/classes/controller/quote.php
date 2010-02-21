@@ -9,30 +9,33 @@ class Controller_Quote extends Controller_Template {
      */
     public function action_add() {
         // validate data first
+        if (!$this->template->user) {
+            Request::instance()->redirect('user/login');
+        }
         $post = new Validate($_POST);
         $post
-            ->rule('quote_text', 'min_length', array(5))
-            ->rule('quote_author', 'min_length', array(5))
-            ->rule('quote_author', 'max_length', array(500))
+            ->rule('text', 'min_length', array(5))
+            ->rule('author', 'min_length', array(5))
+            ->rule('author', 'max_length', array(500))
             ->filter(TRUE, 'trim')
         ;
         $view = $this->template->content = new View('quotes/add');
 
         if ($post->check()) {
             // check author exists
-            $author = ORM::factory('author')->where('name', '=', $post['quote_author'])->find();
+            $author = ORM::factory('author')->where('name', '=', $post['author'])->find();
             $valid_author_id = $author->id;
             if (!$author->loaded()) {
                 // create author if does not exist
                 $author_controller = new Controller_Author($this->request);
                 $valid_author_id = $author_controller->_add(array(
-                    'author_name' => $post['quote_author']
+                    'author_name' => $post['author']
                 ));
             }
 
             // create quote
             $quote = new Model_Quote;
-            $quote->text = $post['quote_text'];
+            $quote->text = $post['text'];
             $quote->author_id = $valid_author_id;
 
             if ($quote->save()) {
@@ -41,7 +44,7 @@ class Controller_Quote extends Controller_Template {
                 $this->template->title = 'Quotes saved';
             } else {
                 // failure
-                $view->error = isset($_POST['quote_text']) ? true : false;
+                $view->error = isset($_POST['text']) ? true : false;
                 $this->template->title = 'Error saving';
             }
         }
@@ -49,7 +52,7 @@ class Controller_Quote extends Controller_Template {
             // if data has been submitted, it's not valid
             if ($_POST) {
                 $view->data = $_POST;
-                $view->error = isset($_POST['quote_text']) ? true : false;
+                $view->error = isset($_POST['text']) ? true : false;
             }
 
             $this->template->title = 'Add quotes';
