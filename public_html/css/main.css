@@ -43,6 +43,18 @@ ul li {
     padding: 5px 0;
 }
 
+h1 {
+    font-size: 200%;
+    text-align: center;
+    padding: 0.5em 0 1em;
+}
+
+h2 {
+    font-size: 180%;
+    text-align: center;
+    padding: 0.5em 0 1em;
+}
+
 
 /*----------------------------------
     Header
@@ -78,7 +90,7 @@ ul li {
 #logo {
     margin: 0 10px 0 0;
     padding: 0;
-    font-size: 2em;
+    font-size: 250%;
     line-height: 1.3em;
     position: absolute;
     top: 28px;
@@ -86,6 +98,7 @@ ul li {
 }
 #logo a {
     text-indent: -9999px;
+    font-size: 0;
     display: block;
     width: 220px;
     height: 60px;
@@ -107,12 +120,6 @@ ul li {
     background-position: -333px -48px;
 }
 
-#header .top-rated {
-    position: absolute;
-    right: 250px;
-    top: 90px;
-}
-
 #header .quote {
     position: absolute;
     text-align: right;
@@ -131,25 +138,55 @@ ul li {
     margin-top: 12px;
 }
 
-/** navbar **/
-#navbar {
+/** navigation **/
+#navigation {
+    font-size: 90%;
+    list-style-type: none;
+    position: absolute;
+    top: 96px;
+    right: 10px;
+    margin: 0; padding: 0;
 }
-#navbar ul {
+#navigation li {
+    float: left;
+    display: inline-block;
+    background: url(../img/quotessprite.png) no-repeat 0 -48px;
+    width: 112px;
+    height: 24px;
+    padding: 0;
+    margin: 0 1px;
+    text-align: center;
 }
-#navbar li {
+#navigation li.active,
+#navigation li:hover,
+#navigation li:active {
+    background-position: 0 -24px;
+}
+#navigation a {
+    display: block;
+    padding-top: 7px;
 }
 
-#search {
-    position: absolute;
-    top: 90px;
-    right: 0;
+#navigation #search {
+    background: url(../img/quotessprite.png) no-repeat -111px -48px;
+    width: 175px;
+    color: #fb8f4a;
+}
+#navigation #search:hover,
+#navigation #search.active {
+    background-position: -111px -24px;
+}
+#search label {
+    padding-left: 2px;
 }
 #search input[type="text"] {
     border: 0;
-    background: #ed9861;
-    width: 150px;
+    margin-top: 5px;
+    padding-right: 4px;
+    background: none;
+    width: 88px;
+    font-size: 90%;
 }
-
 #search input[type="submit"] {
     background: url(../img/quotessprite.png) no-repeat -306px -24px;
     width: 12px;
@@ -159,8 +196,8 @@ ul li {
     text-indent: -9999px;
     font-size: 0;
     float: right;
-    right: 15px;
-    top: 1px;
+    right: 12px;
+    top: 4px;
     position: relative;
 }
 
@@ -184,7 +221,7 @@ ul li {
     top: -16px; left: 20px;
     background: url(../img/quotessprite.png) no-repeat -349px -24px;
     width: 36px; height: 16px;
-    font-size: 0px;
+    font-size: 0;
     text-indent: -9999px;
     cursor: pointer;
 }
@@ -242,7 +279,7 @@ ul li {
 }
 
 .feed-icons a {
-    font-size: 0px;
+    font-size: 0;
     text-indent: -9999px;
     display: inline-block;
     width: 16px;
@@ -268,7 +305,7 @@ ul li {
 #content .quote-inner {
     padding: 20px;
     width: 500px;
-    background: url(../img/quotessprite.png) no-repeat 520px 125px;
+    background: url(../img/quotessprite.png) no-repeat 520px 120px;
     min-height: 100px;
     height: auto !important;
     height: 100px;
@@ -289,7 +326,7 @@ ul li {
 #content .quote .categories {
     float: left;
     line-height: 1.8em;
-    font-size: 0.9em;
+    font-size: 90%;
     width: 250px;
 }
 #content .quote .categories a {
@@ -318,7 +355,7 @@ ul li {
 }
 
 .list-note {
-    padding: 80px 40px;
+    padding: 70px 40px;
     line-height: 1.8em;
     text-align: center;
 }
@@ -348,14 +385,8 @@ ul li {
 /*----------------------------------
     Category list
 ----------------------------------*/
-.category-header h1 {
-    padding: 0.5em 0;
-    font-size: 2em;
-    text-align: center;
-}
-
-.category-header h3 {
-    text-align: center;
+.category-header {
+    font-size: 160%;
 }
 
 
@@ -366,8 +397,11 @@ ul li {
 /*----------------------------------
     Search page
 ----------------------------------*/
-.sh { /* search highlight */
+.search-index em { /* search highlight */
     background: #ffe2cf;
+    color: #000;
+    padding: 1px 2px;
+    font-style: normal;
 }
 
 /*----------------------------------
@@ -393,11 +427,6 @@ ul li {
 /*----------------------------------
     Login form
 ----------------------------------*/
-h1 {
-    font-size: 200%;
-    text-align: center;
-    padding: 0.5em 0 1em;
-}
 .login {
     text-align: center;
 }

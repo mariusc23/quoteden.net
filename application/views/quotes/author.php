@@ -11,9 +11,12 @@ foreach ($quotes as $quote) {
 }
 ?>
 <?php print $pager; ?>
+<?php if (isset($last_page)): ?>
 <div class="list-note border">
-Looking for other great quotes? Check out our <a href="<?php print Url::site('top'); ?>">top rated quotes</a> below or <a href="#">submit more quotes for this author!</a>
+Looking for other great quotes?<br/>
+Check out <a href="<?php print Url::site('quote/top'); ?>">top rated quotes</a> below.
 </div>
+<?php endif; ?>
 <div class="feed-icons">
     <a href="/rss.xml"><img width="16" height="16" title="Quote feed" alt="Syndicate content" src="/img/feed.png"></a>
 </div><!-- /.feed-icons -->

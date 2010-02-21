@@ -6,11 +6,11 @@ Unknown author
 endif; ?>
 <?php include('quote_single.php'); ?>
 <div class="list-note<?php if ($quotes): ?> border<?php endif; ?>">
-Looking for other great quotes?
+Looking for other great quotes?<br/>
 <?php if ($quotes): ?>
-Check out the related quotes below or our <a href="<?php print Url::site('top'); ?>">top rated quotes</a>.
+Check out related quotes below or <a href="<?php print Url::site('quote/top'); ?>">click to see top rated quotes</a>.
 <?php else: ?>
-Check out our <a href="<?php print Url::site('top'); ?>">top related quotes</a>.
+Check out our <a href="<?php print Url::site('quote/top'); ?>">top rated quotes</a>.
 <?php endif; // if ($quotes) ?>
 </div>
 <div class="quote-list quote-list-quote">

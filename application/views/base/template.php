@@ -44,25 +44,26 @@ if (!$user) {
         <input type="text" value="" size="15" name="username" maxlength="60" title="Username" />
         <input type="password" size="15" maxlength="60" name="password" title="Password" />
         <input type="submit" value="Log in" name="login" />
-        <a title="Reset your password" href="/user/password">Forgot password?</a>
     </form>
 </div>
 
 <ul id="navigation" role="navigation">
-    <li>
+    <li<?php if ($model == 'quote' && $action == 'index'): ?> class="active"<?php endif; ?>>
+        <a href="<?php print Url::site('') ?>" title="home page">Home</a>
     </li>
-    <li>
+    <li<?php if ($model == 'quote' && $action == 'top'): ?> class="active"<?php endif; ?>>
+        <a href="<?php print Url::site('quote/top') ?>" title="Top rated quotes">Top Rated</a>
     </li>
-    <li>
+    <li<?php if ($model == 'category'): ?> class="active"<?php endif; ?>>
+        <a href="<?php print Url::site('category') ?>" title="Categories">Categories</a>
     </li>
-    <li>
-        <form id="search" method="get" accept-charset="UTF-8" action="<?php print Url::site('search') ?>">
-            <input type="text" title="Search this site" value="<?php if (isset($_GET['q'])) print $_GET['q']; ?>" size="15" name="q" maxlength="255" />
+    <li id="search"<?php if ($model == 'search'): ?> class="active"<?php endif; ?>>
+        <form method="get" accept-charset="UTF-8" action="<?php print Url::site('search') ?>">
+            <label>Search: <input type="text" title="Search this site" value="<?php if (isset($_GET['q'])) print $_GET['q']; ?>" size="15" name="q" maxlength="255" /></label>
             <input type="submit" value="Search" id="edit-submit" />
         </form>
     </li>
 </ul>
-<a href="/top" title="Top Rated Quotes" class="top-rated"><img src="<?php print Url::site('img/top.png') ?>" alt="Top Rated"/></a>
 
 
 </div></div><!-- /#header-inner, /#header -->

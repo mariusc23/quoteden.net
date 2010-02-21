@@ -1,6 +1,6 @@
 <?php
 class Controller_Search extends Controller_Template {
-    public $template = 'quotes/template';
+    public $template = 'base/template';
     public $sphinxclient = null;
 
     /**
@@ -49,7 +49,7 @@ class Controller_Search extends Controller_Template {
             $this->template->content = $view;
             return ;
         }
-        // count items
+        $this->bold_query($view, $view->quotes, array($search_query));
 
         // create pagination object
         $pagination = Pagination::factory(array(
@@ -59,44 +59,42 @@ class Controller_Search extends Controller_Template {
         ));
 
         // render the pager
+        $view->last_page = $pagination->next_page ? null : true;
         $view->pager = $pagination->render();
 
         $this->template->content = $view;
     }
 
-
     /**
-     * Shows the author page, lists some quotes
+     * Bolds queries $q in properties $fields for array objects
+     *
+     * @param array $quotes array of $quote objects
+     * @param string $q array of queries to bold
+     * @param array $fields (optional) fields per row to affect
+     * @see format_results
      */
-    public function action_id() {
-        $id = $this->request->param('id');
-        $quote = new Model_Quote($id);
+    public function bold_query($view, $quotes, $q = array()) {
+        $view->categories_list_bolded = array();
 
-        $view = View::factory('quotes/quote');
+        $mb_words = array_unique(mb_split("\s", implode($q, " ")));
+        if ($mb_words) {
+            foreach ($quotes as $i => $quote) {
+                foreach ($mb_words as $mb_word) {
+                    if (!$mb_word) continue;
 
-        if (!$quote->loaded()) {
-            $this->template->content = $view;
-            return ;
-        }
+                    $preg_repl = "(\b" . preg_quote($mb_word)."\b)";
 
-        $view->quote = $quote;
+                    $quotes[$i]->text = mb_eregi_replace($preg_repl, "<em>\\1</em>", $quotes[$i]->text);
+                    $quotes[$i]->author->name = mb_eregi_replace($preg_repl, "<em>\\1</em>", $quotes[$i]->author->name);
 
-        $view->quotes = array();
-        $count = 0;
-        foreach($quote->categories_list as $category) {
-            if ($count > QUOTES_ITEMS_PER_PAGE) break;
-            $quotes = $category->quotes->find_all();
-            foreach ($quotes as $q) {
-                if ($id == $q->id) continue;
-                if ($count > QUOTES_ITEMS_PER_PAGE) break;
-                $view->quotes[] = $q;
-                $count++;
+                    $view->categories_list_bolded[$quote->id] = array();
+                    foreach ($quote->categories_list as $k => $category) {
+                        $category->name = mb_eregi_replace($preg_repl, "<em>\\1</em>", $category->name);
+                        $view->categories_list_bolded[$quote->id][] = $category;
+                    }
+                }
             }
         }
-        $view->count = $count;
-
-        $this->template->title = 'Quote ' . $quote->id;
-        $this->template->content = $view;
     }
 
     /**
@@ -104,10 +102,8 @@ class Controller_Search extends Controller_Template {
      */
     public function before() {
         parent::before();
-        if ($this->auto_render) {
-            // Initialize empty values
-            $this->template->title   = '';
-            $this->template->content = '';
-        }
+        $this->template->user = Auth::instance()->get_user();
+        $this->template->model = 'search';
+        $this->template->action = Request::instance()->action;
     }
 }

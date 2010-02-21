@@ -125,8 +125,8 @@ class Controller_Author extends Controller_Template {
             ->offset($pagination->offset)
             ->find_all()
         ;
-
         // render the pager
+        $view->last_page = $pagination->next_page ? null : true;
         $view->pager = $pagination->render();
 
         $this->template->title = $author->name;

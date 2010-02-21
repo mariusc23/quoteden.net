@@ -62,6 +62,7 @@ class Controller_Category extends Controller_Template {
         ;
 
         // render the pager
+        $view->last_page = $pagination->next_page ? null : true;
         $view->pager = $pagination->render();
 
         $this->template->title = $category->name . ' (category)';
