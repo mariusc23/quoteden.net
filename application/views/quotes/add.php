@@ -34,7 +34,7 @@ if ($quotes) {
         if (!$first) print ', ';
         $first = false;
         print '<a href="' . Url::site('quote/id/' . $quote->id) . '" title="quote by ' . $quote->author->name . '">'
-            . $quote->id . ' (' . $quote->name . ')</a>, ';
+            . $quote->id . ' (' . $quote->author->name . ')</a>, ';
     }
     print '</li>';
 }

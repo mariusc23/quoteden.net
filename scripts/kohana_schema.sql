@@ -40,10 +40,12 @@ CREATE TABLE IF NOT EXISTS `users` (
  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
  `name` varchar(255) DEFAULT NULL,
  `email` varchar(255) NOT NULL,
+ `logins` int(12) unsigned NOT NULL,
+ `last_login` int(12) unsigned NOT NULL,
  PRIMARY KEY (`id`),
  UNIQUE KEY `username` (`username`),
  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDb DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `roles` (
