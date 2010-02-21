@@ -3,6 +3,38 @@ class Controller_Category extends Controller_Template {
     public $template = 'base/template';
 
     /**
+     * Adds a category
+     * @param array $data array of (field_name, field_value) pairs
+     * @return newly inserted category on success
+     *      OR null on failure to save
+     *      OR false on invalid supplied data
+     */
+    public function _add($data) {
+        $post = new Validate($data);
+        // validate data first
+        $post
+            ->rule('category_name', 'min_length', array(2))
+            ->rule('category_name', 'max_length', array(500))
+            ->filter(TRUE, 'trim')
+        ;
+
+        if($post->check()) {
+            // add author, bio optional
+            $category = new Model_Category;
+            $category->name = $post['category_name'];
+
+            if($category->save()) {
+                return $category;
+            } else {
+                return null;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
      * lists all categories
      */
     public function action_index() {

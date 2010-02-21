@@ -63,6 +63,12 @@ h2 {
     clear: both;
 }
 
+ul.error,
+li.error {
+    color: #ff0400;
+}
+
+
 /*----------------------------------
     Header
 ----------------------------------*/
@@ -191,7 +197,7 @@ h2 {
     margin-top: 5px;
     padding-right: 4px;
     background: none;
-    width: 88px;
+    width: 82px;
     font-size: 90%;
 }
 #search input[type="submit"] {
@@ -202,9 +208,7 @@ h2 {
     border: 0;
     text-indent: -9999px;
     font-size: 0;
-    float: right;
-    right: 12px;
-    top: 4px;
+    right: 5px;
     position: relative;
 }
 
@@ -450,7 +454,7 @@ h2 {
 /*----------------------------------
     Quote add
 ----------------------------------*/
-.quote-add label {
+.quote-add #content label {
     display: block;
 }
 
@@ -461,13 +465,18 @@ h2 {
     font-size: 90%;
 }
 
-.quote-add .text {
+.quote-add .form .meta {
+    float: left;
+}
+.quote-add .form .text {
     float: left;
     width: 450px;
 }
 
-.quote-add #content-inner form {
+.quote-add #content-inner .form {
     padding: 10px 15px 5px 15px;
+    height: 170px;
+    border-bottom: 1px solid #ccc;
 }
 .quote-add .text textarea,
 .quote-add .meta textarea,
@@ -493,6 +502,7 @@ h2 {
 
 .quote-add .meta input[type="submit"] {
     color: #ff6400;
+    cursor: pointer;
     border: none;
     background: none;
     font-size: 140%;
@@ -511,9 +521,8 @@ h2 {
     padding: 2px 4px;
 }
 
-.quote-add #content form {
-    height: 170px;
-    border-bottom: 1px solid #ccc;
+.quote-add #content .messages {
+    margin: 20px 10px 5px 10px;
 }
 
 /*----------------------------------
@@ -562,10 +571,6 @@ h2 {
     display: inline-block;
     width: 80px;
 }
-.login ul {
-    color: #ff0400;
-}
-
 
 /*----------------------------------
     Register page
@@ -574,6 +579,8 @@ h2 {
     padding: 0 20px;
     line-height: 1.8em;
 }
+
+
  
   .node-type-quotes .fivestar-widget {
     position: absolute;

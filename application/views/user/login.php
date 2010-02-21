@@ -8,7 +8,7 @@
 <?php
 print Form::open('user/login', array('class'=>'login'));
 if (isset($errors)) {
-    print '<ul>';
+    print '<ul class="error">';
     foreach ($errors as $error) {
         print '<li>' . ucfirst($error) . '</li>';
     }
