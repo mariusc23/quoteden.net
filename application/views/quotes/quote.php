@@ -19,5 +19,5 @@ Check out our <a href="<?php print Url::site('quote/top'); ?>">top rated quotes<
 <?php endforeach; ?>
 </div><!-- /.quote-list-author -->
 <div class="feed-icons">
-    <a href="/rss.xml"><img width="16" height="16" title="Quote feed" alt="Syndicate content" src="/img/feed.png"></a>
+    <a href="/rss.xml"></a>
 </div><!-- /.feed-icons -->

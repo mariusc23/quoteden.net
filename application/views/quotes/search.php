@@ -41,7 +41,4 @@ Sorry, couldn't find any quotes.<br/>
 Try a broader search by entering fewer words, or check out <a href="<?php print Url::site('quote/top'); ?>">top rated quotes</a> below.
 </div>
 <?php endif; ?>
-<div class="feed-icons">
-    <a href="/rss.xml"><img width="16" height="16" title="Quote feed" alt="Syndicate content" src="/img/feed.png"></a>
-</div><!-- /.feed-icons -->
 </div><!-- /.quote-list -->

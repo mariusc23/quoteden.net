@@ -4,6 +4,6 @@
 <?php endforeach; ?>
 <?php print $pager; ?>
 <div class="feed-icons">
-    <a href="/rss.xml"><img width="16" height="16" title="Quote feed" alt="Syndicate content" src="/img/feed.png"></a>
+    <a href="/rss.xml"></a>
 </div><!-- /.feed-icons -->
 </div><!-- /.quote-list -->
