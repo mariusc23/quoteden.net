@@ -207,7 +207,7 @@ li.error {
     cursor: pointer;
     border: 0;
     text-indent: -9999px;
-    line-height: 0px;
+    line-height: 0px; /* IE fix */
     font-size: 0;
     right: 5px;
     position: relative;
@@ -228,6 +228,7 @@ li.error {
     border: 0;
 }
 #login input[type="submit"] {
+    line-height: 0px; /* IE fix */
     position: absolute;
     color: #fff;
     top: -16px; left: 20px;
