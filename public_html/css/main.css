@@ -208,6 +208,7 @@ li.error {
     border: 0;
     text-indent: -9999px;
     font-size: 0;
+    color: transparent; /* IE fix */
     right: 5px;
     position: relative;
 }
@@ -227,6 +228,7 @@ li.error {
     border: 0;
 }
 #login input[type="submit"] {
+    color: transparent; /* IE fix */
     position: absolute;
     color: #fff;
     top: -16px; left: 20px;
@@ -592,9 +594,21 @@ li.error {
     Inspired by...
     http://www.komodomedia.com/blog/2007/01/css-rating-redux/
 ----------------------------------*/
-.quote .rating {
+.quote .rating-wrap {
+    margin: 20px 0 10px;
+    width: 120px;
     float: right;
-    margin: 20px 50px 10px 0;
+}
+.quote .rating {
+    position: relative;
+    width: 70px;
+    margin: 0 auto;
+    height: 14px;
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-position: left top;
 }
 
 .rating,
@@ -603,16 +617,6 @@ li.error {
 .rating a:focus,
 .rating .current {
     background: #fff url(../img/stars.png) left -1000px repeat-x;
-}
-.rating {
-    position: relative;
-    width: 70px;
-    height: 14px;
-    overflow: hidden;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    background-position: left top;
 }
 .rating li{
     display: inline;

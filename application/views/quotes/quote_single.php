@@ -1,4 +1,5 @@
 <div class="quote">
+<div class="rating-wrap">
 <ul class="rating">
     <li class="current" style="width:50%">50%</li>
     <li><a href="#1" title="poor" class="one">1</a></li>
@@ -7,6 +8,7 @@
     <li><a href="#4" title="good" class="four">4</a></li>
     <li><a href="#5" title="awesome!" class="five">5</a></li>
 </ul>
+</div>
 <div class="id">
 <a href="<?php print Url::site('quote/id/' . $quote->id); ?>" title="Details about this quote"><?php print $quote->id; ?></a>
 </div>
