@@ -3,6 +3,7 @@
 define('IN_PRODUCTION', TRUE);
 define('QUOTES_ITEMS_PER_PAGE', 10);
 define('QUOTES_AUTHORS_PER_PAGE', 20);
+define('QUOTES_MIN_TOP_RATED', 3);
 define('SITE_SEPARATOR', ' - ');
 
 define('SPHINX_MAXRESULTS', 1000);

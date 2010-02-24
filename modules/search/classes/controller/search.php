@@ -58,6 +58,22 @@ class Controller_Search extends Controller_Template {
             'items_per_page' => QUOTES_ITEMS_PER_PAGE,
         ));
 
+        // top rated quotes
+        $top_limit = max(QUOTES_MIN_TOP_RATED, QUOTES_ITEMS_PER_PAGE - ($count % QUOTES_ITEMS_PER_PAGE));
+        $top_voteaverages = ORM::factory('voteaverage')->order_by('average','desc')
+             ->limit(QUOTES_ITEMS_PER_PAGE * $top_limit)
+             ->offset(0)
+             ->find_all()
+        ;
+
+        $view->top_quotes = array();
+        foreach ($top_voteaverages as $voteaverage) {
+            $view->top_quotes[] = $voteaverage->quote;
+        }
+
+        shuffle($view->top_quotes);
+        $view->top_quotes = array_slice($view->top_quotes, 0, $top_limit);
+
         // render the pager
         $view->last_page = $pagination->next_page ? null : true;
         $view->pager = $pagination->render();

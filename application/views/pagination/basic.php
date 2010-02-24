@@ -1,12 +1,19 @@
 <?php
 define('PAGES_BEFORE', 5);
-define('PAGES_AFTER', 5);
+define('PAGES_AFTER', 6);
 $start = $current_page - PAGES_BEFORE;
 $end = PAGES_AFTER;
 if ($start < 1) {
     $end -= $start;
     $start = 1;
 }
+if ($end + $current_page - $total_pages > 0) {
+    $start -= $end + $current_page - $total_pages - 1;
+}
+if ($start < 1) {
+    $start = 1;
+}
+
 ?>
 <div class="pager">
 
@@ -22,6 +29,10 @@ if ($start < 1) {
         <span class="previous"><?php echo __('&lsaquo;') ?></span>
     <?php endif ?>
 
+    <?php if ($start > 1): ?>
+        <span class="omit">...</span>
+    <?php endif ?>
+
     <?php for ($i = $start; $i < $current_page; $i++): ?>
         <a href="<?php echo $page->url($i) ?>"><?php echo $i ?></a>
     <?php endfor ?>
@@ -31,6 +42,10 @@ if ($start < 1) {
     <?php for ($i = $current_page + 1; ($i <= $total_pages) && ($i < $current_page + $end); $i++): ?>
         <a href="<?php echo $page->url($i) ?>"><?php echo $i ?></a>
     <?php endfor ?>
+
+    <?php if ($i < $total_pages + 1): ?>
+        <span class="omit">...</span>
+    <?php endif ?>
 
     <?php if ($next_page !== FALSE): ?>
         <a href="<?php echo $page->url($next_page) ?>"><?php echo __('&rsaquo;') ?></a>

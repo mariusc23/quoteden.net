@@ -8,8 +8,32 @@ class Controller_Quote extends Controller_Template {
      * Top rated quotes
      */
     public function action_top() {
+        // count items
+        $count = DB::select(DB::expr('COUNT(quote_id) AS count'))->from('voteaverages')->execute('default')->get('count');
+
+        // create pagination object
+        $pagination = Pagination::factory(array(
+            'current_page'   => array('source' => 'query_string', 'key' => 'p'),
+            'total_items'    => $count,
+            'items_per_page' => QUOTES_ITEMS_PER_PAGE,
+        ));
+
         // get the content
-        $view = $this->template->content = View::factory('quotes/top');
+        $view = $this->template->content = View::factory('quotes/quotes');
+        // top rated quotes
+        $top_voteaverages = ORM::factory('voteaverage')->order_by('average','desc')
+             ->limit($pagination->items_per_page)
+             ->offset($pagination->offset)
+             ->find_all()
+        ;
+
+        $view->quotes = array();
+        foreach ($top_voteaverages as $voteaverage) {
+            $view->quotes[] = $voteaverage->quote;
+        }
+
+        // render the pager
+        $view->pager = $pagination->render();
     }
     /**
      * Add action corresponds to /quote/add

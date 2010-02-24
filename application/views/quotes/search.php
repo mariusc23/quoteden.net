@@ -45,11 +45,17 @@ print implode(' ', $author_name) . ' ' . $last_name; ?></a></div>
 Looking for other great quotes?<br/>
 Check out <a href="<?php print Url::site('quote/top'); ?>">top rated quotes</a> below.
 </div>
+<?php foreach ($top_quotes as $quote): ?>
+<?php include('quote_single.php'); ?>
+<?php endforeach; ?>
 <?php endif; ?>
 <?php else: ?>
 <div class="list-note border">
 Sorry, couldn't find any quotes.<br/>
 Try a broader search by entering fewer words, or check out <a href="<?php print Url::site('quote/top'); ?>">top rated quotes</a> below.
 </div>
+<?php foreach ($top_quotes as $quote): ?>
+<?php include('quote_single.php'); ?>
+<?php endforeach; ?>
 <?php endif; ?>
 </div><!-- /.quote-list -->
