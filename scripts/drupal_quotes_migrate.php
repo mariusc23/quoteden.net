@@ -13,7 +13,7 @@ $query = '
     FROM quotes_authors
 ';
 $statement = $db_1_link->prepare($query);
-$statement->execute($args);
+$statement->execute();
 $rows = $statement->fetchAll();
 
 /* migrate authors */
@@ -37,7 +37,7 @@ $query = '
         AND node.vid = quotes.vid
 ';
 $statement = $db_1_link->prepare($query);
-$statement->execute($args);
+$statement->execute();
 $rows = $statement->fetchAll();
 
 /* migrate quotes */
@@ -57,7 +57,7 @@ $query = '
     FROM term_data
 ';
 $statement = $db_1_link->prepare($query);
-$statement->execute($args);
+$statement->execute();
 $rows = $statement->fetchAll();
 
 /* migrate quotes */
@@ -79,7 +79,7 @@ $query = '
         AND node.vid = term_node.vid
 ';
 $statement = $db_1_link->prepare($query);
-$statement->execute($args);
+$statement->execute();
 $rows = $statement->fetchAll();
 
 /* migrate quotes */
@@ -92,6 +92,65 @@ foreach ($rows as $row) {
 }
 echo $count . " quote categories linked\n";
 
+
+
+/* votes */
+$query = "
+    SELECT content_id AS quote_id, value AS rating, timestamp AS changed, vote_source AS voter, uid AS user_id
+    FROM votingapi_vote
+    WHERE
+        content_type = 'node'
+        AND value_type = 'percent'
+    ORDER BY
+        changed
+";
+$statement = $db_1_link->prepare($query);
+$statement->execute();
+$rows = $statement->fetchAll();
+
+/* migrate votes */
+$votes = array();
+
+/* clean up first */
+$statement = $db_2_link->prepare("TRUNCATE TABLE voteaverages;");
+$statement->execute();
+$statement = $db_2_link->prepare("TRUNCATE TABLE votes;");
+$statement->execute();
+
+$statement = $db_2_link->prepare("INSERT IGNORE INTO votes(quote_id, voter, user_id, rating, changed)
+    VALUES (?, ?, ?, ?, ?);");
+
+$count = 0;
+foreach ($rows as $row) {
+    $votes[] = $row;
+    $row['user_id'] = $row['user_id'] ? $row['user_id'] : null;
+    $count += $statement->execute(array($row['quote_id'], $row['voter'], $row['user_id'], $row['rating'], date('Y-m-d H:i:s', $row['changed'])));
+}
+echo $count . " votes migrated\n";
+
+/* link them to quotes */
+$statement = $db_2_link->prepare("INSERT IGNORE INTO voteaverages(quote_id, average, count, changed)
+    VALUES (?, ?, ?, ?);");
+$statement_2 = $db_2_link->prepare("SELECT FROM voteaverages WHERE quote_id = ? LIMIT 1;");
+$statement_3 = $db_2_link->prepare("UPDATE voteaverages SET average = ?, count = ?, changed = ?");
+
+$count = 0;
+foreach ($votes as $vote) {
+    $statement_2->execute(array($vote['quote_id']));
+    $rows = $statement_2->fetchAll();
+
+    if ($rows) {
+        // update existing row
+        $row = $rows[0];
+        $row['average'] = ($row['average'] * $row['count'] + $vote['rating']) / ($row['count'] + 1);
+        $row['count']++;
+        $count += $statement_3->execute(array($row['average'], $row['count'], date('Y-m-d H:i:s', $vote['changed'])));
+    } else {
+        // create new row
+        $count += $statement->execute(array($vote['quote_id'], $vote['rating'], 1, date('Y-m-d H:i:s', $vote['changed'])));
+    }
+}
+echo $count . " votes linked to quotes\n";
 
 
 echo "Done.\n";

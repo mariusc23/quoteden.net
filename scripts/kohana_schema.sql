@@ -68,3 +68,26 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
  PRIMARY KEY  (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE IF NOT EXISTS `votes` (
+ `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ `quote_id` bigint(20) unsigned NOT NULL,
+ `voter` varchar(23) NOT NULL,
+ `user_id` int(10) DEFAULT NULL,
+ `rating` int(3) unsigned NOT NULL DEFAULT '0',
+ `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`),
+ KEY `quote_id` (`quote_id`,`voter`),
+ KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `vote_averages` (
+ `quote_id` bigint(20) unsigned NOT NULL,
+ `average` float unsigned NOT NULL DEFAULT '0',
+ `count` bigint(20) unsigned NOT NULL,
+ `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`quote_id`),
+ KEY `average` (`average`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

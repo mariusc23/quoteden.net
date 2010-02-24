@@ -662,3 +662,16 @@ li.error {
     z-index: 1;
     background-position: 0 -14px;
 }
+
+.rating-wrap .msg {
+    color: #000;
+    height: 1.3em;
+    width: 100%;
+    font-size: 80%;
+    position: relative;
+    left: -1em;
+}
+.rating-wrap .error {
+    color: #ff0400;
+    left: -0.3em;
+}

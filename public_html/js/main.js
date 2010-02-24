@@ -6,7 +6,10 @@
  */
 $(document).ready(function() {
     var template_add_form = $('.quote-add #content .form:last').clone()
-      , num_forms = $('.quote-add #content .form').length;
+      , num_forms = $('.quote-add #content .form').length
+      , RATING_MULTIPLIER = 20
+      , RATING_URL = $('#logo a')[0].href + 'vote/add/'
+    ;
     template_add_form.find('input[type="text"]').val('');
     template_add_form.find('textarea').html('');
 
@@ -31,4 +34,55 @@ $(document).ready(function() {
         $(this).parents('.form').fadeOut('slow');
         return false;
     });
+
+    $('.rating a').live('click', function() {
+        var rating = parseInt(this.href.substr(-1, 1))
+          , quote_id = parseInt($(this).parents('.quote').find('.id a').text())
+          , msg_div = $(this).parents('.rating-wrap').children('.msg')
+          , current_rating = $(this).parents('.rating').children('.current')
+        ;
+        if (!isNaN(rating) && !isNaN(quote_id)) {
+            rating = rating * RATING_MULTIPLIER;
+
+            $.ajax({
+                url: RATING_URL + quote_id,
+                type: 'POST',
+                async: true,
+                data: {'rating' : rating},
+                cache: false,
+                dataType: 'text',
+                timeout: 3000,
+                global: false,
+                error: function(request, textStatus, errorThrown) {
+                    msg_div.addClass('error');
+                    if (request.status == 403) {
+                        msg_div.html('Already voted');
+                    } else if (request.status == 500) {
+                        msg_div.html('Server error');
+                    } else if (request.status == 400) {
+                        msg_div.html('Invalid vote');
+                    }
+                    setTimeout(function() {
+                        msgHide(msg_div);
+                    }, 4000);
+                },
+                success: function(data, textStatus) {
+                    var new_rating = parseInt(data);
+                    if (!isNaN(new_rating)) {
+                        current_rating.css('width', new_rating + '%');
+                        msg_div.html('Thanks for voting!');
+                        setTimeout(function() {
+                            msgHide(msg_div);
+                        }, 4000);
+                    }
+                }
+            });
+        }
+        return false;
+    });
+
+    function msgHide(jquery_object) {
+        jquery_object.html('');
+        jquery_object.removeClass('error');
+    }
 });

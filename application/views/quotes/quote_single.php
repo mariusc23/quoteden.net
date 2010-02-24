@@ -1,7 +1,8 @@
 <div class="quote">
 <div class="rating-wrap">
+<div class="msg"></div>
 <ul class="rating">
-    <li class="current" style="width:50%">50%</li>
+    <li class="current" style="width:<?php print $quote->voteaverage->average; ?>%"><?php print $quote->voteaverage->average; ?>%</li>
     <li><a href="#1" title="poor" class="one">1</a></li>
     <li><a href="#2" title="fair" class="two">2</a></li>
     <li><a href="#3" title="okay" class="three">3</a></li>

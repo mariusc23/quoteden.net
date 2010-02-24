@@ -114,6 +114,12 @@ Route::set('user', '(user(/<action>(/<id>)))')
         'action'     => 'login',
      ));
 
+Route::set('vote', '(vote(/<action>(/<id>)))')
+    ->defaults(array(
+        'controller' => 'vote',
+        'action'     => 'add',
+     ));
+
 /**
  * 404 page
  */
