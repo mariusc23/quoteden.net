@@ -21,10 +21,12 @@ class Controller_Quote extends Controller_Template {
         // get the content
         $view = $this->template->content = View::factory('quotes/quotes');
         // top rated quotes
-        $top_voteaverages = ORM::factory('voteaverage')->order_by('average','desc')
-             ->limit($pagination->items_per_page)
-             ->offset($pagination->offset)
-             ->find_all()
+        $top_voteaverages = ORM::factory('voteaverage')
+            ->order_by('average','desc')
+            ->order_by('quote_id','desc')
+            ->limit($pagination->items_per_page)
+            ->offset($pagination->offset)
+            ->find_all()
         ;
 
         $view->quotes = array();
