@@ -57,9 +57,9 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `roles` (`id`, `name`, `description`) VALUES(1, 'login', 'Login privileges, granted after account confirmation.');
-INSERT INTO `roles` (`id`, `name`, `description`) VALUES(2, 'admin', 'Administrative user, has access to everything.');
-INSERT INTO `roles` (`id`, `name`, `description`) VALUES(3, 'author', 'Can create, delete and edit own content.');
+INSERT IGNORE INTO `roles` (`id`, `name`, `description`) VALUES(1, 'login', 'Login privileges, granted after account confirmation.');
+INSERT IGNORE INTO `roles` (`id`, `name`, `description`) VALUES(2, 'admin', 'Administrative user, has access to everything.');
+INSERT IGNORE INTO `roles` (`id`, `name`, `description`) VALUES(3, 'author', 'Can create, delete and edit own content.');
 
 
 CREATE TABLE IF NOT EXISTS `roles_users` (
@@ -77,12 +77,12 @@ CREATE TABLE IF NOT EXISTS `votes` (
  `rating` int(3) unsigned NOT NULL DEFAULT '0',
  `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  PRIMARY KEY (`id`),
- KEY `quote_id` (`quote_id`,`voter`),
- KEY `user_id` (`user_id`)
+ KEY `user_id` (`user_id`),
+ KEY `quote_id` (`quote_id`,`voter`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE IF NOT EXISTS `vote_averages` (
+CREATE TABLE IF NOT EXISTS `voteaverages` (
  `quote_id` bigint(20) unsigned NOT NULL,
  `average` float unsigned NOT NULL DEFAULT '0',
  `count` bigint(20) unsigned NOT NULL,
@@ -90,4 +90,3 @@ CREATE TABLE IF NOT EXISTS `vote_averages` (
  PRIMARY KEY (`quote_id`),
  KEY `average` (`average`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
