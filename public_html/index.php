@@ -1,5 +1,5 @@
 <?php
-
+ob_start("ob_gzhandler");
 /**
  * The directory in which your application specific resources are located.
  * The application directory must contain the config/kohana.php file.
@@ -101,3 +101,5 @@ else
 
 // Bootstrap the application
 require APPPATH.'bootstrap'.EXT;
+
+ob_end_flush();
