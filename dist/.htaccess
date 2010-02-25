@@ -27,3 +27,12 @@ ExpiresDefault A0
  ExpiresDefault A2592000
  FileETag None
 </FilesMatch>
+
+
+# Rewrite old quoteden URLs
+RewriteRule ^index.php/taxonomy/term/([0-9]+)/?$ /category/id/$1 [R=301,L]
+RewriteRule ^index.php/node/([0-9]+)/?$ /quote/id/$1 [R=301,L]
+RewriteRule ^index.php/top/?$ /quote/top [R=301,L]
+RewriteRule ^index.php/search/node/(.*) /search?q=$1 [R=301,L]
+RewriteRule ^index.php/frontpage/?$ / [R=301,L]
+
