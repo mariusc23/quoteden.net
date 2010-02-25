@@ -79,11 +79,15 @@ $(document).ready(function() {
                         msgHide(msg_div);
                     }, 4000);
                 },
-                success: function(data, textStatus) {
+                success: function(data, textStatus, request) {
                     var new_rating = parseInt(data);
                     if (!isNaN(new_rating)) {
                         current_rating.css('width', new_rating + '%');
-                        msg_div.html('Thanks for voting!');
+                        var message = 'Thanks for voting!';
+                        if (request.status == 200) {
+                            message = 'Vote updated';
+                        }
+                        msg_div.html(message);
                         setTimeout(function() {
                             msgHide(msg_div);
                         }, 4000);

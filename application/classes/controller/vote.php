@@ -39,19 +39,45 @@ class Controller_Vote extends Controller {
                     ->find();
         }
 
-        if ($vote->loaded()) {
-            // forbidden, already voted
-            header("HTTP/1.0 403 Forbidden");
-            die;
-        }
-
-
         // now we have a valid quote, and a valid vote, check rating
         $post = new Validate($_POST);
         $post->rule('rating', 'Model_Vote::check_numeric');
 
 
         if ($post->check()) {
+            if ($vote->loaded()) {
+                // update vote
+                $old_rating = $vote->rating;
+                $vote->rating = $post['rating'];
+
+                if ($vote->save()) {
+                    $vote_average = ORM::factory('voteaverage')->where('quote_id', '=', $quote_id)->find();
+                    if ($vote_average->loaded()) {
+                        // update the average
+                        $vote_average->average =
+                            ($vote_average->average * $vote_average->count + $post['rating'] - $old_rating)
+                            / ($vote_average->count);
+                    } else {
+                        // internal server error
+                        header("HTTP/1.0 500 Internal Server Error");
+                        die;
+                    }
+
+                    if (!$vote_average->save()) {
+                        // internal server error
+                        header("HTTP/1.0 500 Internal Server Error");
+                        die;
+                    }
+                } else {
+                    // internal server error
+                    header("HTTP/1.0 500 Internal Server Error");
+                    die;
+                }
+
+                print $vote_average->average;
+                die;
+            }
+
             // create quote
             $vote = new Model_Vote;
             $vote->quote_id = $quote_id;
@@ -82,6 +108,7 @@ class Controller_Vote extends Controller {
                     die;
                 }
                 // success!
+                header("HTTP/1.0 201 Created");
                 print $vote_average->average;
                 die;
             } else {
