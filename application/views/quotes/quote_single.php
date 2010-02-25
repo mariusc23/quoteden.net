@@ -1,6 +1,6 @@
 <div class="quote">
 <div class="rating-wrap">
-<div class="msg"></div>
+<div class="msg">Javascript required</div>
 <ul class="rating">
     <li class="current" style="width:<?php print $quote->voteaverage->average; ?>%"><?php print $quote->voteaverage->average; ?>%</li>
     <li><a href="#1" title="poor" class="one">1</a></li>

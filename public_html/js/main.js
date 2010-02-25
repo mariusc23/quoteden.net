@@ -4,14 +4,27 @@
  *
  * quoteden.net
  */
+$('.msg').html('');
 $(document).ready(function() {
     var template_add_form = $('.quote-add #content .form:last').clone()
       , num_forms = $('.quote-add #content .form').length
       , RATING_MULTIPLIER = 20
       , RATING_URL = $('#logo a')[0].href + 'vote/add/'
+      , search_input = $('#search input[type="text"]');
     ;
     template_add_form.find('input[type="text"]').val('');
     template_add_form.find('textarea').html('');
+
+    function check_search_input() {
+        if (!search_input.parents('li').hasClass('active')
+            && search_input.val().length > 0) {
+            search_input.parents('li').addClass('active');
+        }
+    }
+    if (!search_input.parents('li').hasClass('active')) {
+        search_input.keyup(function () { check_search_input(); });
+    }
+    check_search_input();
 
     /* show/hide login form */
     if ($('.log-in').length > 0) {
