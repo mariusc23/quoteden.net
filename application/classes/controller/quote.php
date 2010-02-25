@@ -208,6 +208,34 @@ class Controller_Quote extends Controller_Template {
         $this->template->title = 'Quote ' . $quote->id;
     }
 
+    public function action_feed() {
+        $info = array(
+              'title' => 'Newest Quotes - Quoteden',
+              'pubDate' => date("D, d M Y H:i:s T"),
+              'description' => 'Newest quotes from Quoteden',
+          ); 
+
+        $quotes = ORM::factory('quote')->order_by('id','desc')
+             ->limit(QUOTES_ITEMS_PER_PAGE)
+             ->offset($pagination->offset)
+             ->find_all()
+        ;
+
+        $items = array();
+        foreach ($quotes as $quote) {
+            $items[] = array(
+                'title' => $quote->id,
+                'link' => 'quote/id/' . $quote->id,
+                'description' => $quote->text
+                    . '<br/><br/>'
+                    . '<a href =" ' . Url::site('author/id/' . $quote->author->id) . '" title="More quotes by this author">'
+                    . $quote->author->name . '</a>'
+                    ,
+            );
+        }
+        print $xml = Feed::create($info, $items);
+    }
+
     public function before() {
         parent::before();
         $this->template->user = Auth::instance()->get_user();

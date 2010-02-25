@@ -120,6 +120,12 @@ Route::set('vote', '(vote(/<action>(/<id>)))')
         'action'     => 'add',
      ));
 
+Route::set('homefeed', 'rss.xml')
+    ->defaults(array(
+        'controller' => 'quote',
+        'action'     => 'feed',
+     ));
+
 /**
  * 404 page
  */
