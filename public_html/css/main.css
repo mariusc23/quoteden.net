@@ -76,7 +76,7 @@ li.error {
     margin: 0 auto;
     width: 740px;
     height: 120px;
-    background: url(../img/quotessprite.png) no-repeat 0 -72px;
+    background: url(../img/quotessprite.png) no-repeat 0 -48px;
     position: relative;
 }
 /* Alternatively, the skip-to-nav link can be completely hidden until a user tabs
@@ -122,7 +122,7 @@ li.error {
     text-indent: -9999px;
     top: 32px;
     left: 244px;
-    background: url(../img/quotessprite.png) no-repeat -333px -24px;
+    background: url(../img/quotessprite.png) no-repeat -333px 0;
     display: block;
     height: 16px;
     width: 16px;
@@ -130,7 +130,7 @@ li.error {
 
 #header a.plus:hover,
 #header a.plus:active {
-    background-position: -333px -48px;
+    background-position: -333px -24px;
 }
 
 #header .quote {
@@ -163,7 +163,7 @@ li.error {
 #navigation li {
     float: left;
     display: inline-block;
-    background: url(../img/quotessprite.png) no-repeat 0 -48px;
+    background: url(../img/quotessprite.png) no-repeat 0 -24px;
     width: 112px;
     height: 24px;
     padding: 0;
@@ -173,7 +173,7 @@ li.error {
 #navigation li.active,
 #navigation li:hover,
 #navigation li:active {
-    background-position: 0 -24px;
+    background-position: 0 0;
 }
 #navigation a {
     display: block;
@@ -181,13 +181,13 @@ li.error {
 }
 
 #navigation #search {
-    background: url(../img/quotessprite.png) no-repeat -111px -48px;
+    background: url(../img/quotessprite.png) no-repeat -111px -24px;
     width: 175px;
     color: #fb8f4a;
 }
 #navigation #search:hover,
 #navigation #search.active {
-    background-position: -111px -24px;
+    background-position: -111px 0;
 }
 #search label {
     padding-left: 2px;
@@ -201,7 +201,7 @@ li.error {
     font-size: 90%;
 }
 #search input[type="submit"] {
-    background: url(../img/quotessprite.png) no-repeat -306px -24px;
+    background: url(../img/quotessprite.png) no-repeat -306px 0;
     width: 12px;
     height: 24px;
     cursor: pointer;
@@ -232,7 +232,7 @@ li.error {
     position: absolute;
     color: #fff;
     top: -16px; left: 20px;
-    background: url(../img/quotessprite.png) no-repeat -349px -24px;
+    background: url(../img/quotessprite.png) no-repeat -349px 0;
     width: 36px; height: 16px;
     font-size: 0;
     text-indent: -9999px;
@@ -240,7 +240,7 @@ li.error {
 }
 
 #login input[type="submit"]:hover {
-    background-position: -349px -48px;
+    background-position: -349px -24px;
 }
 
 #login input[type="text"]
@@ -297,12 +297,12 @@ li.error {
     display: inline-block;
     width: 16px;
     height: 16px;
-    background: url(../img/quotessprite.png) no-repeat -385px -24px;
+    background: url(../img/quotessprite.png) no-repeat -385px 0;
 }
 
 .feed-icons a:hover,
 .feed-icons a:active {
-    background-position: -385px -48px;
+    background-position: -385px -24px;
 }
 
 /*----------------------------------
@@ -310,7 +310,7 @@ li.error {
 ----------------------------------*/
 #content .quote {
     clear: both;
-    background: url(../img/quotessprite.png) no-repeat -718px -192px;
+    background: url(../img/quotessprite.png) no-repeat -744px 5px;
     margin: 2px;
     padding-bottom: 2px;
     border-bottom: 1px solid #ccc;
