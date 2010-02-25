@@ -61,37 +61,36 @@ class Controller_Author extends Controller_Template {
 
     }
 
+    /**
+     * lists all categories
+     */
     public function action_index() {
-        // count items
-        $count = DB::select(DB::expr('COUNT(id) AS count'))->from('authors')->execute('default')->get('count');
-
-        // create pagination object
-        $pagination = Pagination::factory(array(
-            'current_page'   => array('source' => 'query_string', 'key' => 'p'),
-            'total_items'    => $count,
-            'items_per_page' => QUOTES_AUTHORS_PER_PAGE,
-        ));
 
         // get the content
         $view = $this->template->content = View::factory('quotes/authors');
         $view->authors = ORM::factory('author')
-            ->order_by('id','desc')
-            ->limit($pagination->items_per_page)
-            ->offset($pagination->offset)
-            ->find_all()
-        ;
-
-        // render the pager
-        $view->pager = $pagination->render();
-
-        // count the number of quotes for each author
-        $view->quotes_count = array();
-        foreach($view->authors as $author) {
-            $view->quotes_count[$author->id] = DB::select(DB::expr('COUNT(id) AS count'))->from('quotes')->where('author_id', '=', $author->id)->execute('default')->get('count');
-        }
-
+            ->order_by('name', 'asc')
+            ->find_all();
 
         $this->template->title = 'Authors';
+    }
+
+    /**
+     * lists all categories for a letter
+     */
+    public function action_letter() {
+        $letter = $this->request->param('id');
+        // get the content
+        $view = $this->template->content = View::factory('quotes/authors_letter');
+        $view->authors = ORM::factory('author')
+            ->where('name', 'LIKE', mb_strtolower($letter) . '%')
+            ->order_by('name', 'asc')
+            ->find_all();
+
+        $view->letter = $letter;
+        $view->count_split = count($view->authors) / 4 + 1;
+
+        $this->template->title = $letter . ' authors';
     }
 
     /**

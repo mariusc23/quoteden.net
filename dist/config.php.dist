@@ -1,5 +1,4 @@
 <?php
-// this belongs in application/config/config.php
 define('IN_PRODUCTION', TRUE);
 define('QUOTES_ITEMS_PER_PAGE', 10);
 define('QUOTES_AUTHORS_PER_PAGE', 20);
@@ -20,3 +19,4 @@ define('SITE_NAME', 'Quote Den');
 setlocale(LC_ALL, 'en_US.utf8');
 
 define('CATEGORIES_LIST_COUNT', 8);
+define('AUTHORS_LIST_COUNT', 8);

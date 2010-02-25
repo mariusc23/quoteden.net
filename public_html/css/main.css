@@ -411,7 +411,9 @@ li.error {
 /*----------------------------------
     Categories list
 ----------------------------------*/
-.category-row {
+.category-row
+, .author-row
+{
     width: 100%;
     clear: both;
     position: relative;
@@ -424,7 +426,8 @@ li.error {
 }
 
 .letter h2,
-.category-letter h2 {
+.category-letter h2
+, .author-letter h2 {
     color: #6f6f6f;
     font-size: 160%;
     text-align: left;
@@ -433,26 +436,33 @@ li.error {
     margin: 20px 20px 5px 25px;
 }
 
-.letter ul,
-.category-letter ul  {
+.letter ul
+, .category-letter ul
+, .author-letter ul {
     list-style: none;
     line-height: 1.4em;
     padding: 0 20px 10px 25px;
 }
 
-.letter li.last,
-.category-letter li.last {
+.letter li.last
+, .category-letter li.last
+, .author-letter li.last
+{
     text-align: left;
     padding: 20px 10px 0 0;
     font-weight: bold;
 }
 
-.category-letter #content ul {
+.category-letter #content ul
+, .author-letter #content ul
+{
     float: left;
     width: 140px;
 }
 
-.category-letter #content .last {
+.category-letter #content .last
+, .author-letter #content .last
+{
     float: right;
     padding: 16px 50px 0 0;
     font-weight: bold;
