@@ -25,7 +25,7 @@ if (isset($title)) {
     <div class="author"><a href="/author/id/1">Jacqueline Kennedy Onassis</a></div>
 </div><!-- /.quote -->
 
-<a title="Add quotes" href="<?php
+<a href="<?php
 if (!$user) {
     print Url::site('user/login', 'https');
 } else {
