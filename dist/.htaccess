@@ -35,4 +35,4 @@ RewriteRule ^index.php/node/([0-9]+)/?$ /quote/id/$1 [R=301,L]
 RewriteRule ^index.php/top/?$ /quote/top [R=301,L]
 RewriteRule ^index.php/search/node/(.*) /search?q=$1 [R=301,L]
 RewriteRule ^index.php/frontpage/?$ / [R=301,L]
-
+RewriteRule ^index.php/quotes/author /author [R=301,L]
