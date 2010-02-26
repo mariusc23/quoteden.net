@@ -69,11 +69,11 @@ $(document).ready(function() {
                 error: function(request, textStatus, errorThrown) {
                     msg_div.addClass('error');
                     if (request.status == 403) {
-                        msg_div.html('Already voted');
+                        msg_div.html('Already rated');
                     } else if (request.status == 500) {
                         msg_div.html('Server error');
                     } else if (request.status == 400) {
-                        msg_div.html('Invalid vote');
+                        msg_div.html('Invalid rating');
                     }
                     setTimeout(function() {
                         msgHide(msg_div);
@@ -83,9 +83,9 @@ $(document).ready(function() {
                     var new_rating = parseInt(data);
                     if (!isNaN(new_rating)) {
                         current_rating.css('width', new_rating + '%');
-                        var message = 'Thanks for voting!';
+                        var message = 'Thanks for rating!';
                         if (request.status == 200) {
-                            message = 'Vote updated';
+                            message = 'Rating updated';
                         }
                         msg_div.html(message);
                         setTimeout(function() {
