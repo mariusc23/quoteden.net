@@ -310,25 +310,24 @@ li.error {
 ----------------------------------*/
 #content .quote {
     clear: both;
-    background: url(../img/quotessprite.png) no-repeat -744px 5px;
-    margin: 2px;
-    padding-bottom: 2px;
+    background: url(../img/quotessprite.png) no-repeat -744px 1px;
     border-bottom: 1px solid #ccc;
 }
 #content .quote-inner {
     padding: 20px;
-    width: 500px;
+    width: 490px;
     background: url(../img/qmark2.png) no-repeat bottom right;
-    min-height: 100px;
+    min-height: 90px;
     height: auto !important;
-    height: 100px;
+    height: 90px;
 }
 #content .quote .id {
     clear: both;
     float: right;
-    font-size: 95px;
+    font-size: 82px;
     font-family: Arial, Helvetica, sans-serif;
-    width: 190px;
+    width: 178px;
+    margin-right: 2px;
     text-align: center;
 }
 #content .quote .id a {
@@ -352,7 +351,7 @@ li.error {
 }
 #content .quote {
     margin: 2px;
-    padding-bottom: 2px;
+    padding-bottom: 12px;
 }
 #content .quote .categories, #content .quote .author {
     padding-top: 4px;
@@ -605,20 +604,21 @@ li.error {
     http://www.komodomedia.com/blog/2007/01/css-rating-redux/
 ----------------------------------*/
 .quote .rating-wrap {
-    margin: 20px 0 10px;
-    width: 120px;
+    margin: 0 0 2px;
+    padding: 0;
+    width: 185px;
     float: right;
+    text-align: center;
 }
 .quote .rating {
     position: relative;
-    width: 70px;
-    margin: 0 auto;
-    height: 14px;
+    width: 180px;
+    margin-top: 5px;
+    height: 30px;
     overflow: hidden;
     list-style: none;
-    margin: 0;
     padding: 0;
-    background-position: left top;
+    background-position: left 1px;
 }
 
 .rating,
@@ -626,7 +626,7 @@ li.error {
 .rating a:active,
 .rating a:focus,
 .rating .current {
-    background: #fff url(../img/stars.png) left -1000px repeat-x;
+    background: #fff url(../img/stars.png) left 0 repeat-x;
 }
 .rating li{
     display: inline;
@@ -637,8 +637,8 @@ li.error {
     top: 0;
     left: 0;
     text-indent: -9999px;
-    height: 14px;
-    line-height: 14px;
+    height: 30px;
+    line-height: 30px;
     outline: none;
     overflow: hidden;
     border: none;
@@ -670,16 +670,16 @@ li.error {
 }
 .rating .current {
     z-index: 1;
-    background-position: 0 -14px;
+    background-position: 0 -28px;
 }
 
 .rating-wrap .msg {
     color: #000;
-    height: 1.3em;
-    width: 100%;
+    height: 1em;
+    text-align: center;
+    display: inline-block;
+    margin: 0 auto;
     font-size: 80%;
-    position: relative;
-    left: -1em;
 }
 .rating-wrap .error {
     color: #ff0400;
