@@ -22,7 +22,7 @@
 <?php print $quote->text; ?>
 </div>
 <div class="categories">
-<?php foreach ($categories_list_bolded[$quote->id] as $category) {
+<?php if ($categories_list_bolded[$quote->id]) foreach ($categories_list_bolded[$quote->id] as $category) {
     print '<a href="' . Url::site('category/id/' . $category->id) . '">' . $category->name . '</a> ';
 } ?>
 </div>
@@ -45,7 +45,7 @@ print implode(' ', $author_name) . ' ' . $last_name; ?></a></div>
 Looking for other great quotes?<br/>
 Check out <a href="<?php print Url::site('quote/top'); ?>">top rated quotes</a> below.
 </div>
-<?php foreach ($top_quotes as $quote): ?>
+<?php if ($top_quotes) foreach ($top_quotes as $quote): ?>
 <?php include('quote_single.php'); ?>
 <?php endforeach; ?>
 <?php endif; ?>
@@ -54,7 +54,7 @@ Check out <a href="<?php print Url::site('quote/top'); ?>">top rated quotes</a> 
 Sorry, couldn't find any quotes.<br/>
 Try a broader search by entering fewer words, or check out <a href="<?php print Url::site('quote/top'); ?>">top rated quotes</a> below.
 </div>
-<?php foreach ($top_quotes as $quote): ?>
+<?php if ($top_quotes) foreach ($top_quotes as $quote): ?>
 <?php include('quote_single.php'); ?>
 <?php endforeach; ?>
 <?php endif; ?>

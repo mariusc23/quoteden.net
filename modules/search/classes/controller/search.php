@@ -35,19 +35,84 @@ class Controller_Search extends Controller_Template {
         //$this->sphinxclient->SetSortMode(SPH_SORT_ATTR_DESC, 'id');
         //$this->sphinxclient->ResetFilters();
 
-        $results = $this->sphinxclient->Query($search_query, SPHINX_INDEX);
+        $results = $this->sphinxclient->Query(mb_ereg_replace('-', '\-', $search_query)
+                        , SPHINX_INDEX);
         if ($results) {
             $count = $results['total'];
             $results = $results['matches'];
 
             $view->quotes = array();
 
-            foreach ($results as $sphinx_quote) {
+            if (isset($results)) foreach ($results as $sphinx_quote) {
                 $view->quotes[] = new Model_Quote($sphinx_quote['id']);
             }
-        } else {
+        } elseif ($_GET['format'] != 'json') {
             $this->template->content = $view;
             return ;
+        }
+
+        if ($_GET['format'] == 'json') {
+            $short_name = $_GET['short'];
+            $callback = trim($_GET['callback']);
+            if ($callback) {
+                header('Content-type: application/x-javascript; charset=utf-8');
+
+                if (!$this->jsonp_is_valid($callback)) {
+                    header("HTTP/1.0 400 Bad Request");
+                    die;
+                }
+
+            } else {
+                header('Content-type: application/json; charset=utf-8');
+            }
+
+            $quotes = array();
+            if (isset($view->quotes)) foreach ($view->quotes as $quote) {
+                if ($short_name) {
+                    $author_name = explode(' ', $quote->author->name);
+                    $last_name = $author_name[count($author_name)-1];
+                    unset($author_name[count($author_name)-1]);
+                    foreach ($author_name as $k => $name) {
+                        $author_name[$k] = mb_eregi_replace("^([A-Za-z])[A-Za-z]+(.*)$", "\\1.\\2", $name);
+                    }
+                    for($i=count($author_name)-2; $i>=0; $i--) {
+                        unset($author_name[$i]);
+                    }
+                    $author_name = implode(' ', $author_name) . ' ' . $last_name;
+                }
+                $quote_json = array(
+                    'id' => $quote->id,
+                    'text' => $quote->text,
+                    'author_name' => $short_name ? $author_name : $quote->author->name,
+                    'author_id' => $quote->author->id,
+                    'categories' => array(),
+                );
+                if ($quote->categories_list) foreach ($quote->categories_list as $category) {
+                    $quote_json['categories'][] = array(
+                        'name' => $category->name,
+                        'id' => $category->id,
+                    );
+                }
+                $quotes[] = $quote_json;
+            }
+
+            $json = array(
+                'results' => $quotes,
+                'total' => $count,
+                'query' => $search_query,
+                'search_url' => Url::site('search', 'http') . '?q=' . urlencode($search_query)
+            );
+
+            if ($count == 0) {
+                $json['message'] = 'No results';
+            }
+
+            if ($callback) {
+                echo $callback . '(' . json_encode($json) . ');';
+            } else {
+                echo json_encode($json);
+            }
+            die;
         }
         $this->bold_query($view, $view->quotes, array($search_query));
 
@@ -122,4 +187,13 @@ class Controller_Search extends Controller_Template {
         $this->template->model = 'search';
         $this->template->action = Request::instance()->action;
     }
+
+    /**
+     * Validates json function name
+     */
+    public function jsonp_is_valid($callback) {
+        return (bool)preg_match('/^[a-zA-Z_\\$][a-zA-Z0-9_\\$]*(\\[[a-zA-Z0-9_\\$]*\\])*'
+                . '(\\.[a-zA-Z0-9_\\$]+(\\[[a-zA-Z0-9_\\$]*\\])*)*$/', $callback);
+    }
+
 }

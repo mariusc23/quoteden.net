@@ -1,19 +1,19 @@
 <?php
-function print_form($id, $data = array('text' => '', 'categories' => '', 'author' => '')) {
+function print_form($data = array('text' => '', 'categories' => '', 'author' => '')) {
     echo '<div class="form">
     <div class="text">
-        <label><span>Quote ' . $id . ':</span>
-            <textarea name="text[]" rows="8" cols="55">' . $data['text'] . '</textarea>
+        <label><span>Add quote:</span>
+            <textarea name="text" rows="8" cols="55">' . $data['text'] . '</textarea>
         </label>
     </div>
 
     <div class="meta">
         <label><span>Categories (comma separated):</span>
-            <textarea type="text" value="' . $data['categories'] . '" rows="2" cols="34" name="categories[]" ></textarea>
+            <textarea type="text" value="' . $data['categories'] . '" rows="2" cols="34" name="categories" ></textarea>
         </label>
 
         <label class="author"><span>Author:</span>
-            <input type="text" value="' . $data['author'] . '" size="24" name="author[]" />
+            <input type="text" value="' . $data['author'] . '" size="24" name="author" />
         </label>
         <div class="submit">
             <input type="submit" value="Submit" /> or
@@ -23,47 +23,38 @@ function print_form($id, $data = array('text' => '', 'categories' => '', 'author
     <br class="clear"/>
 </div>';
 }
-if ($quotes || $error) {
-    print '<ul class="messages">';
-}
-if ($quotes) {
-    print '<li>Added quotes ';
-
-    $first = true;
-    foreach ($quotes as $quote) {
-        if (!$first) print ', ';
-        $first = false;
-        print '<a href="' . Url::site('quote/id/' . $quote->id) . '" title="quote by ' . $quote->author->name . '">'
-            . $quote->id . ' (' . $quote->author->name . ')</a>, ';
-    }
-    print '</li>';
-}
 if ($error) {
-    print '<li class="error">Error saving ' . $error . ' quotes. Auto-filled below</li>';
-}
-
-if ($quotes || $error) {
-    print '</ul>';
+    print '<div class="error">Error adding quote</div>';
+    $text = $_POST['text'];
+    $author = $_POST['author'];
+    $categories = $_POST['categories'];
+} elseif($_POST) {
+    print '<div class="message">Added quote</div>';
+    $text = '';
+    $author = '';
+    $categories = '';
 }
 ?>
 <form method="post" accept-charset="UTF-8" action="<?php print Url::site('quote/add') ?>">
 
-<?php if (!$error): for($i=1; $i<=3; $i++):
-    print_form($i);
-endfor;
-else:
-    $i = 0;
-    foreach ($_POST['text'] as $k => $text) {
-        $i++;
-        print_form($i, array(
-            'text' => $text,
-            'categories' => $_POST['categories'][$k],
-            'author' => $_POST['author'][$k],
-        ));
-    }
-endif; ?>
+<?php 
+print_form(array(
+    'text' => $text,
+    'categories' => $author,
+    'author' => $categories,
+));
+?>
 </form>
 
-<a id="quote-add-more" href="#">add</a>
 <br class="clear"/>
 
+<div class="search-status">
+Type your quote and watch this area for duplicate quotes
+</div>
+<div class="qresults">
+    <div class="qresult" style="display: none;">
+        <span class="id"></span> &mdash;
+        <span class="text"></span> &mdash;
+        <span class="author"></span>
+    </div>
+</div>

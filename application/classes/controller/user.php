@@ -63,7 +63,7 @@ class Controller_User extends Controller_Template {
 
             // check auth
             if ($user->login($_POST)) {
-                Request::instance()->redirect($this->referer);
+                Request::instance()->redirect(URL::site('quote/add', 'http'));
             } else {
                 $view->errors = $_POST->errors('login');
                 $this->template->title = 'Error logging in';

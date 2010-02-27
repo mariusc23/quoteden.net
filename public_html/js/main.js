@@ -6,14 +6,14 @@
  */
 $('.msg').html('');
 $(document).ready(function() {
-    var template_add_form = $('.quote-add #content .form:last').clone()
-      , num_forms = $('.quote-add #content .form').length
+    var template_result = $('.quote-add #content .qresult:last').clone()
       , RATING_MULTIPLIER = 20
       , RATING_URL = $('#logo a')[0].href + 'vote/add/'
-      , search_input = $('#search input[type="text"]');
+      , SEARCH_URL = '/search?format=json&short=1&q='
+      , search_input = $('#search input[type="text"]')
+      , searchTimeout = false
+      , SEARCH_MESSAGE_DEFAULT = $('.search-status').html()
     ;
-    template_add_form.find('input[type="text"]').val('');
-    template_add_form.find('textarea').html('');
 
     function check_search_input() {
         if (!search_input.parents('li').hasClass('active')
@@ -33,20 +33,6 @@ $(document).ready(function() {
             return false;
         });
     }
-
-    $('#quote-add-more').click(function () {
-        var new_form = template_add_form.clone();
-        new_form.find('label:first span').html('Quote ' + (++num_forms));
-        new_form.hide();
-        new_form.appendTo($('#content form:last')).fadeIn('slow');
-        document.getElementById('footer').scrollIntoView(true);
-        return false;
-    });
-
-    $('.form .delete').live('click', function() {
-        $(this).parents('.form').fadeOut('slow');
-        return false;
-    });
 
     $('.rating a').live('click', function() {
         var rating = parseInt(this.href.substr(-1, 1))
@@ -102,4 +88,61 @@ $(document).ready(function() {
         jquery_object.html('');
         jquery_object.removeClass('error');
     }
+
+
+    $('.quote-add textarea[name="text"]').keyup(function() {
+        var text = $(this).val();
+        if (text.length < 10) {
+            $('.search-status').html(SEARCH_MESSAGE_DEFAULT);
+            $('#content .qresults').children().remove();
+            return;
+        }
+
+        if (searchTimeout) clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(function () {
+        $.ajax({
+            url: SEARCH_URL + text,
+            type: 'POST',
+            async: true,
+            cache: false,
+            dataType: 'json',
+            timeout: 3000,
+            global: false,
+            error: function(request, textStatus, errorThrown) {
+                alert('Error searching for quote.');
+            },
+            success: function(data, textStatus, request) {
+                if ($('.quote-add textarea[name="text"]').val() != text) return;
+                $('#content .qresults').children().remove();
+                if (data.message) {
+                    $('.search-status').html('No results');
+                    return;
+                } else {
+                    $('.search-status').html(data.total + ' results');
+                }
+                var result;
+                for (var i in data.results) {
+                    quote = data.results[i];
+                    qresult = template_result.clone();
+
+                    qresult.children('.id').html(
+                        '<a href="/quote/id/' + quote.id + '">'
+                        + quote.id + '</a>'
+                    );
+                    qresult.children('.text').html(
+                        '<a href="/quote/id/' + quote.id + '">'
+                        + quote.text + '</a>'
+                    );
+                    qresult.children('.author').html(
+                        '<a href="/author/id/' + quote.author_id + '">'
+                        + quote.author_name + '</a>'
+                    );
+
+                    qresult.show();
+                    qresult.appendTo($('#content .qresults'));
+                }
+            }
+        })
+        }, 100); // setTimeout
+    });
 });

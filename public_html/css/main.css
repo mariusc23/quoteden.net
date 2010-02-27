@@ -63,8 +63,7 @@ h2 {
     clear: both;
 }
 
-ul.error,
-li.error {
+.error {
     color: #ff0400;
 }
 
@@ -525,21 +524,47 @@ li.error {
     font-size: 140%;
 }
 
-.quote-add a#quote-add-more {
-    display: block;
-    float: right;
-    margin-right: 20px;
-    border: 1px solid #ccc;
-    border-top: none;
-    background: #fff;
-    z-index: 1;
-    position: relative;
-    top: -1px;
-    padding: 2px 4px;
-}
-
 .quote-add #content .messages {
     margin: 20px 10px 5px 10px;
+}
+
+.quote-add #content-inner {
+    min-height: 500px;
+    height: auto !important;
+    height: 500px;
+}
+
+.quote-add #content .error {
+    padding: 20px 10px 5px;
+    text-align: center;
+}
+
+.qresult {
+    padding: 5px 10px 0;
+}
+.search-status {
+    padding: 0 10px;
+    text-align: center;
+}
+.qresult .text {
+    position: relative;
+    top: 0.3em;
+    display: inline-block;
+    height: 1.5em;
+    line-height: 1.5em;
+    width: 520px;
+    overflow: hidden;
+}
+.qresult .author {
+    display: inline-block;
+}
+.qresult .id {
+    display: inline-block;
+    width: 30px;
+    text-align: right;
+}
+.qresult .text a {
+    color: #000;
 }
 
 /*----------------------------------

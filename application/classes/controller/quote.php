@@ -47,103 +47,77 @@ class Controller_Quote extends Controller_Template {
             Request::instance()->redirect('user/login');
         }
         $this->template->content = $view = new View('quotes/add');
-        $view->error = 0;
-        $view->quotes = array();
 
         if ($_POST) {
-            $count = count($_POST['text']);
-            foreach ($_POST['text'] as $k => $text) {
-                $quote = $this->_add_one(array(
-                    'text' => $text,
-                    'author' => $_POST['author'][$k],
-                    'categories' => $_POST['categories'][$k],
-                ));
-                if ($quote) {
-                    $view->quotes[] = $quote;
-                    unset($_POST['text'][$k]);
-                    unset($_POST['author'][$k]);
-                    unset($_POST['categories'][$k]);
+            $view->error = 0;
+            // validate data first
+            $post = new Validate($_POST);
+            $post
+                ->rule('text', 'min_length', array(5))
+                ->rule('categories', 'max_length', array(2000))
+                ->rule('author', 'min_length', array(5))
+                ->rule('author', 'max_length', array(500))
+                ->filter(TRUE, 'trim')
+            ;
+
+            if ($post->check()) {
+                // check author exists
+                $author = ORM::factory('author')->where('name', '=', $post['author'])->find();
+                $valid_author_id = $author->id;
+                if (!$author->loaded()) {
+                    // create author if does not exist
+                    $author_controller = new Controller_Author($this->request);
+                    $valid_author_id = $author_controller->_add(array(
+                        'author_name' => $post['author']
+                    ));
+                }
+
+                // create quote
+                $quote = new Model_Quote;
+                $quote->text = $post['text'];
+                $quote->author_id = $valid_author_id;
+
+                if ($quote->save()) {
+                    if ($post['categories']) {
+                        // use categories as csv
+                        $categories_string = explode(',', $post['categories']);
+                        foreach ($categories_string as $i => $category) {
+                            $categories_string[$i] = $category = trim($category);
+                        }
+                        $categories_string = array_unique($categories_string);
+
+                        $category_controller = new Controller_Category($this->request);
+                        foreach($categories_string as $category) {
+                            $cat = ORM::factory('category')->where('name', '=', $category)->find();
+                            if ($cat->loaded()) {
+                                $quote->add('categories', $cat);
+                                unset($categories_string[$i]);
+                            } else {
+                                $cat = $category_controller->_add(array(
+                                    'category_name' => $category
+                                ));
+                                if ($cat) {
+                                    $quote->add('categories', $cat);
+                                }
+                            }
+                        }
+                    }
+
+                    // success!
+                    $this->template->title = 'Quote added';
                 } else {
-                    $view->error++;
-                    $count--;
+                    // failure
+                    $view->error = 1;
+                    $this->template->title = 'Error saving quote';
                 }
             }
-
-            $this->template->title = $count . ' quotes added';
-            if ($view->error) {
-                $this->template->title = 'Error saving ' . $view->error . ' quotes - ' . $this->template->title;
+            else {
+                $view->error = 1;
+                $this->template->title = 'Error saving quote';
             }
         } else {
             $this->template->title = 'Add quotes';
         }
-    }
-    public function _add_one($data) {
-
-        // validate data first
-        $post = new Validate($data);
-        $post
-            ->rule('text', 'min_length', array(5))
-            ->rule('categories', 'max_length', array(2000))
-            ->rule('author', 'min_length', array(5))
-            ->rule('author', 'max_length', array(500))
-            ->filter(TRUE, 'trim')
-        ;
-
-        if ($post->check()) {
-            // check author exists
-            $author = ORM::factory('author')->where('name', '=', $post['author'])->find();
-            $valid_author_id = $author->id;
-            if (!$author->loaded()) {
-                // create author if does not exist
-                $author_controller = new Controller_Author($this->request);
-                $valid_author_id = $author_controller->_add(array(
-                    'author_name' => $post['author']
-                ));
-            }
-
-            // create quote
-            $quote = new Model_Quote;
-            $quote->text = $post['text'];
-            $quote->author_id = $valid_author_id;
-
-            if ($quote->save()) {
-                if ($post['categories']) {
-                    // use categories as csv
-                    $categories_string = explode(',', $post['categories']);
-                    foreach ($categories_string as $i => $category) {
-                        $categories_string[$i] = $category = trim($category);
-                    }
-                    $categories_string = array_unique($categories_string);
-    
-                    $category_controller = new Controller_Category($this->request);
-                    foreach($categories_string as $category) {
-                        $cat = ORM::factory('category')->where('name', '=', $category)->find();
-                        if ($cat->loaded()) {
-                            $quote->add('categories', $cat);
-                            unset($categories_string[$i]);
-                        } else {
-                            $cat = $category_controller->_add(array(
-                                'category_name' => $category
-                            ));
-                            if ($cat) {
-                                $quote->add('category', $cat);
-                            }
-                        }
-                    }
-                }
-
-                // success!
-                return $quote;
-            } else {
-                // failure
-                return null;
-            }
-        }
-        else {
-            // if data has been submitted, it's not valid
-            return false;
-        }
-
     }
 
     /**
