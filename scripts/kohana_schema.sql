@@ -47,6 +47,10 @@ CREATE TABLE IF NOT EXISTS `users` (
  UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+INSERT INTO `users` (`id`, `username`, `password`, `created`, `name`, `email`, `logins`, `last_login`) VALUES
+(1, 'quotemaster', '0e5d91af84642b3eb887ed068c380b239ff12cefd3', NOW(), NULL, 'paul.craciunoiu@gmail.com', 19, NOW());
+
+
 
 CREATE TABLE IF NOT EXISTS `roles` (
  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -67,6 +71,8 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
  `role_id` int(10) UNSIGNED NOT NULL,
  PRIMARY KEY  (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES (1, 1);
 
 
 CREATE TABLE IF NOT EXISTS `votes` (

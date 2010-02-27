@@ -488,7 +488,15 @@ h2 {
     float: left;
     width: 450px;
 }
-
+.quote-add .form .text textarea {
+    width: 430px;
+}
+.quote-add .form .meta textarea {
+    width: 255px;
+}
+.quote-add .form .meta input[type="text"] {
+    width: 255px;
+}
 .quote-add #content-inner .form {
     padding: 10px 15px 5px 15px;
     height: 170px;
@@ -534,7 +542,9 @@ h2 {
     height: 500px;
 }
 
-.quote-add #content .error {
+.quote-add #content .error
+, .quote-add #content .message
+{
     padding: 20px 10px 5px;
     text-align: center;
 }

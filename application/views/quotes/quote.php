@@ -1,6 +1,6 @@
 <?php if (!isset($quote)): ?>
 <h1 class="quote-header">
-Unknown author
+Unknown quote
 </h1>
 <?php return;
 endif; ?>

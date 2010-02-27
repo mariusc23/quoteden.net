@@ -11,6 +11,9 @@ class Model_Quote extends ORM {
         $this->_object['categories_list'] = $this->categories
             ->order_by('name', 'asc')
             ->find_all();
+        if (Auth::instance()->get_user()) {
+            $this->_object['user'] = true;
+        }
     }
 }
 

@@ -1,49 +1,50 @@
 <?php
-function print_form($data = array('text' => '', 'categories' => '', 'author' => '')) {
-    echo '<div class="form">
+if ($error) {
+    if ($action == 'add') {
+        print '<div class="error">Error adding quote</div>';
+    } else {
+        print '<div class="error">Error updating quote</div>';
+    }
+} elseif($_POST) {
+    if ($action == 'add') {
+        print '<div class="message">Added quote</div>';
+    } else {
+        print '<div class="message">Updated quote</div>';
+    }
+}
+?>
+<?php if ($action == 'edit'): ?>
+<div class="message">
+    <a href="<?php print Url::site('quote/delete/' . $quote->id); ?>" title="Delete this quote">Delete</a>
+</div>
+<?php endif; ?>
+
+<form method="post" accept-charset="UTF-8" action="<?php if ($action == 'add') {
+    print Url::site('quote/add');
+} else {
+    print Url::site('quote/edit/' . $id);
+} ?>">
+<div class="form">
     <div class="text">
-        <label><span>Add quote:</span>
-            <textarea name="text" rows="8" cols="55">' . $data['text'] . '</textarea>
+        <label><span><?php if ($action == 'add'): ?>Add quote:<?php else: ?>Edit quote:<?php endif; ?></span>
+            <textarea name="text" rows="8" cols="55"><?php print $text ?></textarea>
         </label>
     </div>
 
     <div class="meta">
         <label><span>Categories (comma separated):</span>
-            <textarea type="text" value="' . $data['categories'] . '" rows="2" cols="34" name="categories" ></textarea>
+            <textarea type="text" rows="2" cols="34" name="categories" ><?php print $categories ?></textarea>
         </label>
 
         <label class="author"><span>Author:</span>
-            <input type="text" value="' . $data['author'] . '" size="24" name="author" />
+            <input type="text" value="<?php print $author ?>" size="24" name="author" />
         </label>
         <div class="submit">
-            <input type="submit" value="Submit" /> or
-            <a class="delete" href="#">delete</a>
+            <input type="submit" value="Submit" />
         </div>
     </div>
     <br class="clear"/>
-</div>';
-}
-if ($error) {
-    print '<div class="error">Error adding quote</div>';
-    $text = $_POST['text'];
-    $author = $_POST['author'];
-    $categories = $_POST['categories'];
-} elseif($_POST) {
-    print '<div class="message">Added quote</div>';
-    $text = '';
-    $author = '';
-    $categories = '';
-}
-?>
-<form method="post" accept-charset="UTF-8" action="<?php print Url::site('quote/add') ?>">
-
-<?php 
-print_form(array(
-    'text' => $text,
-    'categories' => $author,
-    'author' => $categories,
-));
-?>
+</div>
 </form>
 
 <br class="clear"/>

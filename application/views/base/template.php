@@ -14,7 +14,11 @@ if (isset($title)) {
 <link type="image/x-icon" href="<?php print Url::site('img/favicon.ico') ?>" rel="shortcut icon">
 <link type="text/css" href="<?php print Url::site('min/?g=css'); ?>" rel="stylesheet" media="screen" />
 </head>
-<body class="<?php print $model . '-' . $action ?>">
+<body class="<?php if ($action == 'edit') {
+    print $model . '-add';
+} else {
+    print $model . '-' . $action;
+} ?>">
 <div id="header" role="banner">
 <div id="header-inner">
 
@@ -40,7 +44,7 @@ if (!$user) {
 ?></a>
 
 <div id="login">
-    <form id="user-login-form" method="post" accept-charset="UTF-8" action="<?php print Url::site('user/login', 'https'); ?>">
+    <form id="user-login-form" method="post" accept-charset="UTF-8" action="<?php print Url::site('user/login', 'http'); ?>">
         <input type="text" value="" size="15" name="username" maxlength="60" title="Username" />
         <input type="password" size="15" maxlength="60" name="password" title="Password" />
         <input type="submit" value="Log in" name="login" />
@@ -48,7 +52,7 @@ if (!$user) {
 </div>
 
 <ul id="navigation" role="navigation">
-    <li<?php if ($model == 'quote' && ($action == 'index' || $action == 'add' || $action == 'id')): ?> class="active"<?php endif; ?>>
+    <li<?php if ($model == 'quote' && ($action == 'index' || $action == 'add' || $action == 'id' || $action == 'edit')): ?> class="active"<?php endif; ?>>
         <a href="<?php print Url::site('') ?>" title="home page">Home</a>
     </li>
     <li<?php if ($model == 'quote' && $action == 'top'): ?> class="active"<?php endif; ?>>

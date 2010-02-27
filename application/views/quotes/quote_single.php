@@ -31,5 +31,8 @@ foreach ($author_name as $k => $name) {
 }
 print implode(' ', $author_name) . ' ' . $last_name; ?></a></div>
 <br class="after-author" />
+<?php if (isset($quote->user)): ?>
+<a href="<?php print Url::site('quote/edit/' . $quote->id); ?>" title="Edit this quote">Edit</a>
+<?php endif; ?>
 </div><!-- /.quote-inner -->
 </div><!-- /.quote -->
