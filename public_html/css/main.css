@@ -325,12 +325,13 @@ h2 {
     float: right;
     font-size: 82px;
     font-family: Arial, Helvetica, sans-serif;
-    width: 178px;
-    margin-right: 9px;
+    width: 190px;
+    margin-right: 4px;
     text-align: center;
 }
 #content .quote .id a {
     color: #ccc;
+    font-weight: 700;
 }
 #content .quote .text {
     line-height: 1.8em;
@@ -344,9 +345,6 @@ h2 {
 #content .quote .categories a {
     display: inline-block;
     padding: 0 0.5em 0 0;
-}
-#content .quote .id a {
-    font-weight: 700;
 }
 #content .quote {
     margin: 2px;
@@ -642,7 +640,7 @@ h2 {
 .quote .rating-wrap {
     margin: 0 0 2px;
     padding: 0;
-    width: 185px;
+    width: 191px;
     float: right;
     text-align: center;
 }
