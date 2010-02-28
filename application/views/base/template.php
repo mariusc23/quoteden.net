@@ -85,6 +85,18 @@ Copyright &copy; 2009 - <?php print date('Y'); ?> <a href="/"><?php print SITE_N
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="<?php print Url::site('min/?g=js'); ?>"></script>
+
+<?php if (!$user): ?>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-12266209-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<?php endif; ?>
 </body>
 </html>
 
