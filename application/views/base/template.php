@@ -26,7 +26,7 @@ if (isset($title)) {
 
 <div class="quote">
     <div class="text"><p>One man can make a difference and every man should try.</p></div>
-    <div class="author"><a href="/author/id/1">Jacqueline Kennedy Onassis</a></div>
+    <div class="author"><a href="/author/id/372">Jacqueline Kennedy Onassis</a></div>
 </div><!-- /.quote -->
 
 <a href="<?php
