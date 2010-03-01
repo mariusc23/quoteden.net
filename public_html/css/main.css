@@ -275,7 +275,7 @@ h2 {
 
 .pager {
     clear: both;
-    margin: 1em 0;
+    margin: 1.3em 0 0.4em 0;
     text-align: center;
 }
 
@@ -574,6 +574,27 @@ h2 {
 }
 .qresult .text a {
     color: #000;
+}
+
+.autocomplete {
+    position: absolute;
+    list-style: none;
+    background: #fff;
+    width: 255px;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    margin-top: -1px;
+}
+
+.autocomplete li {
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.autocomplete li:hover
+, .autocomplete li.active {
+    background: #eee;
 }
 
 /*----------------------------------

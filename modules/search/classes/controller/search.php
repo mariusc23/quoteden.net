@@ -57,7 +57,7 @@ class Controller_Search extends Controller_Template {
             if ($callback) {
                 header('Content-type: application/x-javascript; charset=utf-8');
 
-                if (!$this->jsonp_is_valid($callback)) {
+                if (!self::jsonp_is_valid($callback)) {
                     header("HTTP/1.0 400 Bad Request");
                     die;
                 }
@@ -191,7 +191,7 @@ class Controller_Search extends Controller_Template {
     /**
      * Validates json function name
      */
-    public function jsonp_is_valid($callback) {
+    public static function jsonp_is_valid($callback) {
         return (bool)preg_match('/^[a-zA-Z_\\$][a-zA-Z0-9_\\$]*(\\[[a-zA-Z0-9_\\$]*\\])*'
                 . '(\\.[a-zA-Z0-9_\\$]+(\\[[a-zA-Z0-9_\\$]*\\])*)*$/', $callback);
     }

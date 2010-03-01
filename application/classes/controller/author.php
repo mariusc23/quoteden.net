@@ -148,6 +148,64 @@ class Controller_Author extends Controller_Template {
         $this->template->title = $author->name;
     }
 
+    /**
+     * List authors in JSON format
+     */
+    public function action_jsonlist() {
+        $starts_with = trim($this->request->param('id'));
+        $starts_with = filter_var($starts_with, FILTER_SANITIZE_STRING);
+        if (!$starts_with) {
+            header("HTTP/1.0 400 Bad Request");
+            die;
+        }
+
+        $callback = trim($_GET['callback']);
+        if ($callback) {
+            header('Content-type: application/x-javascript; charset=utf-8');
+
+            if (!Controller_Search::jsonp_is_valid($callback)) {
+                header("HTTP/1.0 400 Bad Request");
+                die;
+            }
+
+        } else {
+            header('Content-type: application/json; charset=utf-8');
+        }
+
+        $authors = ORM::factory('author')
+            ->where('name', 'LIKE', $starts_with . '%')
+            ->order_by('name', 'asc')
+            ->limit(AUTHORS_LIST_COUNT)
+            ->find_all();
+
+        $authors_json = array();
+        $count = 0;
+        if (isset($authors)) foreach ($authors as $author) {
+            $author_json = array(
+                'id' => $author->id,
+                'name' => $author->name,
+            );
+            $authors_json[] = $author_json;
+            $count++;
+        }
+
+        $json = array(
+            'results' => $authors_json,
+            'total' => $count,
+        );
+
+        if ($count == 0) {
+            $json['message'] = 'No results';
+        }
+
+        if ($callback) {
+            echo $callback . '(' . json_encode($json) . ');';
+        } else {
+            echo json_encode($json);
+        }
+        die;
+    }
+
     public function before() {
         parent::before();
         $this->template->user = Auth::instance()->get_user();

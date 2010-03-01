@@ -39,6 +39,7 @@ if ($error) {
         <label class="author"><span>Author:</span>
             <input type="text" value="<?php print $author ?>" size="24" name="author" />
         </label>
+
         <div class="submit">
             <input type="submit" value="Submit" />
         </div>

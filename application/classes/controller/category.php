@@ -122,6 +122,64 @@ class Controller_Category extends Controller_Template {
         $this->template->title = $category->name . ' (category)';
     }
 
+    /**
+     * List categories in JSON format
+     */
+    public function action_jsonlist() {
+        $starts_with = trim($this->request->param('id'));
+        $starts_with = filter_var($starts_with, FILTER_SANITIZE_STRING);
+        if (!$starts_with) {
+            header("HTTP/1.0 400 Bad Request");
+            die;
+        }
+
+        $callback = trim($_GET['callback']);
+        if ($callback) {
+            header('Content-type: application/x-javascript; charset=utf-8');
+
+            if (!Controller_Search::jsonp_is_valid($callback)) {
+                header("HTTP/1.0 400 Bad Request");
+                die;
+            }
+
+        } else {
+            header('Content-type: application/json; charset=utf-8');
+        }
+
+        $categories = ORM::factory('category')
+            ->where('name', 'LIKE', $starts_with . '%')
+            ->order_by('name', 'asc')
+            ->limit(CATEGORIES_LIST_COUNT)
+            ->find_all();
+
+        $categories_json = array();
+        $count = 0;
+        if (isset($categories)) foreach ($categories as $category) {
+            $category_json = array(
+                'id' => $category->id,
+                'name' => $category->name,
+            );
+            $categories_json[] = $category_json;
+            $count++;
+        }
+
+        $json = array(
+            'results' => $categories_json,
+            'total' => $count,
+        );
+
+        if ($count == 0) {
+            $json['message'] = 'No results';
+        }
+
+        if ($callback) {
+            echo $callback . '(' . json_encode($json) . ');';
+        } else {
+            echo json_encode($json);
+        }
+        die;
+    }
+
     public function before() {
         parent::before();
         $this->template->user = Auth::instance()->get_user();
