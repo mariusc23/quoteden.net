@@ -1,23 +1,21 @@
-<?php
-if ($error) {
-    if ($action == 'add') {
-        print '<div class="error">Error adding quote</div>';
-    } else {
-        print '<div class="error">Error updating quote</div>';
-    }
-} elseif($_POST) {
-    if ($action == 'add') {
-        print '<div class="message">Added quote</div>';
-    } else {
-        print '<div class="message">Updated quote</div>';
-    }
-}
-?>
+<ul class="messages">
 <?php if ($action == 'edit'): ?>
-<div class="message">
-    <a href="<?php print Url::site('quote/delete/' . $quote->id); ?>" title="Delete this quote">Delete</a>
-</div>
+    <li><a href="<?php print Url::site('quote/delete/' . $quote->id); ?>" title="Delete this quote">Delete quote <?php print $quote->id; ?>!</a></li>
 <?php endif; ?>
+<?php if ($error): ?>
+    <?php if ($action == 'add'): ?>
+    <li class="error">Error adding quote</li>
+    <?php else: ?>
+    <li class="error">Error updating quote</li>
+    <?php endif; ?>
+<?php elseif($_POST): ?>
+    <?php if ($action == 'add'): ?>
+    <li><a href="<?php print Url::site('quote/id/' . $quote->id) ?>">Added quote <?php print $quote->id; ?></a></li>
+    <?php else: ?>
+    <li><a href="<?php print Url::site('quote/id/' . $quote->id) ?>">Updated quote <?php print $quote->id; ?></a></li>
+    <?php endif; ?>
+<?php endif; ?>
+</ul>
 
 <form method="post" accept-charset="UTF-8" action="<?php if ($action == 'add') {
     print Url::site('quote/add');
@@ -37,7 +35,7 @@ if ($error) {
         </label>
 
         <label class="author"><span>Author:</span>
-            <input type="text" value="<?php print $author ?>" size="24" name="author" />
+            <input type="text" value="<?php print $author ?>" size="24" name="author" autocomplete="off" />
         </label>
 
         <div class="submit">

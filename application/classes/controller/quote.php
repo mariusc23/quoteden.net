@@ -81,6 +81,8 @@ class Controller_Quote extends Controller_Template {
         if (!$quote->loaded()) {
             return ;
         }
+        $view->quote = $quote;
+
         $this->template->title = 'Editing quote ' . $quote->id;
 
         $view->text = $quote->text;
@@ -242,6 +244,7 @@ class Controller_Quote extends Controller_Template {
                         }
                     }
 
+                    $view->quote = $quote;
                     // success!
                     $this->template->title = 'Quote added';
                 } else {

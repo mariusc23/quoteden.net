@@ -53,10 +53,15 @@ if (!$user) {
 
 <ul id="navigation" role="navigation">
     <li<?php if ($model == 'quote' && ($action == 'index' || $action == 'add' || $action == 'id' || $action == 'edit')): ?> class="active"<?php endif; ?>>
-        <a href="<?php print Url::site('') ?>" title="home page">Home</a>
+        <a href="<?php print Url::site('') ?>" title="newest quotes" rel="home">Newest</a>
     </li>
     <li<?php if ($model == 'quote' && $action == 'top'): ?> class="active"<?php endif; ?>>
         <a href="<?php print Url::site('quote/top') ?>" title="Top rated quotes">Top Rated</a>
+    </li>
+    <li class="empty">
+    </li>
+    <li<?php if ($model == 'author'): ?> class="active"<?php endif; ?>>
+        <a href="<?php print Url::site('author') ?>" title="Authors">Authors</a>
     </li>
     <li<?php if ($model == 'category'): ?> class="active"<?php endif; ?>>
         <a href="<?php print Url::site('category') ?>" title="Categories">Categories</a>

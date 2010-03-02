@@ -152,9 +152,9 @@ class Controller_Author extends Controller_Template {
      * List authors in JSON format
      */
     public function action_jsonlist() {
-        $starts_with = trim($this->request->param('id'));
-        $starts_with = filter_var($starts_with, FILTER_SANITIZE_STRING);
-        if (!$starts_with) {
+        $contains = trim($this->request->param('id'));
+        $contains = filter_var($contains, FILTER_SANITIZE_STRING);
+        if (!$contains) {
             header("HTTP/1.0 400 Bad Request");
             die;
         }
@@ -173,7 +173,7 @@ class Controller_Author extends Controller_Template {
         }
 
         $authors = ORM::factory('author')
-            ->where('name', 'LIKE', $starts_with . '%')
+            ->where('name', 'LIKE', '%' . $contains . '%')
             ->order_by('name', 'asc')
             ->limit(AUTHORS_LIST_COUNT)
             ->find_all();

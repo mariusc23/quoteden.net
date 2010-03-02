@@ -169,6 +169,10 @@ h2 {
     margin: 0 1px;
     text-align: center;
 }
+#navigation li.empty {
+    width: 80px;
+    background: none;
+}
 #navigation li.active,
 #navigation li:hover,
 #navigation li:active {
@@ -460,7 +464,7 @@ h2 {
 , .author-letter #content .last
 {
     float: right;
-    padding: 16px 50px 0 0;
+    margin: 16px 50px 0 0;
     font-weight: bold;
 }
 
@@ -541,11 +545,13 @@ h2 {
     height: 500px;
 }
 
-.quote-add #content .error
-, .quote-add #content .message
-{
-    padding: 20px 10px 5px;
-    text-align: center;
+.quote-add #content .messages {
+    padding: 10px 0 0;
+    width: 150px;
+    margin: 0 auto;
+}
+.quote-add #content ul.message {
+    padding-left: 40px;
 }
 
 .qresult {
