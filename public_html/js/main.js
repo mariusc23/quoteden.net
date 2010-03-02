@@ -271,7 +271,7 @@ $(document).ready(function() {
             async: true,
             cache: false,
             dataType: 'json',
-            timeout: 500,
+            timeout: 3000,
             global: false,
             error: function(request, textStatus, errorThrown) {
                 console.log('Error trying to autocomplete.');
