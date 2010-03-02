@@ -1,5 +1,5 @@
 <div class="quote-list">
-<?php if (isset($quotes)): ?>
+<?php if (isset($quotes) && $quotes): ?>
 <?php foreach ($quotes as $quote): ?>
 
 <div class="quote">

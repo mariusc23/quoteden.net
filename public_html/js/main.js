@@ -228,7 +228,7 @@ $(document).ready(function() {
         if (e.keyCode != 8
             && (
                 (e.keyCode >= 16 && e.keyCode <= 18) || e.keyCode == 32
-                || e.ctrlKey || e.altKey || e.shiftKey
+                || (e.ctrlKey && e.keyCode != 86) || e.altKey || e.shiftKey
                 || e.keyCode < 65 || e.keyCode > 122
                 || (e.keyCode > 90 && e.keyCode < 97)
             )

@@ -464,9 +464,7 @@ h2 {
 , .author-letter #content .last
 {
     float: right;
-    position: relative;
-    top: 16px;
-    right: 50px;
+    margin: 16px 50px 0 0;
     font-weight: bold;
 }
 
