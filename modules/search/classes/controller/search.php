@@ -114,7 +114,7 @@ class Controller_Search extends Controller_Template {
             }
             die;
         }
-        $this->bold_query($view, $view->quotes, array($search_query));
+        self::bold_query($this->sphinxclient, $view, $view->quotes, array($search_query));
 
         // create pagination object
         $pagination = Pagination::factory(array(
@@ -154,27 +154,59 @@ class Controller_Search extends Controller_Template {
      * @param array $fields (optional) fields per row to affect
      * @see format_results
      */
-    public function bold_query($view, $quotes, $q = array()) {
+    public static function bold_query($sphinxclient, $view, $quotes, $q = array()) {
         $view->categories_list_bolded = array();
 
-        $mb_words = array_unique(mb_split("\s", implode($q, " ")));
-        if ($mb_words) {
-            foreach ($quotes as $i => $quote) {
-                foreach ($mb_words as $mb_word) {
-                    if (!$mb_word) continue;
+        // start with the quote content
+        $docs = array();
+        foreach ($view->quotes as $quote) {
+            $docs[] = $quote->text;
+        }
+        // build the excerpts
+        $excerpts = $sphinxclient->BuildExcerpts($docs, SPHINX_INDEX, implode(' ', $q),
+            array('before_match' => '<em>', 'after_match' => '</em>', 'limit' => 2000)
+        );
+        // reassign the bolded content
+        foreach ($docs as $id => $doc) {
+            $view->quotes[$id]->text = $excerpts[$id];
+        }
 
-                    $preg_repl = "(\b" . preg_quote($mb_word)."\b)";
-
-                    $quotes[$i]->text = mb_eregi_replace($preg_repl, "<em>\\1</em>", $quotes[$i]->text);
-                    $quotes[$i]->author->name = mb_eregi_replace($preg_repl, "<em>\\1</em>", $quotes[$i]->author->name);
-
-                    $view->categories_list_bolded[$quote->id] = array();
-                    foreach ($quote->categories_list as $k => $category) {
-                        $category->name = mb_eregi_replace($preg_repl, "<em>\\1</em>", $category->name);
-                        $view->categories_list_bolded[$quote->id][] = $category;
-                    }
-                }
+        // now categories
+        $docs = array();
+        foreach ($quotes as $quote) {
+            $view->categories_list_bolded[$quote->id] = array();
+            foreach ($quote->categories_list as $k => $category) {
+                $docs[] = $category->name;
             }
+        }
+        // build the excerpts
+        $excerpts = $sphinxclient->BuildExcerpts($docs, SPHINX_INDEX, implode(' ', $q),
+            array('before_match' => '<em>', 'after_match' => '</em>', 'limit' => 2000)
+        );
+        // reassign the bolded content
+        $j = 0;
+        foreach ($quotes as $quote) {
+            foreach ($quote->categories_list as $k => $category) {
+                $category->name = $excerpts[$j];
+                $view->categories_list_bolded[$quote->id][] = $category;
+                $j++;
+            }
+        }
+
+        // finally authors
+        $docs = array();
+        foreach ($quotes as $quote) {
+            $docs[] = $quote->author->name;
+        }
+        // build the excerpts
+        $excerpts = $sphinxclient->BuildExcerpts($docs, SPHINX_INDEX, implode(' ', $q),
+            array('before_match' => '<em>', 'after_match' => '</em>', 'limit' => 2000)
+        );
+        // reassign the bolded content
+        $j = 0;
+        foreach ($quotes as $quote) {
+            $quote->author->name = $excerpts[$j];
+            $j++;
         }
     }
 
