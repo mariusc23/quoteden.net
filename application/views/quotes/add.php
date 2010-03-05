@@ -1,7 +1,4 @@
 <ul class="messages">
-<?php if ($action == 'edit'): ?>
-    <li><a href="<?php print Url::site('quote/delete/' . $quote->id); ?>" title="Delete this quote">Delete quote <?php print $quote->id; ?>!</a></li>
-<?php endif; ?>
 <?php if ($error): ?>
     <?php if ($action == 'add'): ?>
     <li class="error">Error adding quote</li>
@@ -24,7 +21,7 @@
 } ?>">
 <div class="form">
     <div class="text">
-        <label><span><?php if ($action == 'add'): ?>Add quote:<?php else: ?>Edit quote:<?php endif; ?></span>
+        <label><span><?php if ($action == 'add'): ?>Add quote:<?php else: ?>Edit quote <?php print $quote->id; ?>:<?php endif; ?></span>
             <textarea name="text" rows="8" cols="55"><?php print $text ?></textarea>
         </label>
     </div>
@@ -40,6 +37,7 @@
 
         <div class="submit">
             <input type="submit" value="Submit" />
+            <?php if ($action == 'edit'): ?>or <a href="<?php print Url::site('quote/delete/' . $quote->id); ?>" title="Delete this quote">delete</a><?php endif; ?>
         </div>
     </div>
     <br class="clear"/>
