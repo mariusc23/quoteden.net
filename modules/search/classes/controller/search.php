@@ -196,7 +196,7 @@ class Controller_Search extends Controller_Template {
         // finally authors
         $docs = array();
         foreach ($quotes as $quote) {
-            $docs[] = $quote->author->name;
+            $docs[] = $quote->author->short_name;
         }
         // build the excerpts
         $excerpts = $sphinxclient->BuildExcerpts($docs, SPHINX_INDEX, implode(' ', $q),
@@ -205,7 +205,7 @@ class Controller_Search extends Controller_Template {
         // reassign the bolded content
         $j = 0;
         foreach ($quotes as $quote) {
-            $quote->author->name = $excerpts[$j];
+            $quote->author->short_name = $excerpts[$j];
             $j++;
         }
     }
