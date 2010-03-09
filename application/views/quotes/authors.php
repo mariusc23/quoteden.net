@@ -1,7 +1,7 @@
 <?php
 $auts_by_initial = array();
 foreach ($authors as $author) {
-    $current_initial = mb_strtoupper(mb_substr($author->name, 0, 1));
+    $current_initial = mb_strtoupper(mb_substr($author->last_name, 0, 1));
 
     if (!isset($auts_by_initial[ord($current_initial)])) $auts_by_initial[ord($current_initial)] = array();
     $auts_by_initial[ord($current_initial)][] = $author;

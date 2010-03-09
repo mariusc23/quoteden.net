@@ -11,7 +11,7 @@ require_once('../application/config/config.php');
 
         $author_name = explode(' ', $name);
         $count = count($author_name);
-        $last_name = $author_name[$count-1];
+        $last_name = trim($author_name[$count-1], " \t\n\r\0\x0B!@#$%^&*()_+-={}[]|\\:\";'<>?,./");
         unset($author_name[$count-1]);
         foreach ($author_name as $k => $name) {
             $author_name[$k] = mb_eregi_replace("^\b([A-Za-z]).+\b(.*)$", "\\1.\\2", $name);
@@ -34,6 +34,11 @@ require_once('../application/config/config.php');
         return $short_name;
     }
 
+    function build_last_name($name) {
+        $name = explode(' ', $name);
+        return trim($name[count($name)-1], " \t\n\r\0\x0B!@#$%^&*()_+-={}[]|\\:\";'<>?,./");
+    }
+
 try {
 $db_2_link = new PDO("mysql:host=" . DB_KOHANA_HOST . ";dbname=" . DB_KOHANA_NAME, DB_KOHANA_USER, DB_KOHANA_PASS);
 
@@ -47,13 +52,21 @@ $statement->execute();
 $rows = $statement->fetchAll();
 
 /* shorten author names */
-$statement = $db_2_link->prepare("UPDATE authors SET short_name = ? WHERE id = ?");
+$statement = $db_2_link->prepare(
+"UPDATE
+    authors
+SET
+    short_name = ?,
+    last_name = ?
+WHERE
+    id = ?");
 $count = 0;
 foreach ($rows as $row) {
     $short_name = shorten_name($row['name']);
-    $count += $statement->execute(array($short_name, $row['id']));
+    $last_name = build_last_name($row['name']);
+    $count += $statement->execute(array($short_name, $last_name, $row['id']));
 }
-echo $count . " author names shortened\n";
+echo $count . " authors affected\n";
 
 echo "Done.\n";
 } catch (PDOException $e) {

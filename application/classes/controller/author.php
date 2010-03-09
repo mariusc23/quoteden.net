@@ -23,6 +23,7 @@ class Controller_Author extends Controller_Template {
             $author = new Model_Author;
             $author->name = $post['author_name'];
             $author->short_name = Controller_Author::shorten_name($author->name);
+            $author->last_name = Controller_Author::build_last_name($author->name);
 
             if($author->save()) {
                 return $author->id;
@@ -67,7 +68,7 @@ class Controller_Author extends Controller_Template {
         // get the content
         $view = $this->template->content = View::factory('quotes/authors');
         $view->authors = ORM::factory('author')
-            ->order_by('name', 'asc')
+            ->order_by('last_name', 'asc')
             ->find_all();
 
         $this->template->title = 'Authors';
@@ -81,8 +82,8 @@ class Controller_Author extends Controller_Template {
         // get the content
         $view = $this->template->content = View::factory('quotes/authors_letter');
         $view->authors = ORM::factory('author')
-            ->where('name', 'LIKE', mb_strtolower($letter) . '%')
-            ->order_by('name', 'asc')
+            ->where('last_name', 'LIKE', mb_strtolower($letter) . '%')
+            ->order_by('last_name', 'asc')
             ->find_all();
 
         $view->letter = $letter;
@@ -172,7 +173,7 @@ class Controller_Author extends Controller_Template {
 
         $authors = ORM::factory('author')
             ->where('name', 'LIKE', '%' . $contains . '%')
-            ->order_by('name', 'asc')
+            ->order_by('last_name', 'asc')
             ->limit(AUTHORS_LIST_COUNT)
             ->find_all();
 
@@ -211,7 +212,7 @@ class Controller_Author extends Controller_Template {
 
         $author_name = explode(' ', $name);
         $count = count($author_name);
-        $last_name = $author_name[$count-1];
+        $last_name = trim($author_name[$count-1], " \t\n\r\0\x0B!@#$%^&*()_+-={}[]|\\:\";'<>?,./");
         unset($author_name[$count-1]);
         foreach ($author_name as $k => $name) {
             $author_name[$k] = mb_eregi_replace("^\b([A-Za-z]).+\b(.*)$", "\\1.\\2", $name);
@@ -232,6 +233,14 @@ class Controller_Author extends Controller_Template {
             }
         }
         return $short_name;
+    }
+
+    /**
+     * Builds the last name for an author.
+     */
+    public static function build_last_name($name) {
+        $name = explode(' ', $name);
+        return trim($name[count($name)-1], " \t\n\r\0\x0B!@#$%^&*()_+-={}[]|\\:\";'<>?,./");
     }
 
     public function before() {
