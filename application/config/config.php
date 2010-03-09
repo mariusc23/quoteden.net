@@ -20,3 +20,4 @@ setlocale(LC_ALL, 'en_US.utf8');
 
 define('CATEGORIES_LIST_COUNT', 8);
 define('AUTHORS_LIST_COUNT', 8);
+define('AUTHOR_SHORT_NAME_LENGTH', 15);
