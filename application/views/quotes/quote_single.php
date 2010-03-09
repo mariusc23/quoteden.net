@@ -22,14 +22,7 @@
     print '<a href="' . Url::site('category/id/' . $category->id) . '">' . $category->name . '</a> ';
 } ?>
 </div>
-<div class="author"><a href="<?php print Url::site('author/id/' . $quote->author->id); ?>" title="More quotes by this author"><?php
-$author_name = explode(' ', $quote->author->name, 4);
-$last_name = $author_name[count($author_name)-1];
-unset($author_name[count($author_name)-1]);
-foreach ($author_name as $k => $name) {
-    $author_name[$k] = mb_eregi_replace("^([A-Za-z])[A-Za-z]+(.*)$", "\\1.\\2", $name);
-}
-print implode(' ', $author_name) . ' ' . $last_name; ?></a></div>
+<div class="author"><a href="<?php print Url::site('author/id/' . $quote->author->id); ?>" title="See quotes by <?php print $quote->author->name ?>"><?php print $quote->author->short_name ?></a></div>
 <br class="after-author" />
 <?php if (isset($quote->user)): ?>
 <a href="<?php print Url::site('quote/edit/' . $quote->id); ?>" title="Edit this quote">Edit</a>

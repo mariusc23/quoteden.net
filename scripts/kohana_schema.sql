@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `authors` (
  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
  `name` varchar(500) CHARACTER SET utf8 NOT NULL,
- `bio` longtext CHARACTER SET utf8,
+ `short_name` varchar(100) CHARACTER SET utf8 NOT NULL,
  PRIMARY KEY (`id`),
  KEY `name` (`name`(333))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

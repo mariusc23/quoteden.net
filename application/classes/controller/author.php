@@ -19,12 +19,10 @@ class Controller_Author extends Controller_Template {
         ;
 
         if($post->check()) {
-            // add author, bio optional
+            // add author
             $author = new Model_Author;
             $author->name = $post['author_name'];
-            if (isset($post['author_bio'])) {
-                $author->bio = $post['author_bio'];
-            }
+            $author->short_name = Controller_Author::shorten_name($author->name);
 
             if($author->save()) {
                 return $author->id;
@@ -204,6 +202,36 @@ class Controller_Author extends Controller_Template {
             echo json_encode($json);
         }
         die;
+    }
+
+    public static function shorten_name($name) {
+        if (strlen($name) < AUTHOR_SHORT_NAME_LENGTH) {
+            return $name;
+        }
+
+        $author_name = explode(' ', $name);
+        $count = count($author_name);
+        $last_name = $author_name[$count-1];
+        unset($author_name[$count-1]);
+        foreach ($author_name as $k => $name) {
+            $author_name[$k] = mb_eregi_replace("^\b([A-Za-z]).+\b(.*)$", "\\1.\\2", $name);
+        }
+        $short_name = implode(' ', $author_name) . ' ' . $last_name;
+        if (strlen($short_name) > AUTHOR_SHORT_NAME_LENGTH) {
+            $first = true;
+            foreach($author_name as $k => $name) {
+                if (1 == $count - $k || $first) {
+                    $first = false;
+                    continue;
+                }
+                unset($author_name[$k]);
+                $short_name = implode(' ', $author_name) . ' ' . $last_name;
+                if (strlen($short_name) <= AUTHOR_SHORT_NAME_LENGTH) {
+                    break;
+                }
+            }
+        }
+        return $short_name;
     }
 
     public function before() {

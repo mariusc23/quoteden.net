@@ -24,7 +24,7 @@ $ord_Z = ord('Z');
         <li class="last"><a href="<?php print Url::site('author/letter/' . chr($i)); ?>">more</a></li>
     <?php break;
         endif; ?>
-        <li><a href="<?php print Url::site('author/id/' . $author->id); ?>"><?php print $author->name ?></a></li>
+        <li><a href="<?php print Url::site('author/id/' . $author->id); ?>" title="See quotes by <?php print $author->name ?>"><?php print $author->short_name ?></a></li>
     <?php endforeach; ?>
     </ul>
 

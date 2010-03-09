@@ -5,7 +5,7 @@
     <?php $count = 0; $lists = 0;
     foreach ($authors as $author):
         $count++; ?>
-        <li><a href="<?php print Url::site('author/id/' . $author->id); ?>"><?php print $author->name ?></a></li>
+        <li><a href="<?php print Url::site('author/id/' . $author->id); ?>" title="See quotes by <?php print $author->name ?>"><?php print $author->short_name ?></a></li>
         <?php if ($count % $count_split == 0): $lists++; ?>
         </ul><?php if ($lists % 4 == 0): ?>
         <div class="hr"></div>
