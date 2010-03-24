@@ -84,7 +84,7 @@ if (!$user) {
 
 <div id="footer" role="contentinfo">
 <div id="footer-inner">
-Copyright &copy; 2009 - <?php print date('Y'); ?> <a href="/"><?php print SITE_NAME; ?></a>
+&copy; 2009 - <?php print date('Y'); ?> <a href="/"><?php print SITE_NAME; ?></a>, everything except quote content and author. <a href="http://craciunoiu.net">Contact us for feedback or any concerns.</a>
 </div><!-- /#footer-inner -->
 </div><!-- /#footer -->
 

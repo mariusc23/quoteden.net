@@ -31,7 +31,7 @@ a {
 a:visited,
 a:hover,
 a:active {
-    color: #fb8f4a;
+    color: #ffa166;
 }
 
 body ul {
@@ -78,26 +78,6 @@ h2 {
     background: url(../img/quotessprite.png) no-repeat 0 -48px;
     position: relative;
 }
-/* Alternatively, the skip-to-nav link can be completely hidden until a user tabs
-    to the link. Un-comment the following CSS to use this technique. */
-/*
-#skip-to-nav a, #skip-to-nav a:hover, #skip-to-nav a:visited
-{
-    position: absolute;
-    left: 0;
-    top: -500px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-}
-
-#skip-to-nav a:active, #skip-to-nav a:focus
-{
-    position: static;
-    width: auto;
-    height: auto;
-}
-*/
 
 #logo {
     margin: 0 10px 0 0;
@@ -628,10 +608,16 @@ h2 {
 }
 #footer-inner {
     line-height: 36px;
+    font-size: 80%;
 }
 
 #footer a {
     color: #cdc;
+}
+
+#footer-inner a:hover
+, #footer-inner a:active {
+    border-bottom: 1px dashed #cdc; 
 }
 
 
