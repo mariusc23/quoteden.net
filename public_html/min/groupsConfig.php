@@ -32,5 +32,5 @@ return array(
         ))
     ),//*/
     'js' => array('//js/main.js'),
-    'css' => array('//css/reset.css', '//css/main.css', '//css/print.css'),
+    'css' => array('//css/reset.css', '//css/main.css'),
 );
