@@ -44,7 +44,7 @@ class Controller_Quote extends Controller_Template {
      */
     public function action_delete() {
         if (!$this->template->user) {
-            //Request::instance()->redirect('user/login');
+            Request::instance()->redirect('user/login');
         }
 
         $id = $this->request->param('id');
