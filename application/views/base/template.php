@@ -44,7 +44,7 @@ if (!$user) {
 ?></a>
 
 <div id="login">
-    <form id="user-login-form" method="post" accept-charset="UTF-8" action="<?php print Url::site('user/login', 'http'); ?>">
+    <form id="user-login-form" method="post" accept-charset="UTF-8" action="<?php print Url::site('user/login', 'https'); ?>">
         <input type="text" value="" size="15" name="username" maxlength="60" title="Username" />
         <input type="password" size="15" maxlength="60" name="password" title="Password" />
         <input type="submit" value="Log in" name="login" />
