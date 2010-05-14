@@ -21,3 +21,8 @@ setlocale(LC_ALL, 'en_US.utf8');
 define('CATEGORIES_LIST_COUNT', 8);
 define('AUTHORS_LIST_COUNT', 8);
 define('AUTHOR_SHORT_NAME_LENGTH', 15);
+
+/* IMAP email info */
+define('QUOTEDEN_EMAIL_HOST', '{imap.gmail.com:993/imap/ssl}qotd');
+define('QUOTEDEN_EMAIL_ADDRESS', 'quoteden@gmail.com');
+define('QUOTEDEN_EMAIL_PASSWORD', 'mariuspaul');

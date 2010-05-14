@@ -33,4 +33,5 @@ return array(
     ),//*/
     'js' => array('//js/main.js'),
     'css' => array('//css/reset.css', '//css/main.css'),
+    'css_user' => array('//css/user.css'),
 );

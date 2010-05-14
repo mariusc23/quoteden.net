@@ -358,6 +358,61 @@ class Controller_Quote extends Controller_Template {
         print $xml = Feed::create($info, $items);
     }
 
+    /**
+     * Approval queue for quotes.
+     */
+    public function action_queue() {
+        if (!$this->template->user) {
+            Request::instance()->redirect('user/login');
+        }
+        $this->template->content = $view = new View('quotes/queue');
+        $view->action = 'queue';
+
+        $view->text = '';
+        $view->author = '';
+        $view->categories = '';
+
+        $this->template->title = 'Approval queue';
+
+        /* try to connect */
+        /*$connection = imap_open(QUOTEDEN_EMAIL_HOST, QUOTEDEN_EMAIL_ADDRESS,
+                                QUOTEDEN_EMAIL_PASSWORD) or
+                 die('Cannot connect to Gmail: ' . imap_last_error());
+
+        $emails = imap_search($connection, 'ALL');*/
+
+        /* if emails are returned, cycle through each... */
+        if ($emails) {
+
+            /* put the newest emails on top */
+            rsort($emails);
+
+            /* for every email... */
+            foreach ($emails as $email_number) {
+                /* get information specific to this email */
+                $overview = imap_fetch_overview($connection, $email_number, 0);
+                $message = imap_qprint(imap_body($connection, $email_number, 2));
+                if (preg_match('/@starlingtech.com>$/', $overview[0]->from) > 0 ||
+                    preg_match('/paul.craciunoiu@gmail.com>$/', $overview[0]->from) > 0) {
+                    //$message = substr($message
+                }
+
+                /* output the email header information */
+                $output .= '<div class="toggler '.($overview[0]->seen ? 'read' : 'unread').'">';
+                $output .= '<span class="subject">'.$overview[0]->subject.'</span> ';
+                $output .= '<span class="from">'.$overview[0]->from.'</span>';
+                $output .= '<span class="date">on '.$overview[0]->date.'</span>';
+                $output .= '</div>';
+
+                /* output the email body */
+                die($message.'a');
+            }
+        }
+
+        /* close the connection */
+        //imap_close($inbox);
+    }
+
     public function before() {
         parent::before();
         $this->template->user = Auth::instance()->get_user();

@@ -13,8 +13,11 @@ if (isset($title)) {
 <link href="<?php print Url::site('rss.xml') ?>" title="<?php print SITE_NAME; ?> feed" type="application/rss+xml" rel="alternate" />
 <link type="image/x-icon" href="<?php print Url::site('img/favicon.ico') ?>" rel="shortcut icon">
 <link type="text/css" href="<?php print Url::site('min/?g=css'); ?>" rel="stylesheet" media="screen" />
+<?php if ($user): ?>
+<link type="text/css" href="<?php print Url::site('min/?g=css_user'); ?>" rel="stylesheet" media="screen" />
+<?php endif ?>
 </head>
-<body class="<?php if ($action == 'edit') {
+<body class="<?php if ($action === 'edit' || $action === 'queue') {
     print $model . '-add';
 } else {
     print $model . '-' . $action;
@@ -42,6 +45,9 @@ if (!$user) {
     print 'add-quotes" title="Add quotes">Add quotes';
 }
 ?></a>
+<?php if ($user): ?>
+<a class="queue" title="Approval queue" href="<?php print Url::site('quote/queue') ?>">Q</a>
+<?php endif ?>
 
 <div id="login">
     <form id="user-login-form" method="post" accept-charset="UTF-8" action="<?php print Url::site('user/login', 'https'); ?>">
