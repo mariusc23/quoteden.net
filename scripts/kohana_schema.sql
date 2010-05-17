@@ -97,3 +97,15 @@ CREATE TABLE IF NOT EXISTS `voteaverages` (
  PRIMARY KEY (`quote_id`),
  KEY `average` (`average`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `quotequeues` (
+  `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `text` longtext,
+  `author` varchar(255) DEFAULT NULL,
+  `original` longtext NOT NULL,
+  `email_from` varchar(255) NOT NULL,
+  `email_subject` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

@@ -276,7 +276,8 @@ class Controller_Quote extends Controller_Template {
      */
     public function action_index() {
         // count items
-        $count = DB::select(DB::expr('COUNT(id) AS count'))->from('quotes')->execute('default')->get('count');
+        $count = DB::select(DB::expr('COUNT(id) AS count'))->from('quotes')
+            ->execute('default')->get('count');
 
         // create pagination object
         $pagination = Pagination::factory(array(
@@ -350,7 +351,8 @@ class Controller_Quote extends Controller_Template {
                 'link' => 'quote/id/' . $quote->id,
                 'description' => $quote->text
                     . '<br/><br/>'
-                    . '<a href =" ' . Url::site('author/id/' . $quote->author->id) . '" title="More quotes by this author">'
+                    . '<a href =" ' . Url::site('author/id/' . $quote->author->id)
+                    . '" title="More quotes by this author">'
                     . $quote->author->name . '</a>'
                     ,
             );
@@ -365,52 +367,30 @@ class Controller_Quote extends Controller_Template {
         if (!$this->template->user) {
             Request::instance()->redirect('user/login');
         }
-        $this->template->content = $view = new View('quotes/queue');
+        // count items
+        $count = DB::select(DB::expr('COUNT(id) AS count'))
+            ->from('quotequeues')->execute('default')->get('count');
+
+        // create pagination object
+        $pagination = Pagination::factory(array(
+            'current_page'   => array('source' => 'query_string', 'key' => 'p'),
+            'total_items'    => $count,
+            'items_per_page' => QUOTES_ITEMS_PER_PAGE,
+        ));
+
         $view->action = 'queue';
-
-        $view->text = '';
-        $view->author = '';
-        $view->categories = '';
-
         $this->template->title = 'Approval queue';
 
-        /* try to connect */
-        /*$connection = imap_open(QUOTEDEN_EMAIL_HOST, QUOTEDEN_EMAIL_ADDRESS,
-                                QUOTEDEN_EMAIL_PASSWORD) or
-                 die('Cannot connect to Gmail: ' . imap_last_error());
+        // get the content
+        $view = $this->template->content = View::factory('quotes/queue');
+        $view->quotes = ORM::factory('quotequeue')->order_by('id','desc')
+             ->limit($pagination->items_per_page)
+             ->offset($pagination->offset)
+             ->find_all()
+        ;
 
-        $emails = imap_search($connection, 'ALL');*/
-
-        /* if emails are returned, cycle through each... */
-        if ($emails) {
-
-            /* put the newest emails on top */
-            rsort($emails);
-
-            /* for every email... */
-            foreach ($emails as $email_number) {
-                /* get information specific to this email */
-                $overview = imap_fetch_overview($connection, $email_number, 0);
-                $message = imap_qprint(imap_body($connection, $email_number, 2));
-                if (preg_match('/@starlingtech.com>$/', $overview[0]->from) > 0 ||
-                    preg_match('/paul.craciunoiu@gmail.com>$/', $overview[0]->from) > 0) {
-                    //$message = substr($message
-                }
-
-                /* output the email header information */
-                $output .= '<div class="toggler '.($overview[0]->seen ? 'read' : 'unread').'">';
-                $output .= '<span class="subject">'.$overview[0]->subject.'</span> ';
-                $output .= '<span class="from">'.$overview[0]->from.'</span>';
-                $output .= '<span class="date">on '.$overview[0]->date.'</span>';
-                $output .= '</div>';
-
-                /* output the email body */
-                die($message.'a');
-            }
-        }
-
-        /* close the connection */
-        //imap_close($inbox);
+        // render the pager
+        $view->pager = $pagination->render();
     }
 
     public function before() {

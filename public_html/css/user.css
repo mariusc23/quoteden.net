@@ -146,6 +146,7 @@
 div.original {
     margin: 10px 20px;
 }
-div.original pre {
+div.original span {
+    display: block;
     margin: 10px 20px;
 }

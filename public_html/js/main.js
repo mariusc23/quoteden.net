@@ -19,8 +19,10 @@ $(document).ready(function() {
         preventKeyUp = false
     ;
 
-    $('.meta label:first').after('<ul class="categories_auto autocomplete hide"></ul>');
-    $('.meta label:last').after('<ul class="author_auto autocomplete hide"></ul>');
+    $.each($('.meta'), function() {
+        $('label:first', $(this)).after('<ul class="categories_auto autocomplete hide"></ul>');
+        $('label:last',  $(this)).after('<ul class="author_auto autocomplete hide"></ul>');
+    });
 
     function check_search_input() {
         if (!search_input.parents('li').hasClass('active')
@@ -222,9 +224,7 @@ $(document).ready(function() {
         if (preventKeyUp) return false;
 
         var text = obj.val()
-          , suggest_box = $('.quote-add .' + class)
-        ;
-
+          , suggest_box = $('.' + class, obj.parent().parent());
         if (e.keyCode != 8
             && (
                 (e.keyCode >= 16 && e.keyCode <= 18) || e.keyCode == 32
