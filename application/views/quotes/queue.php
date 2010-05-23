@@ -1,30 +1,19 @@
 <?php
-function by_strlen($a, $b) {
-    $a = strlen($a);
-    $b = strlen($b);
-    if ($a === $b) {
-        return 0;
-    }
-    return ($a > $b) ? -1 : 1;
-}
+require_once APPPATH . 'classes/helpers.php';
 
 foreach ($quotes as $quote):
 
 // make the top 5 longest words in the text be categories
-$categories = array_unique(preg_split('/[\s,.!@#$%^&*\(\)_\+;:\'"\[\]{},\/<>?]+/',
-                  $quote->text, -1, PREG_SPLIT_NO_EMPTY));
-$categories = array_map(strtolower, $categories);
-usort($categories, by_strlen);
-$categories = array_slice($categories, 0, 5);
-$categories = implode(', ', $categories);
+$categories = Helper::shorten_text($quote->text, 5, ', ');
 
 ?>
 <div class="original">
-    <strong>Original:</strong><br/>
+    <strong>Original:</strong> <em style="display: none">(Click quote to cycle)</em><br/>
     <span><?php print nl2br(str_replace(" ", "&nbsp;", $quote->original)) ?></span>
 </div>
-<form method="post" accept-charset="UTF-8" action="<?php print Url::site('quote/add') ?>">
+<form class="quote-form" method="post" accept-charset="UTF-8" action="<?php print Url::site('quote/add') ?>">
 <div class="form">
+    <input type="hidden" name="id" value="<?php print $quote->id; ?>"/>
     <div class="text">
         <label><span>Add quote:</span>
             <textarea name="text" rows="8" cols="55"><?php print $quote->text ?></textarea>
@@ -41,7 +30,7 @@ $categories = implode(', ', $categories);
         </label>
 
         <div class="submit">
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Approve" /> or <a class="delete" href="<?php print Url::site('quote/delete_q/' . $quote->id); ?>" title="Remove quote from queue">delete</a>
         </div>
     </div>
     <br class="clear"/>

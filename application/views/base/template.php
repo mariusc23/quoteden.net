@@ -17,7 +17,7 @@ if (isset($title)) {
 <link type="text/css" href="<?php print Url::site('min/?g=css_user'); ?>" rel="stylesheet" media="screen" />
 <?php endif ?>
 </head>
-<body class="<?php if ($action === 'edit' || $action === 'queue') {
+<body class="<?php if ($action === 'edit') {
     print $model . '-add';
 } else {
     print $model . '-' . $action;
@@ -96,6 +96,9 @@ if (!$user) {
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="<?php print Url::site('min/?g=js'); ?>"></script>
+<?php if ($action === 'queue'): ?>
+<script type="text/javascript" src="<?php print Url::site('min/?g=js_q'); ?>"></script>
+<?php endif; ?>
 
 <?php if (!$user): ?>
 <script type="text/javascript">

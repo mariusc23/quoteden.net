@@ -7,11 +7,11 @@
 /*----------------------------------
     Quote add
 ----------------------------------*/
-.quote-add #content label {
+.quote-form label {
     display: block;
 }
 
-.quote-add label span {
+.quote-form label span {
     display: block;
     font-weight: bold;
     line-height: 1.4em;
@@ -19,52 +19,52 @@
     color: #333;
 }
 
-.quote-add .form .meta {
+.quote-form .form .meta {
     float: left;
 }
-.quote-add .form .text {
+.quote-form .form .text {
     float: left;
     width: 445px;
     padding-left: 4px;
 }
-.quote-add .form .text textarea {
+.quote-form .form .text textarea {
     width: 430px;
 }
-.quote-add .form .meta textarea {
+.quote-form .form .meta textarea {
     width: 255px;
     padding: 0;
 }
-.quote-add .form .meta input[type="text"] {
+.quote-form .form .meta input[type="text"] {
     width: 255px;
 }
-.quote-add #content-inner .form {
+.quote-form .form {
     padding: 10px 15px 5px 15px;
     height: 170px;
     border-bottom: 1px solid #ccc;
 }
-.quote-add .text textarea,
-.quote-add .meta textarea,
-.quote-add .meta input[type="text"] {
+.quote-form .text textarea,
+.quote-form .meta textarea,
+.quote-form .meta input[type="text"] {
     background: #f7f7f7;
     border: 1px solid #ccc;
 }
 
-.quote-add .text textarea {
+.quote-form .text textarea {
     width: 430px;
 }
 
-.quote-add .meta .author {
+.quote-form .meta .author {
     margin-top: 4px;
 }
-.quote-add .meta .author span {
+.quote-form .meta .author span {
     padding-bottom: 3px;
 }
-.quote-add .meta .submit {
+.quote-form .meta .submit {
     padding-top: 10px;
     text-align: center;
 }
 
-.quote-add .meta input[type="submit"] {
+.quote-form .meta input[type="submit"] {
     color: #ff6400;
     cursor: pointer;
     border: none;
@@ -76,7 +76,8 @@
     margin: 20px 10px 5px 10px;
 }
 
-.quote-add #content-inner {
+.quote-add #content-inner,
+.quote-queue #content-inner {
     min-height: 500px;
     height: auto !important;
     height: 500px;
@@ -149,4 +150,21 @@ div.original {
 div.original span {
     display: block;
     margin: 10px 20px;
+}
+
+/*----------------------------------
+    Quote dupe
+----------------------------------*/
+.dupe {
+    display: none;
+    margin: 10px 20px;
+    cursor: pointer;
+}
+
+.dupe .author {
+    margin: .5em 0 0 6em;
+}
+
+#content-inner div.meta input.confirm {
+    color: green;
 }

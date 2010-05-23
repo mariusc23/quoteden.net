@@ -1,4 +1,6 @@
 <?php
+require_once APPPATH . 'classes/helpers.php';
+
 class Controller_Search extends Controller_Template {
     public $template = 'base/template';
     public $sphinxclient = null;
@@ -11,9 +13,13 @@ class Controller_Search extends Controller_Template {
      */
     public function action_index() {
         $search_query = isset($_GET['q']) ? $_GET['q'] : '';
+        $dupes_search = isset($_GET['d']) ? true : false;
         $search_offset = isset($_GET['p']) ? intval($_GET['p']) : 1;
         $search_offset = QUOTES_ITEMS_PER_PAGE * ($search_offset - 1);
         if (!$search_offset) $search_offset = 0;
+        if ($dupes_search) {
+            $search_query = Helper::shorten_text($search_query, 5);
+        }
 
         $view = View::factory('quotes/search');
 
@@ -229,3 +235,4 @@ class Controller_Search extends Controller_Template {
     }
 
 }
+

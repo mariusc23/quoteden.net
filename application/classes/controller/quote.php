@@ -40,7 +40,7 @@ class Controller_Quote extends Controller_Template {
 
 
     /**
-     * Edit action corresponds to /quote/edit
+     * Delete action corresponds to /quote/delete
      */
     public function action_delete() {
         if (!$this->template->user) {
@@ -179,9 +179,17 @@ class Controller_Quote extends Controller_Template {
      * Adds quotes and automatically creates authors if they do not exist
      */
     public function action_add() {
-        if (!$this->template->user) {
+        if (Request::$is_ajax) {
+            $this->auto_render = FALSE;
+            if (!$this->template->user) {
+                $this->request->status = 403;
+                return;
+            }
+        }
+        elseif (!$this->template->user) {
             Request::instance()->redirect('user/login');
         }
+
         $this->template->content = $view = new View('quotes/add');
         $view->action = 'add';
 
@@ -244,11 +252,24 @@ class Controller_Quote extends Controller_Template {
                         }
                     }
 
+                    if (Request::$is_ajax) {
+                        $quote = new Model_Quotequeue(intval($_POST['id']));
+                        if ($quote->loaded()) {
+                            $quote->delete($id);
+                        }
+                        $this->request->response = '';
+                        return;
+                    }
+
                     $view->quote = $quote;
                     // success!
                     $this->template->title = 'Quote added';
                 } else {
                     // failure
+                    if (Request::$is_ajax) {
+                        $this->request->status = 500;
+                        return;
+                    }
                     $view->error = 1;
                     $this->template->title = 'Error saving quote';
                     $view->text = $_POST['text'];
@@ -257,6 +278,10 @@ class Controller_Quote extends Controller_Template {
                 }
             }
             else {
+                if (Request::$is_ajax) {
+                    $this->request->status = 400;
+                    return;
+                }
                 $view->error = 1;
                 $this->template->title = 'Error saving quote';
                 $view->text = $_POST['text'];
@@ -264,6 +289,10 @@ class Controller_Quote extends Controller_Template {
                 $view->categories = $_POST['categories'];
             }
         } else {
+            if (Request::$is_ajax) {
+                $this->request->status = 400;
+                return;
+            }
             $this->template->title = 'Add quotes';
         }
     }
@@ -358,6 +387,28 @@ class Controller_Quote extends Controller_Template {
             );
         }
         print $xml = Feed::create($info, $items);
+    }
+
+    /**
+     * Delete queued quote action corresponds to /quote/delete_q.
+     */
+    public function action_delete_q() {
+        $this->request->headers['Content-Type'] = 'application/json';
+        $this->auto_render = FALSE;
+        if (!$this->template->user) {
+            $this->request->status = 403;
+            return;
+        }
+
+        $id = $this->request->param('id');
+        $quote = new Model_Quotequeue($id);
+
+        if (!$quote->loaded()) {
+            $this->request->status = 400;
+            return;
+        }
+
+        $quote->delete($id);
     }
 
     /**

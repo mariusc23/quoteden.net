@@ -167,7 +167,7 @@ $(document).ready(function() {
      */
     function autocomplete_keydown(e, obj, class, comma_separated) {
         var text = obj.val()
-          , suggest_box = $('.quote-add .' + class)
+          , suggest_box = $('.' + class, obj.parent().parent())
           , results = false, active = -1
           , new_text
         ;

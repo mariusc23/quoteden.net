@@ -10,7 +10,7 @@ require_once('emails/starlingtech.php');
 require_once('emails/quotemaster.php'); // <-- TODO: fix this STUB
 // END FORMATS
 
-$formats = array(
+$callbacks = array(
     array('Starlingtech', 'process_content'),
     array('Quotemaster', 'process_content'),
 );
@@ -18,6 +18,7 @@ $formats = array(
 try {
 $db_link = new PDO("mysql:host=" . DB_KOHANA_HOST . ";dbname=" . DB_KOHANA_NAME, DB_KOHANA_USER, DB_KOHANA_PASS);
 
+$num_emails = 0;
 $inserted = 0;
 
 $q = "
@@ -48,8 +49,9 @@ if ($emails) {
         /* get information specific to this email */
         $overview = imap_fetch_overview($connection, $email_number, 0);
         $content = imap_qprint(imap_body($connection, $email_number));
+        imap_clearflag_full($connection, $email_number, '\\SEEN');
 
-        foreach ($formats as $format) {
+        foreach ($callbacks as $format) {
             $q_arr = call_user_func($format, $content, $overview);
             if ($q_arr) {
                 // insert the quotes into the db
@@ -61,7 +63,7 @@ if ($emails) {
                 }
 
                 // mark this email as read, it was processed
-                imap_setflag_full($connection, $email_number, "\\SEEN");
+                imap_setflag_full($connection, $email_number, '\\SEEN');
                 break;
             }
         }
