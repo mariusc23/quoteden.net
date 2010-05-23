@@ -14,7 +14,7 @@
 <?php endif; ?>
 </ul>
 
-<form method="post" accept-charset="UTF-8" action="<?php if ($action == 'add') {
+<form class="quote-form" method="post" accept-charset="UTF-8" action="<?php if ($action == 'add') {
     print Url::site('quote/add');
 } else {
     print Url::site('quote/edit/' . $id);
