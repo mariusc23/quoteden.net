@@ -120,25 +120,49 @@
     color: #000;
 }
 
-.autocomplete {
-    position: absolute;
+.ac_results {
+    padding: 0px;
+    border: 1px solid black;
+    background-color: white;
+    overflow: hidden;
+    z-index: 99999;
+}
+
+.ac_results ul {
+    width: 100%;
+    list-style-position: outside;
     list-style: none;
-    background: #fff;
-    width: 255px;
     padding: 0;
-    border: 1px solid #ccc;
-    border-top: none;
-    margin-top: -1px;
+    margin: 0;
 }
 
-.autocomplete li {
-    padding-left: 10px;
-    cursor: pointer;
+.ac_results li {
+    margin: 0px;
+    padding: 2px 5px;
+    cursor: default;
+    display: block;
+    /* 
+    if width will be 100% horizontal scrollbar will apear 
+    when scroll mode will be used
+    */
+    /*width: 100%;*/
+    font: menu;
+    font-size: 100%;
+    /* 
+    it is very important, if line-height not setted or setted 
+    in relative units scroll will be broken in firefox
+    */
+    line-height: 125%;
+    overflow: hidden;
 }
 
-.autocomplete li:hover
-, .autocomplete li.active {
-    background: #eee;
+.ac_odd {
+    background-color: #eee;
+}
+
+.ac_over {
+    background-color: #0A246A;
+    color: white;
 }
 
 /*----------------------------------

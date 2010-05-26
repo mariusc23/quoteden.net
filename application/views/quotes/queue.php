@@ -39,3 +39,8 @@ $categories = Helper::shorten_text($quote->text, 5, ', ');
 </form>
 <?php endforeach;
 print $pager; ?>
+
+<script>
+QUOTEDEN = {'categories': <?php print $categories_json ?>,
+            'authors': <?php print $authors_json ?>}
+</script>

@@ -197,6 +197,8 @@ class Controller_Quote extends Controller_Template {
         $view->author = '';
         $view->categories = '';
 
+        self::assign_categories($view);
+
         if ($_POST) {
             $view->error = 0;
             // validate data first
@@ -437,11 +439,34 @@ class Controller_Quote extends Controller_Template {
         $view->quotes = ORM::factory('quotequeue')->order_by('id','desc')
              ->limit($pagination->items_per_page)
              ->offset($pagination->offset)
-             ->find_all()
-        ;
+             ->find_all();
 
+        self::assign_categories($view);
         // render the pager
         $view->pager = $pagination->render();
+    }
+
+    private static function assign_categories(&$view) {
+        $view->categories_json = array();
+        $categories_list = ORM::factory('category')
+             ->order_by('name', 'asc')
+             ->find_all();
+        foreach ($categories_list as $category) {
+            $view->categories_json[] = $category->name;
+        }
+        $view->categories_json = json_encode($view->categories_json);
+
+        $view->authors_json = array();
+        $authors_list = ORM::factory('author')
+             ->order_by('name', 'asc')
+             ->find_all();
+        foreach ($authors_list as $author) {
+            if (!$author->name) {
+                continue;
+            }
+            $view->authors_json[] = $author->name;
+        }
+        $view->authors_json = json_encode($view->authors_json);
     }
 
     public function before() {

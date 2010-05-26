@@ -96,8 +96,8 @@ if (!$user) {
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="<?php print Url::site('min/?g=js'); ?>"></script>
-<?php if ($action === 'queue'): ?>
-<script type="text/javascript" src="<?php print Url::site('min/?g=js_q'); ?>"></script>
+<?php if ($action === 'queue' || $action === 'add'): ?>
+<script type="text/javascript" src="<?php print Url::site('min/?g=js_user'); ?>"></script>
 <?php endif; ?>
 
 <?php if (!$user): ?>

@@ -56,3 +56,8 @@ Type your quote and watch this area for duplicate quotes
         <span class="author"></span>
     </div>
 </div>
+
+<script>
+QUOTEDEN = {'categories': <?php print $categories_json ?>,
+            'authors': <?php print $authors_json ?>}
+</script>
