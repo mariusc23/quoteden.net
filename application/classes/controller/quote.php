@@ -40,7 +40,7 @@ class Controller_Quote extends Controller_Template {
 
 
     /**
-     * Edit action corresponds to /quote/edit
+     * Delete action corresponds to /quote/delete
      */
     public function action_delete() {
         if (!$this->template->user) {
@@ -179,15 +179,25 @@ class Controller_Quote extends Controller_Template {
      * Adds quotes and automatically creates authors if they do not exist
      */
     public function action_add() {
-        if (!$this->template->user) {
+        if (Request::$is_ajax) {
+            $this->auto_render = FALSE;
+            if (!$this->template->user) {
+                $this->request->status = 403;
+                return;
+            }
+        }
+        elseif (!$this->template->user) {
             Request::instance()->redirect('user/login');
         }
+
         $this->template->content = $view = new View('quotes/add');
         $view->action = 'add';
 
         $view->text = '';
         $view->author = '';
         $view->categories = '';
+
+        self::assign_categories($view);
 
         if ($_POST) {
             $view->error = 0;
@@ -244,11 +254,24 @@ class Controller_Quote extends Controller_Template {
                         }
                     }
 
+                    if (Request::$is_ajax) {
+                        $quote = new Model_Quotequeue(intval($_POST['id']));
+                        if ($quote->loaded()) {
+                            $quote->delete($id);
+                        }
+                        $this->request->response = '';
+                        return;
+                    }
+
                     $view->quote = $quote;
                     // success!
                     $this->template->title = 'Quote added';
                 } else {
                     // failure
+                    if (Request::$is_ajax) {
+                        $this->request->status = 500;
+                        return;
+                    }
                     $view->error = 1;
                     $this->template->title = 'Error saving quote';
                     $view->text = $_POST['text'];
@@ -257,6 +280,10 @@ class Controller_Quote extends Controller_Template {
                 }
             }
             else {
+                if (Request::$is_ajax) {
+                    $this->request->status = 400;
+                    return;
+                }
                 $view->error = 1;
                 $this->template->title = 'Error saving quote';
                 $view->text = $_POST['text'];
@@ -264,6 +291,10 @@ class Controller_Quote extends Controller_Template {
                 $view->categories = $_POST['categories'];
             }
         } else {
+            if (Request::$is_ajax) {
+                $this->request->status = 400;
+                return;
+            }
             $this->template->title = 'Add quotes';
         }
     }
@@ -276,7 +307,8 @@ class Controller_Quote extends Controller_Template {
      */
     public function action_index() {
         // count items
-        $count = DB::select(DB::expr('COUNT(id) AS count'))->from('quotes')->execute('default')->get('count');
+        $count = DB::select(DB::expr('COUNT(id) AS count'))->from('quotes')
+            ->execute('default')->get('count');
 
         // create pagination object
         $pagination = Pagination::factory(array(
@@ -350,12 +382,91 @@ class Controller_Quote extends Controller_Template {
                 'link' => 'quote/id/' . $quote->id,
                 'description' => $quote->text
                     . '<br/><br/>'
-                    . '<a href =" ' . Url::site('author/id/' . $quote->author->id) . '" title="More quotes by this author">'
+                    . '<a href =" ' . Url::site('author/id/' . $quote->author->id)
+                    . '" title="More quotes by this author">'
                     . $quote->author->name . '</a>'
                     ,
             );
         }
         print $xml = Feed::create($info, $items);
+    }
+
+    /**
+     * Delete queued quote action corresponds to /quote/delete_q.
+     */
+    public function action_delete_q() {
+        $this->request->headers['Content-Type'] = 'application/json';
+        $this->auto_render = FALSE;
+        if (!$this->template->user) {
+            $this->request->status = 403;
+            return;
+        }
+
+        $id = $this->request->param('id');
+        $quote = new Model_Quotequeue($id);
+
+        if (!$quote->loaded()) {
+            $this->request->status = 400;
+            return;
+        }
+
+        $quote->delete($id);
+    }
+
+    /**
+     * Approval queue for quotes.
+     */
+    public function action_queue() {
+        if (!$this->template->user) {
+            Request::instance()->redirect('user/login');
+        }
+        // count items
+        $count = DB::select(DB::expr('COUNT(id) AS count'))
+            ->from('quotequeues')->execute('default')->get('count');
+
+        // create pagination object
+        $pagination = Pagination::factory(array(
+            'current_page'   => array('source' => 'query_string', 'key' => 'p'),
+            'total_items'    => $count,
+            'items_per_page' => QUOTES_ITEMS_PER_PAGE,
+        ));
+
+        $view->action = 'queue';
+        $this->template->title = 'Approval queue';
+
+        // get the content
+        $view = $this->template->content = View::factory('quotes/queue');
+        $view->quotes = ORM::factory('quotequeue')->order_by('id','desc')
+             ->limit($pagination->items_per_page)
+             ->offset($pagination->offset)
+             ->find_all();
+
+        self::assign_categories($view);
+        // render the pager
+        $view->pager = $pagination->render();
+    }
+
+    private static function assign_categories(&$view) {
+        $view->categories_json = array();
+        $categories_list = ORM::factory('category')
+             ->order_by('name', 'asc')
+             ->find_all();
+        foreach ($categories_list as $category) {
+            $view->categories_json[] = $category->name;
+        }
+        $view->categories_json = json_encode($view->categories_json);
+
+        $view->authors_json = array();
+        $authors_list = ORM::factory('author')
+             ->order_by('name', 'asc')
+             ->find_all();
+        foreach ($authors_list as $author) {
+            if (!$author->name) {
+                continue;
+            }
+            $view->authors_json[] = $author->name;
+        }
+        $view->authors_json = json_encode($view->authors_json);
     }
 
     public function before() {

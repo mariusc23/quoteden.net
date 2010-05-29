@@ -1,0 +1,194 @@
+#header a.queue {
+    position: absolute;
+    top: 32px;
+    left: 264px;
+}
+
+/*----------------------------------
+    Quote add
+----------------------------------*/
+.quote-form label {
+    display: block;
+}
+
+.quote-form label span {
+    display: block;
+    font-weight: bold;
+    line-height: 1.4em;
+    font-size: 90%;
+    color: #333;
+}
+
+.quote-form .form .meta {
+    float: left;
+}
+.quote-form .form .text {
+    float: left;
+    width: 445px;
+    padding-left: 4px;
+}
+.quote-form .form .text textarea {
+    width: 430px;
+}
+.quote-form .form .meta textarea {
+    width: 255px;
+    padding: 0;
+}
+.quote-form .form .meta input[type="text"] {
+    width: 255px;
+}
+.quote-form .form {
+    padding: 10px 15px 5px 15px;
+    height: 170px;
+    border-bottom: 1px solid #ccc;
+}
+.quote-form .text textarea,
+.quote-form .meta textarea,
+.quote-form .meta input[type="text"] {
+    background: #f7f7f7;
+    border: 1px solid #ccc;
+}
+
+.quote-form .text textarea {
+    width: 430px;
+}
+
+.quote-form .meta .author {
+    margin-top: 4px;
+}
+.quote-form .meta .author span {
+    padding-bottom: 3px;
+}
+.quote-form .meta .submit {
+    padding-top: 10px;
+    text-align: center;
+}
+
+.quote-form .meta input[type="submit"] {
+    color: #ff6400;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 140%;
+}
+
+.quote-add #content .messages {
+    margin: 20px 10px 5px 10px;
+}
+
+.quote-add #content-inner,
+.quote-queue #content-inner {
+    min-height: 500px;
+    height: auto !important;
+    height: 500px;
+}
+
+.quote-add #content .messages {
+    padding: 10px 0 0;
+    width: 150px;
+    margin: 0 auto;
+}
+.quote-add #content ul.message {
+    padding-left: 40px;
+}
+
+.qresult {
+    padding: 5px 10px 0;
+}
+.search-status {
+    padding: 0 10px;
+    text-align: center;
+}
+.qresult .text {
+    position: relative;
+    top: 0.3em;
+    display: inline-block;
+    height: 1.5em;
+    line-height: 1.5em;
+    width: 520px;
+    overflow: hidden;
+}
+.qresult .author {
+    display: inline-block;
+}
+.qresult .id {
+    display: inline-block;
+    width: 30px;
+    text-align: right;
+}
+.qresult .text a {
+    color: #000;
+}
+
+.ac_results {
+    padding: 0px;
+    border: 1px solid black;
+    background-color: white;
+    overflow: hidden;
+    z-index: 99999;
+}
+
+.ac_results ul {
+    width: 100%;
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ac_results li {
+    margin: 0px;
+    padding: 2px 5px;
+    cursor: default;
+    display: block;
+    /* 
+    if width will be 100% horizontal scrollbar will apear 
+    when scroll mode will be used
+    */
+    /*width: 100%;*/
+    font: menu;
+    font-size: 100%;
+    /* 
+    it is very important, if line-height not setted or setted 
+    in relative units scroll will be broken in firefox
+    */
+    line-height: 125%;
+    overflow: hidden;
+}
+
+.ac_odd {
+    background-color: #eee;
+}
+
+.ac_over {
+    background-color: #0A246A;
+    color: white;
+}
+
+/*----------------------------------
+    Quote queue
+----------------------------------*/
+div.original {
+    margin: 10px 20px;
+}
+div.original span {
+    display: block;
+    margin: 10px 20px;
+}
+
+/*----------------------------------
+    Quote dupe
+----------------------------------*/
+.dupe {
+    display: none;
+    margin: 10px 20px;
+    cursor: pointer;
+}
+
+.dupe .author {
+    margin: .5em 0 0 6em;
+}
+
+#content-inner div.meta input.confirm {
+    color: green;
+}
