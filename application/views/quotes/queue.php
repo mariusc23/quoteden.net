@@ -38,7 +38,13 @@ $categories = Helper::shorten_text($quote->text, 5, ', ');
 </div>
 </form>
 <?php endforeach;
-print $pager; ?>
+print $pager;
+
+if (!(count($quotes))): ?>
+<div class="queue-empty">
+    Approval queue is empty. Please check back again later.
+</div>
+<?php endif; ?>
 
 <script>
 QUOTEDEN = {'categories': <?php print $categories_json ?>,
