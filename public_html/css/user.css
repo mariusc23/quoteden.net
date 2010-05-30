@@ -1,7 +1,17 @@
-#header a.queue {
+#header a.queue {/* 52 */
+    background: url(../img/quotessprite.png) no-repeat -401px 0;
     position: absolute;
+    text-indent: -9999px;
     top: 32px;
     left: 264px;
+    display: block;
+    height: 16px;
+    width: 16px;
+}
+
+#header a.queue:hover,
+#header a.queue:active {
+    background-position: -401px -24px;
 }
 
 /*----------------------------------
@@ -122,10 +132,14 @@
 
 .ac_results {
     padding: 0px;
-    border: 1px solid black;
+    border: 1px solid #cccccc;
+    border-top-color: #fff;
     background-color: white;
     overflow: hidden;
     z-index: 99999;
+    -moz-box-shadow: 0px 2px 6px #999;
+    -webkit-box-shadow: 0px 2px 6px #999;
+    box-shadow: 0px 2px 6px #999;
 }
 
 .ac_results ul {
@@ -157,12 +171,11 @@
 }
 
 .ac_odd {
-    background-color: #eee;
+    background-color: #ffece0;
 }
 
 .ac_over {
-    background-color: #0A246A;
-    color: white;
+    background-color: #f9a17f;
 }
 
 /*----------------------------------

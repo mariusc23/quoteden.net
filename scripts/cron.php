@@ -7,7 +7,7 @@ require_once('config.php');
 
 // FORMATS:
 require_once('emails/starlingtech.php');
-require_once('emails/quotemaster.php'); // <-- TODO: fix this STUB
+require_once('emails/quotemaster.php');
 // END FORMATS
 
 $callbacks = array(
